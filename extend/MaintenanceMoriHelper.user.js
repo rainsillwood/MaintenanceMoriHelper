@@ -330,11 +330,6 @@
     'orteganextaccesstoken': '',
     'ortegauuid': '',
   };
-  //清除缓存
-  if (getStorage('ScriptVersion') * 1 < 1.10) {
-    localStorage.clear();
-    indexedDB.deleteDatabase('database');
-  }
   //公共对象
   let SocketGvG;
   const DataBase = {
@@ -342,12 +337,11 @@
       'version': 1,
     },
     'Record': {
-      'version': 1,
+      'version': 2,
     },
   };
   DataBase.Static.db = await openDB('Static', DataBase.Static.version);
   DataBase.Record.db = await openDB('Record', DataBase.Record.version);
-  setStorage('ScriptVersion', 1.06);
   setStorage('lang', '["en","en","en","en","en","en","en"]');
   //需要从游戏资源获取翻译列表
   const LanguageTableM = {
