@@ -331,7 +331,7 @@
     'ortegauuid': '',
   };
   //清除缓存
-  if (getStorage('ScriptVersion') * 1 < 1.01) {
+  if (getStorage('ScriptVersion') * 1 < 1.10) {
     localStorage.clear();
     indexedDB.deleteDatabase('database');
   }
