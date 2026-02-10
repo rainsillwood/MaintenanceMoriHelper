@@ -3,7 +3,7 @@
 // @namespace    https://suzunemaiki.moe/
 // @updateURL    https://raw.githubusercontent.com/rainsillwood/MaintenanceMoriHelper/main/extend/MaintenanceMoriHelper.user.js
 // @downloadURL  https://raw.githubusercontent.com/rainsillwood/MaintenanceMoriHelper/main/extend/MaintenanceMoriHelper.user.js
-// @version      1.10
+// @version      1.11
 // @description  Maintenance Mori优化
 // @author       SuzuneMaiki
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=mememori-game.com
@@ -53,7 +53,7 @@
     'ModelName': 'Xiaomi 2203121C',
     'GlobalConstant': 'Android OS 13 / API-33 (TKQ1.220829.002/V14.0.12.0.TLACNXM)',
     //服务器url
-    'assetURL': 'https://raw.githubusercontent.com/rainsillwood/MaintenanceMoriHelper/main/assets/',
+    'assetURL': 'https://raw.githubusercontent.com/rainsillwood/mementomori-Assets/main/',
     'authURL': 'https://prd1-auth.mememori-boi.com/api/',
     'LocalURL': 'https://mentemori.icu/',
     'AppVersion': '',
@@ -1500,7 +1500,7 @@
   //生成动作文件
   async function actionMaker() {
     initContent();
-    const Model = await sendGMRequest(`${GlobalConstant.assetURL}model3.json`, {});
+    //const Model = await sendGMRequest(`${GlobalConstant.assetURL}model3.json`, {});
     const CharacterVoiceList = await getCharacterVoice();
     //初始化选择区
     const divSelect = document.body.appendChild(createElement('div', '', 'selectpanel'));
@@ -1599,7 +1599,7 @@
       );
       nodeCharacter.onclick = async () => {
         nodeinfo.innerHTML = '';
-        nodeinfo.appendChild(createElement('p', `<img src="${GlobalConstant.assetURL}/icon_element_${Character.ElementType}.png">${TextResource[Character.NameKey.slice(1, -1)]}`));
+        nodeinfo.appendChild(createElement('p', `<img src="${GlobalConstant.assetURL}Common//icon_element_${Character.ElementType}.png">${TextResource[Character.NameKey.slice(1, -1)]}`));
         let SkillArray = (!Character.ActiveSkillIds ? [] : Character.ActiveSkillIds).concat(!Character.PassiveSkillIds ? [] : Character.PassiveSkillIds);
         for (let i = 0; i < SkillArray.length; i++) {
           const Skill = SkillList[SkillArray[i]];
@@ -2688,7 +2688,7 @@
     gvg-status[state="counter"] > gvg-status-icon-defense {
       left: 0;
       bottom: 0;
-      background-image: url(${GlobalConstant.assetURL}icon_gvg_party_offense_counter.png);
+      background-image: url(${GlobalConstant.assetURL}Common/icon_gvg_party_offense_counter.png);
     }
     gvg-status[state="counter"] > gvg-status-icon-offense {
       right: 0;
@@ -2904,7 +2904,7 @@
               F1: 'icon_gvg_marker_5',
               F2: 'icon_gvg_marker_6',
             };
-            image.src = `${GlobalConstant.assetURL}${imageName[hint[1]] ?? hint[1]}.png`;
+            image.src = `${GlobalConstant.assetURL}Common/${imageName[hint[1]] ?? hint[1]}.png`;
           }
         };
         let kos = castleNode.appendChild(createElement('gvg-ko-count-container'));
@@ -3687,19 +3687,19 @@
     background-image: url('assets/char_frame_lr.png');
   }
   [rarity="S"] > icon > rarity {
-    background-image: url('${GlobalConstant.assetURL}/frame_common_s.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_common_s.png');
   }
   [rarity="A"] > icon > rarity {
-    background-image: url('${GlobalConstant.assetURL}/frame_common_a.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_common_a.png');
   }
   [rarity="B"] > icon > rarity {
-    background-image: url('${GlobalConstant.assetURL}/frame_common_b.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_common_b.png');
   }
   [rarity="C"] > icon > rarity {
-    background-image: url('${GlobalConstant.assetURL}/frame_common_c.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_common_c.png');
   }
   [rarity="D"] > icon > rarity {
-    background-image: url('${GlobalConstant.assetURL}/frame_common_d.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_common_d.png');
   }
   decoration {
     display: none;
@@ -3713,16 +3713,16 @@
     display: block;
   }
   [rarity="R"] decoration {
-    background-image: url('${GlobalConstant.assetURL}/frame_decoration_rplus.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_decoration_rplus.png');
   }
   [rarity="SR"] decoration {
-    background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_decoration_srplus.png');
   }
   [rarity="SSR"] decoration {
-    background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_decoration_srplus.png');
   }
   [rarity="UR"] decoration {
-    background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
+    background-image: url('${GlobalConstant.assetURL}Common/frame_decoration_srplus.png');
   }
   icon > level {
     display: block;
@@ -3766,22 +3766,22 @@
     display: none;
   }
   star {
-    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_1.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_rarity_plus_star_1.png');
   }
   [star="6"] stars > :first-child {
-    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_rarity_plus_star_2.png');
   }
   [star="7"] stars > :nth-child(-n + 2) {
-    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_rarity_plus_star_2.png');
   }
   [star="8"] stars > :nth-child(-n + 3) {
-    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_rarity_plus_star_2.png');
   }
   [star="9"] stars > :nth-child(-n + 4) {
-    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_rarity_plus_star_2.png');
   }
   [star="10"] stars > * {
-    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_rarity_plus_star_2.png');
   }
   element {
     display: block;
@@ -3793,22 +3793,22 @@
     background-size: cover;
   }
   [element="1"] element {
-    background-image: url('${GlobalConstant.assetURL}/icon_element_1.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_element_1.png');
   }
   [element="2"] element {
-    background-image: url('${GlobalConstant.assetURL}/icon_element_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_element_2.png');
   }
   [element="3"] element {
-    background-image: url('${GlobalConstant.assetURL}/icon_element_3.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_element_3.png');
   }
   [element="4"] element {
-    background-image: url('${GlobalConstant.assetURL}/icon_element_4.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_element_4.png');
   }
   [element="5"] element {
-    background-image: url('${GlobalConstant.assetURL}/icon_element_5.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_element_5.png');
   }
   [element="6"] element {
-    background-image: url('${GlobalConstant.assetURL}/icon_element_6.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_element_6.png');
   }
   [element="1"] {
     background-color: #8080ff;
@@ -3935,16 +3935,16 @@
     vertical-align: top;
   }
   [quality="1"] madel {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_1.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_medal_1.png');
   }
   [quality="2"] madel {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_2.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_medal_2.png');
   }
   [quality="3"] madel {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_3.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_medal_3.png');
   }
   [quality="4"] madel {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_4.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_medal_4.png');
   }
   raritydesc {
     display: inline-block;
@@ -4005,28 +4005,28 @@
     margin: 0px 5px;
   }
   category[category="1_0"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_sniper_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_weapon_sniper_01.png');
   }
   category[category="1_1"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_warrior_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_weapon_warrior_01.png');
   }
   category[category="1_2"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_sorcerer_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_weapon_sorcerer_01.png');
   }
   category[category="2_0"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_sub_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_sub_01.png');
   }
   category[category="3_0"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_gauntlet_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_gauntlet_01.png');
   }
   category[category="4_0"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_helmet_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_helmet_01.png');
   }
   category[category="5_0"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_armor_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_armor_01.png');
   }
   category[category="6_0"] {
-    background-image: url('${GlobalConstant.assetURL}/icon_equipment_shoes_01.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_equipment_shoes_01.png');
   }
   parameter_type {
     width: 100%;
@@ -4101,13 +4101,13 @@
     margin-right: 5px;
   }
   [job="1"] job {
-    background-image: url('${GlobalConstant.assetURL}/icon_job_warrior.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_job_warrior.png');
   }
   [job="2"] job {
-    background-image: url('${GlobalConstant.assetURL}/icon_job_sniper.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_job_sniper.png');
   }
   [job="4"] job {
-    background-image: url('${GlobalConstant.assetURL}/icon_job_sorcerer.png');
+    background-image: url('${GlobalConstant.assetURL}Common/icon_job_sorcerer.png');
   }
   lore {
     display: block;
@@ -4514,7 +4514,7 @@
                       <parameter_type>${TextResource['CommonSphereLabel']}</parameter_type>
                       <sphere order="1">
                         <icon>
-                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <img src="${GlobalConstant.assetURL}Common/icon_lock.png">
                           <rarity></rarity>
                           <level></level>
                         </icon>
@@ -4523,7 +4523,7 @@
                       </sphere>
                       <sphere order="2">
                         <icon>
-                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <img src="${GlobalConstant.assetURL}Common/icon_lock.png">
                           <rarity></rarity>
                           <level></level>
                         </icon>
@@ -4532,7 +4532,7 @@
                       </sphere>
                       <sphere order="3">
                         <icon>
-                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <img src="${GlobalConstant.assetURL}Common/icon_lock.png">
                           <rarity></rarity>
                           <level></level>
                         </icon>
@@ -4541,7 +4541,7 @@
                       </sphere>
                       <sphere order="4">
                         <icon>
-                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <img src="${GlobalConstant.assetURL}Common/icon_lock.png">
                           <rarity></rarity>
                           <level></level>
                         </icon>
