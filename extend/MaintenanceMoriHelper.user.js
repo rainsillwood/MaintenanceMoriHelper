@@ -26,21 +26,21 @@
   console.log('脚本运行中');
   //增加冻结层
   document.querySelector('style').append(`
-#loading {
-  width: 100%;
-  height: 100%;
-  font-size: xx-large;
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2147483647;
-  opacity: 0.8;
-}
-  `);
+  #loading {
+    width: 100%;
+    height: 100%;
+    font-size: xx-large;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2147483647;
+    opacity: 0.8;
+  }
+    `);
   const FreezeNode = createElement('div', '<h1>Loading......</h1>', 'loading');
   FreezeNode.ondblclick = () => {
     FreezeNode.classList.add('hidden');
@@ -535,9 +535,11 @@
   const MatchlessList = await getMatchless();
   const LegendList = await getLegend();
   const SphereList = await getSphere();
-  const EquipmenSkillList = await getEquipmentSkill();
+  const EquipmentSkillList = await getEquipmentSkill();
   const EquipmentExclusiveList = await getEquipmentExclusive();
   const SkillList = await getSkill();
+  const CharacterProfile = await getCharacterProfile();
+  const EquipmentComposite = await getEquipmentComposite();
   //初始化所有页面
   await initPage();
   console.log('载入完成');
@@ -609,13 +611,13 @@
     document.querySelector('title').innerHTML = LanguageTable['title'][GlobalURLList.lang];
     //追加导航栏格式
     document.querySelector('style').append(`
-  nav a{
-    display: inline-block;
-    min-width: 22px;
-    text-align: center;
-    padding: 5px 0px;
-  }
-    `);
+    nav a{
+      display: inline-block;
+      min-width: 22px;
+      text-align: center;
+      padding: 5px 0px;
+    }
+      `);
     //获取原导航栏
     const navDefault = document.querySelector('nav');
     //获取功能模块并本地化
@@ -694,7 +696,7 @@
         'href': getURL({ 'function': 'clearlist', 'lang': GlobalURLList.lang }),
         'title': 'clearlist',
       }),
-      createElement('a', '|')
+      createElement('a', '|'),
     );
     //获取语言账号模块
     const divLocal = navDefault.childNodes[3];
@@ -768,7 +770,7 @@
       createElement('a', '|'),
       //ArEg;DeDe;EsMx;FrFr;IdId;PtBr;RuRu;ThTh;ViVn;
       createElement('br'),
-      createElement('a', `<a>${LanguageTable['account'][GlobalURLList.lang]}</a><a>${LanguageTable['noaccount'][GlobalURLList.lang]}</a>`, 'accountmanager')
+      createElement('a', `<a>${LanguageTable['account'][GlobalURLList.lang]}</a><a>${LanguageTable['noaccount'][GlobalURLList.lang]}</a>`, 'accountmanager'),
     );
     //初始化扩展导航栏
     const navExtend = navDefault.insertAdjacentElement('afterend', createElement('nav'));
@@ -801,13 +803,13 @@
         'href': getURL({ 'function': 'guerrillaPack', 'lang': GlobalURLList.lang }),
         'title': 'guerrillaPack',
       }),
-      createElement('a', '|')
+      createElement('a', '|'),
       /*/升级工具-无效功能
-    createElement('a', TextResource['CharacterLevelUpLabel'], {
-      'href': getURL({ 'function': 'levelHelper', 'lang': GlobalURLList.lang }),
-      'title': 'levelHelper',
-    }),
-    createElement('a', '|')*/
+      createElement('a', TextResource['CharacterLevelUpLabel'], {
+        'href': getURL({ 'function': 'levelHelper', 'lang': GlobalURLList.lang }),
+        'title': 'levelHelper',
+      }),
+      createElement('a', '|')*/
     );
     //取消超链接
     document.querySelector(`[title="${GlobalURLList.function}"]`)?.removeAttribute('href');
@@ -851,9 +853,9 @@
         break;
       }
       /*case 'levelHelper': {
-      await levelHelper();
-      break;
-    }*/
+        await levelHelper();
+        break;
+      }*/
       default: {
       }
     }
@@ -908,37 +910,37 @@
     const divSelect = document.body.appendChild(createElement('div', '', 'selectpanel'));
     //选择栏样式
     document.querySelector('style').append(`
-  #selectpanel {
-    width: 700px;
-    display: inline-block;
-    vertical-align: top;
-  }
-  #selectpanel > p {
-    text-align: center;
-  }
-  #selectpanel a {
-    display: inline-block;
-  }
-  #selectpanel  a:nth-child(1) {
-    width: 75px;
-    text-align: left;
-  }
-  #selectpanel  a:nth-child(2) {
-    width: 25px;
-  }
-  #selectpanel > p > :nth-last-child(1) {
-    width: calc(100% - 120px);
-  }
-  #selectpanel button {
-    width: 20%;
-  }
-  #selectpanel option {
-    display: none;
-  }
-  #selectpanel option.default {
-    display: inline;
-  }
-    `);
+    #selectpanel {
+      width: 700px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    #selectpanel > p {
+      text-align: center;
+    }
+    #selectpanel a {
+      display: inline-block;
+    }
+    #selectpanel  a:nth-child(1) {
+      width: 75px;
+      text-align: left;
+    }
+    #selectpanel  a:nth-child(2) {
+      width: 25px;
+    }
+    #selectpanel > p > :nth-last-child(1) {
+      width: calc(100% - 120px);
+    }
+    #selectpanel button {
+      width: 20%;
+    }
+    #selectpanel option {
+      display: none;
+    }
+    #selectpanel option.default {
+      display: inline;
+    }
+      `);
     //区域选择
     const pRegion = divSelect.appendChild(createElement('p', `<a>${LanguageTable['Region'][GlobalURLList.lang]}</a><a>:</a>`));
     if (!addRegion) {
@@ -1037,18 +1039,18 @@
       createElement(
         'style',
         `
-  #listGroup > option.R${RegionId} {
-    display: inline;
-  }
-  #listClass > option.static
-  ${GroupId == 'N' + RegionId ? '' : ',#listClass > option.dynamic'} {
-    display: inline;
-  }
-  #listWorld > ${ClassId > 0 ? 'option.global' : 'option.G' + GroupId} {
-    display: inline;
-  }
-        `
-      )
+    #listGroup > option.R${RegionId} {
+      display: inline;
+    }
+    #listClass > option.static
+    ${GroupId == 'N' + RegionId ? '' : ',#listClass > option.dynamic'} {
+      display: inline;
+    }
+    #listWorld > ${ClassId > 0 ? 'option.global' : 'option.G' + GroupId} {
+      display: inline;
+    }
+          `,
+      ),
     );
     setStorage(GlobalURLList.function + 'RegionId', RegionId);
     setStorage(GlobalURLList.function + 'GroupId', GroupId);
@@ -1058,17 +1060,17 @@
   //初始化内容
   function initContent() {
     document.querySelector('style').append(`
-thead > tr {
-  background: #aaf !important;
-}
-tbody > :nth-child(1) {
-  background: #e8e8e8;
-}
-tbody {
-  font-size: small;
-  font-weight: normal;
-}
-  `);
+  thead > tr {
+    background: #aaf !important;
+  }
+  tbody > :nth-child(1) {
+    background: #e8e8e8;
+  }
+  tbody {
+    font-size: small;
+    font-weight: normal;
+  }
+    `);
     while (document.body.childNodes.length > 7) {
       document.body.lastChild.remove();
     }
@@ -1110,13 +1112,13 @@ tbody {
     let nodeData = document.body.appendChild(
       createElement('div', '', {
         style: 'width: 100%;display: flex;flex-direction: column;flex-wrap: nowrap;',
-      })
+      }),
     );
     let uploadButton = nodeData.appendChild(
       createElement('input', '', {
         type: 'file',
         multiple: 'multiple',
-      })
+      }),
     );
     uploadButton.onchange = function () {
       for (let i = 0; i < this.files.length; i++) {
@@ -1148,39 +1150,39 @@ tbody {
     initContent();
     await initSelect();
     document.querySelector('style').append(`
-#guilds {
-  display: inline-block;
-  width: calc(100% - 820px);
-  text-align: center;
-}
-gvg-list {
-  display: block;
-  position: fixed;
-  top: 5%;
-  width: 200px;
-  height: 95%;
-}
-gvg-list#enermyList {
-  left: calc(50% + 650px);
-}
-gvg-list#friendList {
-  right: calc(50% + 650px);
-}
-gvg-list > h2 {
-  text-align: center;
-  margin: 0px;
-}
-gvg-list > div {
-  height: calc(100% - 28px);
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  background: rgb(255, 127, 127);
-}
-data {
-  display: block;
-  width: 100%;
-}
-  `);
+  #guilds {
+    display: inline-block;
+    width: calc(100% - 820px);
+    text-align: center;
+  }
+  gvg-list {
+    display: block;
+    position: fixed;
+    top: 5%;
+    width: 200px;
+    height: 95%;
+  }
+  gvg-list#enermyList {
+    left: calc(50% + 650px);
+  }
+  gvg-list#friendList {
+    right: calc(50% + 650px);
+  }
+  gvg-list > h2 {
+    text-align: center;
+    margin: 0px;
+  }
+  gvg-list > div {
+    height: calc(100% - 28px);
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    background: rgb(255, 127, 127);
+  }
+  data {
+    display: block;
+    width: 100%;
+  }
+    `);
     const divSelect = document.querySelector('#selectpanel');
     //插入公会列表面板
     divSelect.insertAdjacentElement('afterend', createElement('div', '', 'guilds'));
@@ -1196,22 +1198,22 @@ data {
     const buttonGetServer = pConnect.appendChild(
       createElement('button', LanguageTable['FromServer'][GlobalURLList.lang], {
         name: 'Get',
-      })
+      }),
     );
     /*/开始监听按钮
-    const buttonConnectServer = pConnect.appendChild(
-      createElement('button', LanguageTable['StartUpdate'][GlobalURLList.lang], {
-        name: 'Connect',
-        disabled: 'true',
-      })
-    );
-    //关闭监听按钮
-    const buttonDisconnectServer = pConnect.appendChild(
-      createElement('button', LanguageTable['CloseUpdate'][GlobalURLList.lang], {
-        name: 'Disconnect',
-        disabled: 'true',
-      })
-    );*/
+      const buttonConnectServer = pConnect.appendChild(
+        createElement('button', LanguageTable['StartUpdate'][GlobalURLList.lang], {
+          name: 'Connect',
+          disabled: 'true',
+        })
+      );
+      //关闭监听按钮
+      const buttonDisconnectServer = pConnect.appendChild(
+        createElement('button', LanguageTable['CloseUpdate'][GlobalURLList.lang], {
+          name: 'Disconnect',
+          disabled: 'true',
+        })
+      );*/
     /*初始化数据栏*/
     document.body.append(createElement('data', ''));
     /*初始化世界选择*/
@@ -1367,133 +1369,133 @@ data {
       }
     };
     /*/开始监听
-    buttonConnectServer.onclick = () => {
-      const RegionId = getStorage(GlobalURLList.function + 'RegionId');
-      const GroupId = getStorage(GlobalURLList.function + 'GroupId');
-      const ClassId = getStorage(GlobalURLList.function + 'ClassId');
-      const WorldId = getStorage(GlobalURLList.function + 'WorldId');
-      if (WorldId == -1) {
-        alert('未选择世界');
-        return;
-      }
-      SocketGvG = new WebSocket('wss://api.mentemori.icu/gvg');
-      SocketGvG.binaryType = 'arraybuffer';
-      SocketGvG.onopen = async () => {
-        buttonConnectServer.setAttribute('disabled', 'true');
-        buttonDisconnectServer.removeAttribute('disabled');
-        await loginAccount();
-        const StreamID = {
-          WorldId: (ClassId == 0) * WorldId, //
-          ClassId: ClassId * 1,
-          GroupId: (ClassId != 0) * GroupId,
-          BlockId: (ClassId != 0) * WorldId,
-          CastleId: 0,
+      buttonConnectServer.onclick = () => {
+        const RegionId = getStorage(GlobalURLList.function + 'RegionId');
+        const GroupId = getStorage(GlobalURLList.function + 'GroupId');
+        const ClassId = getStorage(GlobalURLList.function + 'ClassId');
+        const WorldId = getStorage(GlobalURLList.function + 'WorldId');
+        if (WorldId == -1) {
+          alert('未选择世界');
+          return;
+        }
+        SocketGvG = new WebSocket('wss://api.mentemori.icu/gvg');
+        SocketGvG.binaryType = 'arraybuffer';
+        SocketGvG.onopen = async () => {
+          buttonConnectServer.setAttribute('disabled', 'true');
+          buttonDisconnectServer.removeAttribute('disabled');
+          await loginAccount();
+          const StreamID = {
+            WorldId: (ClassId == 0) * WorldId, //
+            ClassId: ClassId * 1,
+            GroupId: (ClassId != 0) * GroupId,
+            BlockId: (ClassId != 0) * WorldId,
+            CastleId: 0,
+          };
+          const _getGuildWar = await getGuildWar(StreamID.ClassId, StreamID.WorldId, StreamID.GroupId);
+          let Match = _getGuildWar?.data;
+          if (Match) {
+            let GuildList = [];
+            for (let i in Match.guilds) {
+              GuildList.push(i);
+            }
+            await fillMap(Match.castles, GuildList);
+            sendData(SocketGvG, StreamID);
+            LogCastleList = { 1: 50, 2: 50, 3: 50, 4: 50, 5: 50, 6: 50, 7: 50, 8: 50, 9: 50, 10: 50, 11: 50, 12: 50, 13: 50, 14: 50, 15: 50, 16: 50, 17: 50, 18: 50, 19: 50, 20: 50, 21: 50 };
+            LogCastle();
+          } else {
+            alert('无法获取战斗信息');
+            SocketGvG.close(1000, 'User Stop');
+          }
         };
-        const _getGuildWar = await getGuildWar(StreamID.ClassId, StreamID.WorldId, StreamID.GroupId);
-        let Match = _getGuildWar?.data;
-        if (Match) {
-          let GuildList = [];
-          for (let i in Match.guilds) {
-            GuildList.push(i);
-          }
-          await fillMap(Match.castles, GuildList);
-          sendData(SocketGvG, StreamID);
-          LogCastleList = { 1: 50, 2: 50, 3: 50, 4: 50, 5: 50, 6: 50, 7: 50, 8: 50, 9: 50, 10: 50, 11: 50, 12: 50, 13: 50, 14: 50, 15: 50, 16: 50, 17: 50, 18: 50, 19: 50, 20: 50, 21: 50 };
-          LogCastle();
-        } else {
-          alert('无法获取战斗信息');
-          SocketGvG.close(1000, 'User Stop');
-        }
-      };
-      SocketGvG.onmessage = async (e) => {
-        const view = new DataView(e.data);
-        let index = 0;
-        while (index < view.byteLength) {
-          let data = getStreamId(view, index);
-          const StreamId = data.value;
-          index = data.offset;
-          switch (StreamId.CastleId) {
-            case 0: {
-              data = getGuild(view, index, StreamId.WorldId);
-              const Guild = data.value;
-              break;
-            }
-            case 31: {
-              data = getPlayer(view, index, StreamId.WorldId);
-              let Player = data.value;
-              console.log(Player);
-              break;
-            }
-            case 30: {
-              data = getAttacker(view, index, StreamId.WorldId);
-              let Attacker = data.value;
-              console.log(Attacker);
-              break;
-            }
-            case 29: {
-              break;
-            }
-            case 28: {
-              data = getLastLoginTime(view, index, StreamId.WorldId);
-              let LastLoginTime = data.value;
-              console.log(LastLoginTime);
-              break;
-            }
-            case 27: {
-              break;
-            }
-            case 26: {
-              break;
-            }
-            case 25: {
-              break;
-            }
-            case 24: {
-              break;
-            }
-            case 23: {
-              break;
-            }
-            case 22: {
-              break;
-            }
-            default: {
-              data = getCastle(view, index, StreamId.WorldId);
-              let Castle = data.value;
-              Castle.CastleId = StreamId.CastleId;
-              changeCastle(Castle);
-              const Now = new Date();
-              const Time = (Now.getHours() * 60 + Now.getMinutes()) * 60 + Now.getSeconds();
-              if (Time >= 74700 && Time <= 78300) {
-                LogCastleList[StreamId.CastleId]++;
+        SocketGvG.onmessage = async (e) => {
+          const view = new DataView(e.data);
+          let index = 0;
+          while (index < view.byteLength) {
+            let data = getStreamId(view, index);
+            const StreamId = data.value;
+            index = data.offset;
+            switch (StreamId.CastleId) {
+              case 0: {
+                data = getGuild(view, index, StreamId.WorldId);
+                const Guild = data.value;
+                break;
               }
-              break;
+              case 31: {
+                data = getPlayer(view, index, StreamId.WorldId);
+                let Player = data.value;
+                console.log(Player);
+                break;
+              }
+              case 30: {
+                data = getAttacker(view, index, StreamId.WorldId);
+                let Attacker = data.value;
+                console.log(Attacker);
+                break;
+              }
+              case 29: {
+                break;
+              }
+              case 28: {
+                data = getLastLoginTime(view, index, StreamId.WorldId);
+                let LastLoginTime = data.value;
+                console.log(LastLoginTime);
+                break;
+              }
+              case 27: {
+                break;
+              }
+              case 26: {
+                break;
+              }
+              case 25: {
+                break;
+              }
+              case 24: {
+                break;
+              }
+              case 23: {
+                break;
+              }
+              case 22: {
+                break;
+              }
+              default: {
+                data = getCastle(view, index, StreamId.WorldId);
+                let Castle = data.value;
+                Castle.CastleId = StreamId.CastleId;
+                changeCastle(Castle);
+                const Now = new Date();
+                const Time = (Now.getHours() * 60 + Now.getMinutes()) * 60 + Now.getSeconds();
+                if (Time >= 74700 && Time <= 78300) {
+                  LogCastleList[StreamId.CastleId]++;
+                }
+                break;
+              }
             }
+            index = data.offset;
           }
-          index = data.offset;
-        }
-      };
-      SocketGvG.error = (e) => {
-        console.log('WebSocket error');
-      };
-      SocketGvG.onclose = (e) => {
-        if (e.code == 1000) {
-          console.log('Connection closed, User Stop');
-          buttonDisconnectServer.setAttribute('disabled', 'true');
-          buttonConnectServer.removeAttribute('disabled');
-        } else {
-          console.log('Connection closed, retrying in 5s');
-          setTimeout(() => {
+        };
+        SocketGvG.error = (e) => {
+          console.log('WebSocket error');
+        };
+        SocketGvG.onclose = (e) => {
+          if (e.code == 1000) {
+            console.log('Connection closed, User Stop');
+            buttonDisconnectServer.setAttribute('disabled', 'true');
             buttonConnectServer.removeAttribute('disabled');
-            buttonConnectServer.click();
-          }, 5000);
-        }
+          } else {
+            console.log('Connection closed, retrying in 5s');
+            setTimeout(() => {
+              buttonConnectServer.removeAttribute('disabled');
+              buttonConnectServer.click();
+            }, 5000);
+          }
+        };
       };
-    };
-    //关闭监听
-    buttonDisconnectServer.onclick = () => {
-      SocketGvG.close(1000, 'User Stop');
-    };*/
+      //关闭监听
+      buttonDisconnectServer.onclick = () => {
+        SocketGvG.close(1000, 'User Stop');
+      };*/
   }
   //生成动作文件
   async function actionMaker() {
@@ -1504,35 +1506,35 @@ data {
     const divSelect = document.body.appendChild(createElement('div', '', 'selectpanel'));
     //选择栏样式
     document.querySelector('style').append(`
-#selectpanel {
-  width: 700px;
-  display: inline-block;
-  vertical-align: top;
-}
-#selectpanel > p {
-  text-align: center;
-}
-#selectpanel a {
-  display: inline-block;
-}
-#selectpanel a:nth-child(1) {
-  width: 75px;
-  text-align: left;
-}
-#selectpanel a:nth-child(2) {
-  width: 25px;
-}
-#selectpanel a:nth-child(3) {
-  width: calc(100% - 120px);
-}
-#selectpanel select {
-  width: calc(100% - 120px);
-}
-data {
-  display: block;
-  width: 100%;
-}
-  `);
+  #selectpanel {
+    width: 700px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  #selectpanel > p {
+    text-align: center;
+  }
+  #selectpanel a {
+    display: inline-block;
+  }
+  #selectpanel a:nth-child(1) {
+    width: 75px;
+    text-align: left;
+  }
+  #selectpanel a:nth-child(2) {
+    width: 25px;
+  }
+  #selectpanel a:nth-child(3) {
+    width: calc(100% - 120px);
+  }
+  #selectpanel select {
+    width: calc(100% - 120px);
+  }
+  data {
+    display: block;
+    width: 100%;
+  }
+    `);
     //语言选择
     const pVoice = divSelect.appendChild(createElement('p', `<a>${TextResource['GameSettingVoiceLanguage']}</a><a>:</a>`));
     const selectVoice = pVoice.appendChild(createElement('select', ''));
@@ -1560,14 +1562,25 @@ data {
       createElement(
         'style',
         `
-character {
-  display: inline-block;
-  text-align: center;
-  border: black 2px solid;
-}
-      `
-      )
+  character {
+    display: inline-block;
+    text-align: center;
+    border: black 2px solid;
+    img {
+      height:128px;
+      width:128px;
+    }
+  }
+  #characterinfo {
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+        `,
+      ),
     );
+    let nodeinfo = document.body.appendChild(createElement('div', '', 'characterinfo'));
     for (let i in CharacterList) {
       const Character = CharacterList[i];
       const CharacterId = Character.Id;
@@ -1577,249 +1590,315 @@ character {
         createElement(
           'character',
           `
-        <div>No.${CharacterId}</div>
-        <img src="${GlobalConstant.assetURL}CharacterIcon/CHR_${ChraracterFile}/CHR_${ChraracterFile}_00_s.png">
-        <div>${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</div>
-        <div>${TextResource[Character.NameKey.slice(1, -1)]}</div>
-        `
-        )
+          <div>No.${CharacterId}</div>
+          <img src="${GlobalConstant.assetURL}CharacterIcon/CHR_${ChraracterFile}/CHR_${ChraracterFile}_00_s.png">
+          <div>${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</div>
+          <div>${TextResource[Character.NameKey.slice(1, -1)]}</div>
+          `,
+        ),
       );
       nodeCharacter.onclick = async () => {
-        console.log(CharacterVoice);
+        nodeinfo.innerHTML = '';
+        nodeinfo.appendChild(createElement('p', `<img src="${GlobalConstant.assetURL}/icon_element_${Character.ElementType}.png">${TextResource[Character.NameKey.slice(1, -1)]}`));
+        let SkillArray = (!Character.ActiveSkillIds ? [] : Character.ActiveSkillIds).concat(!Character.PassiveSkillIds ? [] : Character.PassiveSkillIds);
+        for (let i = 0; i < SkillArray.length; i++) {
+          const Skill = SkillList[SkillArray[i]];
+          let skillType = Skill.ActiveSkillInfos ? 'Active' : 'Passive';
+          let nodeSkillInfo = nodeinfo.appendChild(
+            createElement(
+              'p',
+              `
+                <div>${TextResource[Skill.NameKey.slice(1, -1)]}</div>
+                <div>
+                    <a>${TextResource['SkillCategory' + skillType]}</a>
+                    <a>⏳ ${Skill.SkillMaxCoolTime == undefined ? '-' : TextResource['CommonTurnFormat'].replace('{0}', Skill.SkillMaxCoolTime)}</a>
+                </div>
+              `,
+            ),
+          );
+          for (let j = 0; j < Skill[`${skillType}SkillInfos`].length; j++) {
+            const SkillInfo = Skill[`${skillType}SkillInfos`][j];
+            nodeSkillInfo.appendChild(
+              createElement(
+                'div',
+                `
+                  <skilllevel>${j == 0 ? '' : TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', j + 1)}</skilllevel>
+                  <skill>${TextResource[SkillInfo.DescriptionKey.slice(1, -1)]}</skill>
+                  <unlocked>${j == 0 ? '' : TextResource['DialogCharacterSkillLockSkillDescriptionFormat'].replace('{0}', '').replace('<color=#BE5742>', '').replace('{1}', SkillInfo.CharacterLevel)}</unlocked>
+                  `,
+              ),
+            );
+          }
+        }
+        nodeinfo.appendChild(createElement('hr'));
+        let EquipmentCompositeId = CharacterProfile[CharacterId].EquipmentCompositeId;
+        if (EquipmentCompositeId > 0) {
+          let Equipment = EquipmentList[EquipmentComposite[CharacterProfile[CharacterId].EquipmentCompositeId].EquipmentId];
+          while (Equipment.AfterLevelEvolutionEquipmentId > 0 || Equipment.AfterRarityEvolutionEquipmentId > 0) {
+            Equipment = EquipmentList[Equipment.AfterLevelEvolutionEquipmentId || Equipment.AfterRarityEvolutionEquipmentId];
+          }
+          let EquipmentSkill = EquipmentSkillList[Equipment.EquipmentExclusiveSkillDescriptionId];
+          let EquipmentExclusive = EquipmentExclusiveList[Equipment.ExclusiveEffectId];
+          console.log(EquipmentExclusive);
+          let nodeEquipment = nodeinfo.appendChild(createElement('p', `${TextResource[Equipment.NameKey.slice(1, -1)]}`));
+          nodeEquipment.appendChild(
+            createElement(
+              'p',
+              `
+            <div>SSR:${TextResource[EquipmentSkill.Description1Key.slice(1, -1)]}</div>
+            <div>UR :${TextResource[EquipmentSkill.Description2Key.slice(1, -1)]}</div>
+            <div>LR :${TextResource[EquipmentSkill.Description3Key.slice(1, -1)]}</div>`,
+            ),
+          );
+          let nodeEffect = nodeEquipment.appendChild(createElement('p', ''));
+          let EquipmentExclusives = (!EquipmentExclusive.BaseParameterChangeInfoList ? [] : EquipmentExclusive.BaseParameterChangeInfoList).concat(!EquipmentExclusive.BattleParameterChangeInfoList ? [] : EquipmentExclusive.BattleParameterChangeInfoList);
+          for (let k = 0; k < EquipmentExclusives.length; k++) {
+            let parameterExclusive = getParameter(EquipmentExclusives[k]);
+            nodeEffect.insertAdjacentHTML(
+              'beforeend',
+              `
+                <div>
+                  <effect_name>${TextResource[parameterExclusive.name]}</effect_name>
+                  <effect_value>${getNumber(parameterExclusive.value)}</effect_value>
+                </div>
+                `,
+            );
+          }
+        }
         /*const VoiceLanguage = selectVoice.value;
-      const Skill = [
-        SkillList[Character.ActiveSkillIds[0]], //
-        SkillList[Character.ActiveSkillIds[1]],
-      ];
-      let model = JSON.parse(Model);
-      model.FileReferences.Moc = `CHR_${ChraracterFile}.moc3`;
-      model.Physics = `CHR_${ChraracterFile}.physics3.json`;
-      model.PhysicsV2.File = `CHR_${ChraracterFile}.physics3.json`;
-      model.Motions = {
-        'Menu': [
+        const Skill = [
+          SkillList[Character.ActiveSkillIds[0]], //
+          SkillList[Character.ActiveSkillIds[1]],
+        ];
+        let model = JSON.parse(Model);
+        model.FileReferences.Moc = `CHR_${ChraracterFile}.moc3`;
+        model.Physics = `CHR_${ChraracterFile}.physics3.json`;
+        model.PhysicsV2.File = `CHR_${ChraracterFile}.physics3.json`;
+        model.Motions = {
+          'Menu': [
+            {
+              'Name': 'Menu',
+              'Text': TextResource['MenuTitle'],
+              'Choices': [
+                {
+                  'Text': TextResource['MenuMusicPlayerButton'],
+                  'NextMtn': 'Menu:PlayMusic',
+                },
+                {
+                  'Text': TextResource['CharacterDetailVoice'],
+                },
+                {
+                  'Text': TextResource['CharacterDetailMemory'],
+                },
+                {
+                  'Text': TextResource['DungeonBattleGridBattleTitle'],
+                },
+                {
+                  'Text': TextResource['DungeonBattleGridBattleTitle'],
+                },
+              ],
+            },
+            {
+              'Name': 'PlayMusic',
+              'Text': TextResource['MusicPlayerTabPlaylist'],
+              'Choices': [
+                {
+                  'Text': '日文（完整）',
+                  'NextMtn': 'Menu:PlayMusicJP',
+                },
+                {
+                  'Text': '英文（完整）',
+                  'NextMtn': 'Menu:PlayMusicUS',
+                },
+                {
+                  'Text': '日文（短）',
+                  'NextMtn': 'Menu:PlayShortJP',
+                },
+                {
+                  'Text': '英文（短）',
+                  'NextMtn': 'Menu:PlayShortUS',
+                },
+                {
+                  'Text': '停止',
+                  'NextMtn': 'Menu:PlayStop',
+                },
+              ],
+            },
+            {
+              'Name': 'PlayMusicJP',
+              'Sound': `Music/CHR_${ChraracterFile}_SONG_JP.wav`,
+              'SoundChannel': 1,
+              'SoundLoop': true,
+              'Interruptable': true,
+            },
+            {
+              'Name': 'PlayMusicUS',
+              'Sound': `Music/CHR_${ChraracterFile}_SONG_US.wav`,
+              'SoundChannel': 1,
+              'SoundLoop': true,
+              'Interruptable': true,
+            },
+            {
+              'Name': 'PlayShortJP',
+              'Sound': `Music/CHR_${ChraracterFile}_SONG_SHORT_JP.wav`,
+              'SoundChannel': 1,
+              'SoundLoop': true,
+              'Interruptable': true,
+            },
+            {
+              'Name': 'PlayShortUS',
+              'Sound': `Music/CHR_${ChraracterFile}_SONG_SHORT_US.wav`,
+              'SoundChannel': 1,
+              'SoundLoop': true,
+              'Interruptable': true,
+            },
+            {
+              'Name': 'PlayStop',
+              'Sound': 'Sound/SE_001001.wav',
+              'SoundChannel': 1,
+            },
+          ],
+          'Login': [
+            {
+              'Name': 'Login1',
+              'Text': TextResource['MenuTitle'],
+              'File': 'motions/Talk_Loop.anim.motion3.json',
+              'Sound': `Voice/${VoiceLanguage}/Common/CV_${VoiceLanguage}_${ChraracterFile}_Mypage_${'0'.repeat(3 - CharacterVoice.CharacterDetailVoiceUnLockedText1.Path.TimelineId.toString().length)}${CharacterVoice.CharacterDetailVoiceUnLockedText1.Path.TimelineId}.wav`,
+            },
+            {
+              'Name': 'Login2',
+              'Text': TextResource[CharacterVoice.CharacterDetailVoiceUnLockedText2.SubtitleKey.slice(1, -1)],
+              'File': 'motions/Talk_Loop.anim.motion3.json',
+              'Sound': `Voice/${VoiceLanguage}/Common/CV_${VoiceLanguage}_${ChraracterFile}_Mypage_${'0'.repeat(3 - CharacterVoice.CharacterDetailVoiceUnLockedText1.Path.TimelineId.toString().length)}${CharacterVoice.CharacterDetailVoiceUnLockedText2.Path.TimelineId}.wav`,
+            },
+          ],
+          'Talk': [
+            {
+              'Name': 'TalkStart',
+              'File': 'motions/Talk_In.anim.motion3.json',
+            },
+            {
+              'Name': 'TalkEnd',
+              'File': 'motions/Talk_Out.anim.motion3.json',
+            },
+            {
+              'Name': 'Talk1',
+              'File': 'motions/Talk_Loop.anim.motion3.json',
+              'Sound': `Voice/${VoiceLanguage}/Common/CV_${VoiceLanguage}_${ChraracterFile}_Mypage_002.wav`,
+            },
+          ],
+          'Battle': [
+            {
+              'Name': 'Skill1',
+              'Text': TextResource['MenuTitle'],
+              'File': 'motions/Skill.anim.motion3.json',
+              'Sound': `Voice/JP/Skill/CV_${VoiceLanguage}_SKILL_000105001_0.wav`,
+            },
+            {
+              'Name': 'Skill2',
+              'Text': TextResource['MenuTitle'],
+              'File': 'motions/Skill.anim.motion3.json',
+              'Sound': 'Voice/JP/Skill/CV_JP_SKILL_000105002_0.wav',
+            },
+            {
+              'Name': 'BattleStart',
+            },
+            {
+              'Name': 'BattleWin',
+            },
+            {
+              'Name': 'BattleLose',
+            },
+          ],
+        };
+        for (let j in CharacterVoice) {
+          const Voice = CharacterVoice[j];
+          const VoiceType={}
+          const GroupType={}
+        }
+        model.Expressions = [
           {
-            'Name': 'Menu',
-            'Text': TextResource['MenuTitle'],
-            'Choices': [
-              {
-                'Text': TextResource['MenuMusicPlayerButton'],
-                'NextMtn': 'Menu:PlayMusic',
-              },
-              {
-                'Text': TextResource['CharacterDetailVoice'],
-              },
-              {
-                'Text': TextResource['CharacterDetailMemory'],
-              },
-              {
-                'Text': TextResource['DungeonBattleGridBattleTitle'],
-              },
-              {
-                'Text': TextResource['DungeonBattleGridBattleTitle'],
-              },
-            ],
+            'Name': 'Angry',
+            'File': 'motions/Face_Angry.anim.motion3.json',
           },
           {
-            'Name': 'PlayMusic',
-            'Text': TextResource['MusicPlayerTabPlaylist'],
-            'Choices': [
-              {
-                'Text': '日文（完整）',
-                'NextMtn': 'Menu:PlayMusicJP',
-              },
-              {
-                'Text': '英文（完整）',
-                'NextMtn': 'Menu:PlayMusicUS',
-              },
-              {
-                'Text': '日文（短）',
-                'NextMtn': 'Menu:PlayShortJP',
-              },
-              {
-                'Text': '英文（短）',
-                'NextMtn': 'Menu:PlayShortUS',
-              },
-              {
-                'Text': '停止',
-                'NextMtn': 'Menu:PlayStop',
-              },
-            ],
+            'Name': 'Blushing',
+            'File': 'motions/Face_Blushing.anim.motion3.json',
           },
           {
-            'Name': 'PlayMusicJP',
-            'Sound': `Music/CHR_${ChraracterFile}_SONG_JP.wav`,
-            'SoundChannel': 1,
-            'SoundLoop': true,
-            'Interruptable': true,
+            'Name': 'Eye_Close',
+            'File': 'motions/Face_Eye_Close.anim.motion3.json',
           },
           {
-            'Name': 'PlayMusicUS',
-            'Sound': `Music/CHR_${ChraracterFile}_SONG_US.wav`,
-            'SoundChannel': 1,
-            'SoundLoop': true,
-            'Interruptable': true,
+            'Name': 'Eye_Grin',
+            'File': 'motions/Face_Eye_Grin.anim.motion3.json',
           },
           {
-            'Name': 'PlayShortJP',
-            'Sound': `Music/CHR_${ChraracterFile}_SONG_SHORT_JP.wav`,
-            'SoundChannel': 1,
-            'SoundLoop': true,
-            'Interruptable': true,
+            'Name': 'Glad',
+            'File': 'motions/Face_Glad.anim.motion3.json',
           },
           {
-            'Name': 'PlayShortUS',
-            'Sound': `Music/CHR_${ChraracterFile}_SONG_SHORT_US.wav`,
-            'SoundChannel': 1,
-            'SoundLoop': true,
-            'Interruptable': true,
+            'Name': 'Look_Down',
+            'File': 'motions/Face_Look_Down.anim.motion3.json',
           },
           {
-            'Name': 'PlayStop',
-            'Sound': 'Sound/SE_001001.wav',
-            'SoundChannel': 1,
-          },
-        ],
-        'Login': [
-          {
-            'Name': 'Login1',
-            'Text': TextResource['MenuTitle'],
-            'File': 'motions/Talk_Loop.anim.motion3.json',
-            'Sound': `Voice/${VoiceLanguage}/Common/CV_${VoiceLanguage}_${ChraracterFile}_Mypage_${'0'.repeat(3 - CharacterVoice.CharacterDetailVoiceUnLockedText1.Path.TimelineId.toString().length)}${CharacterVoice.CharacterDetailVoiceUnLockedText1.Path.TimelineId}.wav`,
+            'Name': 'Look_Left',
+            'File': 'motions/Face_Look_Left.anim.motion3.json',
           },
           {
-            'Name': 'Login2',
-            'Text': TextResource[CharacterVoice.CharacterDetailVoiceUnLockedText2.SubtitleKey.slice(1, -1)],
-            'File': 'motions/Talk_Loop.anim.motion3.json',
-            'Sound': `Voice/${VoiceLanguage}/Common/CV_${VoiceLanguage}_${ChraracterFile}_Mypage_${'0'.repeat(3 - CharacterVoice.CharacterDetailVoiceUnLockedText1.Path.TimelineId.toString().length)}${CharacterVoice.CharacterDetailVoiceUnLockedText2.Path.TimelineId}.wav`,
-          },
-        ],
-        'Talk': [
-          {
-            'Name': 'TalkStart',
-            'File': 'motions/Talk_In.anim.motion3.json',
+            'Name': 'Look_Right',
+            'File': 'motions/Face_Look_Right.anim.motion3.json',
           },
           {
-            'Name': 'TalkEnd',
-            'File': 'motions/Talk_Out.anim.motion3.json',
+            'Name': 'Look_Up',
+            'File': 'motions/Face_Look_Up.anim.motion3.json',
           },
           {
-            'Name': 'Talk1',
-            'File': 'motions/Talk_Loop.anim.motion3.json',
-            'Sound': `Voice/${VoiceLanguage}/Common/CV_${VoiceLanguage}_${ChraracterFile}_Mypage_002.wav`,
-          },
-        ],
-        'Battle': [
-          {
-            'Name': 'Skill1',
-            'Text': TextResource['MenuTitle'],
-            'File': 'motions/Skill.anim.motion3.json',
-            'Sound': `Voice/JP/Skill/CV_${VoiceLanguage}_SKILL_000105001_0.wav`,
+            'Name': 'Sad',
+            'File': 'motions/Face_Sad.anim.motion3.json',
           },
           {
-            'Name': 'Skill2',
-            'Text': TextResource['MenuTitle'],
-            'File': 'motions/Skill.anim.motion3.json',
-            'Sound': 'Voice/JP/Skill/CV_JP_SKILL_000105002_0.wav',
+            'Name': 'Smile',
+            'File': 'motions/Face_Smile.anim.motion3.json',
           },
           {
-            'Name': 'BattleStart',
+            'Name': 'Surprise',
+            'File': 'motions/Face_Surprise.anim.motion3.json',
           },
           {
-            'Name': 'BattleWin',
+            'Name': 'TearDrop',
+            'File': 'motions/Face_TearDrop.anim.motion3.json',
           },
           {
-            'Name': 'BattleLose',
+            'Name': 'Tears',
+            'File': 'motions/Face_Tears.anim.motion3.json',
           },
-        ],
-      };
-      for (let j in CharacterVoice) {
-        const Voice = CharacterVoice[j];
-        const VoiceType={}
-        const GroupType={}
-      }
-      model.Expressions = [
-        {
-          'Name': 'Angry',
-          'File': 'motions/Face_Angry.anim.motion3.json',
-        },
-        {
-          'Name': 'Blushing',
-          'File': 'motions/Face_Blushing.anim.motion3.json',
-        },
-        {
-          'Name': 'Eye_Close',
-          'File': 'motions/Face_Eye_Close.anim.motion3.json',
-        },
-        {
-          'Name': 'Eye_Grin',
-          'File': 'motions/Face_Eye_Grin.anim.motion3.json',
-        },
-        {
-          'Name': 'Glad',
-          'File': 'motions/Face_Glad.anim.motion3.json',
-        },
-        {
-          'Name': 'Look_Down',
-          'File': 'motions/Face_Look_Down.anim.motion3.json',
-        },
-        {
-          'Name': 'Look_Left',
-          'File': 'motions/Face_Look_Left.anim.motion3.json',
-        },
-        {
-          'Name': 'Look_Right',
-          'File': 'motions/Face_Look_Right.anim.motion3.json',
-        },
-        {
-          'Name': 'Look_Up',
-          'File': 'motions/Face_Look_Up.anim.motion3.json',
-        },
-        {
-          'Name': 'Sad',
-          'File': 'motions/Face_Sad.anim.motion3.json',
-        },
-        {
-          'Name': 'Smile',
-          'File': 'motions/Face_Smile.anim.motion3.json',
-        },
-        {
-          'Name': 'Surprise',
-          'File': 'motions/Face_Surprise.anim.motion3.json',
-        },
-        {
-          'Name': 'TearDrop',
-          'File': 'motions/Face_TearDrop.anim.motion3.json',
-        },
-        {
-          'Name': 'Tears',
-          'File': 'motions/Face_Tears.anim.motion3.json',
-        },
-        {
-          'Name': 'Unique1',
-          'File': 'motions/Face_Unique1.anim.motion3.json',
-        },
-        {
-          'Name': 'Unique',
-          'File': 'motions/Face_Unique2.anim.motion3.json',
-        },
-      ];
-      model.Controllers.KeyTrigger = {
-        'Items': [
           {
-            'Input': 77,
-            'DownMtn': 'Menu:Menu',
-            'UpMtn': 'Menu:Menu',
+            'Name': 'Unique1',
+            'File': 'motions/Face_Unique1.anim.motion3.json',
           },
-        ],
-        'Enabled': true,
-      };
-      model.Options.Name = ChraracterFile;
-      let file = new Blob([JSON.stringify(model)], { type: 'text/plain' });
-      let link = createElement('a', +'.json');
-      let url = window.URL.createObjectURL(file);
-      link.href = url;
-      link.download = `${ChraracterFile}.model3.json`;
-      nodeData.appendChild(link);*/
+          {
+            'Name': 'Unique',
+            'File': 'motions/Face_Unique2.anim.motion3.json',
+          },
+        ];
+        model.Controllers.KeyTrigger = {
+          'Items': [
+            {
+              'Input': 77,
+              'DownMtn': 'Menu:Menu',
+              'UpMtn': 'Menu:Menu',
+            },
+          ],
+          'Enabled': true,
+        };
+        model.Options.Name = ChraracterFile;
+        let file = new Blob([JSON.stringify(model)], { type: 'text/plain' });
+        let link = createElement('a', +'.json');
+        let url = window.URL.createObjectURL(file);
+        link.href = url;
+        link.download = `${ChraracterFile}.model3.json`;
+        nodeData.appendChild(link);*/
       };
     }
     FreezeNode.classList.add('hidden');
@@ -1854,184 +1933,184 @@ character {
     document.body.appendChild(createElement('h2', TextResource['GuerrillaPackName1']));
     //插入数据节点
     document.head.querySelector('style').append(`
-  data {
-    display: block;
-    width: 100%;
-    padding: 0px;
-    overflow-x: hidden;
-  }
-    `);
+    data {
+      display: block;
+      width: 100%;
+      padding: 0px;
+      overflow-x: hidden;
+    }
+      `);
     document.body.appendChild(createElement('data', ''));
     //插入数据
     showPack(CachePoint);
     /*const ListPT = {
-    'HKD': {
-      '80': 8,
-      '325': 28,
-      '500': 48,
-      '750': 68,
-      '1500': 148,
-      '3000': 298,
-      '5900': 588,
-    },
-    'JPY': {
-      '80': 160,
-      '325': 650,
-      '500': 1000,
-      '750': 1500,
-      '1500': 3000,
-      '3000': 6000,
-      '5900': 11800,
-    },
-    'NTD': {
-      '80': 33,
-      '325': 130,
-      '500': 190,
-      '750': 290,
-      '1500': 630,
-      '3000': 1260,
-      '5900': 2490,
-    },
-    'USD': {
-      '80': 0.99,
-      '325': 3.99,
-      '500': 5.99,
-      '750': 8.99,
-      '1500': 18.99,
-      '3000': 37.99,
-      '5900': 74.99,
-    },
-    'GBP': {
-      '80': 0.99,
-      '325': 3.99,
-      '500': 5.99,
-      '750': 7.99,
-      '1500': 16.99,
-      '3000': 32.99,
-      '5900': 64.99,
-    },
-    'EUR': {
-      '80': 0.99,
-      '325': 3.99,
-      '500': 6.99,
-      '750': 9.99,
-      '1500': 0,
-      '3000': 45.99,
-      '5900': 89.99,
-    },
-    'SGD': {
-      '80': 0.98,
-      '325': 5.98,
-      '500': 8.98,
-      '750': 12.98,
-      '1500': 26.98,
-      '3000': 55.98,
-      '5900': 104.98,
-    },
-  };*/
+      'HKD': {
+        '80': 8,
+        '325': 28,
+        '500': 48,
+        '750': 68,
+        '1500': 148,
+        '3000': 298,
+        '5900': 588,
+      },
+      'JPY': {
+        '80': 160,
+        '325': 650,
+        '500': 1000,
+        '750': 1500,
+        '1500': 3000,
+        '3000': 6000,
+        '5900': 11800,
+      },
+      'NTD': {
+        '80': 33,
+        '325': 130,
+        '500': 190,
+        '750': 290,
+        '1500': 630,
+        '3000': 1260,
+        '5900': 2490,
+      },
+      'USD': {
+        '80': 0.99,
+        '325': 3.99,
+        '500': 5.99,
+        '750': 8.99,
+        '1500': 18.99,
+        '3000': 37.99,
+        '5900': 74.99,
+      },
+      'GBP': {
+        '80': 0.99,
+        '325': 3.99,
+        '500': 5.99,
+        '750': 7.99,
+        '1500': 16.99,
+        '3000': 32.99,
+        '5900': 64.99,
+      },
+      'EUR': {
+        '80': 0.99,
+        '325': 3.99,
+        '500': 6.99,
+        '750': 9.99,
+        '1500': 0,
+        '3000': 45.99,
+        '5900': 89.99,
+      },
+      'SGD': {
+        '80': 0.98,
+        '325': 5.98,
+        '500': 8.98,
+        '750': 12.98,
+        '1500': 26.98,
+        '3000': 55.98,
+        '5900': 104.98,
+      },
+    };*/
   }
   /*/强制升级-无效功能,开树后升级功能被锁定
-async function levelHelper() {
-  initContent();
-  //初始化选择栏，
-  await initSelect(true, true, false, true);
-  //插入标题
-  document.body.appendChild(createElement('h2', TextResource['CommonFooterCharacterButtonLabel']));
-  //插入数据区
-  let nodeData = document.body.appendChild(createElement('data', ''));
-  document.querySelector('style').append(`
-data {
-  display: block;
-  width: 100%;
-}
-    `);
-  nodeData.append(
-    createElement(
-      'style',
-      `
-character {
-  display: inline-block;
-  text-align: center;
-  border: black 2px solid;
-}
-      `
-    )
-  );
-  //获取缓存
-  let CacheRegionId = getStorage(GlobalURLList.function + 'RegionId');
-  let CacheGroupId = getStorage(GlobalURLList.function + 'GroupId');
-  let CacheWorldId = getStorage(GlobalURLList.function + 'WorldId');
-  //写入缓存
-  const [selectRegion, selectGroup, selectClass, selectWorld] = [document.querySelector('#listRegion'), document.querySelector('#listGroup'), document.querySelector('#listClass'), document.querySelector('#listWorld')];
-  selectRegion.value = CacheRegionId;
-  selectGroup.value = CacheGroupId;
-  selectClass.value = 0;
-  selectWorld.value = CacheWorldId;
-  changeSelect(CacheRegionId, CacheGroupId, selectClass.value, CacheWorldId);
-  selectGroup.onchange = () => {
-    selectWorld.value = -1;
-    changeSelect(selectRegion.value, selectGroup.value, selectClass.value, -1);
-  };
-  //登录选项
-  const divSelect = document.querySelector('#selectpanel');
-  const pAccount = divSelect.appendChild(createElement('p', `<a>${TextResource['StripeControlTabTypePortal']}</a><a>:</a>`));
-  const aAccount = pAccount.appendChild(createElement('a', ''));
-  const buttonLogin = divSelect.appendChild(createElement('button', TextResource['TutorialAssetDownloadButton']));
-  buttonLogin.onclick = async () => {
-    nodeData.querySelectorAll('character').forEach((node) => {
-      node.remove();
-    });
-    let PlayerData = await loginAccount(true);
-    const Player = PlayerData.UserSyncData.UserStatusDtoInfo;
-    aAccount.innerHTML = `
-<div>${Player.Name}</div>
-<div>${Player.Rank}</div>
-<div>${Player.PlayerId}</div>
-      `;
-    const CardList = PlayerData.UserSyncData.UserCharacterDtoInfos;
-    const LevelLink = PlayerData.UserSyncData.UserLevelLinkMemberDtoInfos;
-    const LinkedLevel = PlayerData.UserSyncData.UserLevelLinkDtoInfo.PartyLevel;
-    const LevelLinkList = LevelLink.map((Card) => {
-      return Card.UserCharacterGuid;
-    });
-    for (const Card of CardList) {
-      const CharacterId = Card.CharacterId;
-      const Character = CharacterList[CharacterId];
-      const Rarity = CharacterRarity[Card.RarityFlags];
-      const ChraracterFile = `${'0'.repeat(6 - CharacterId.toString().length)}${CharacterId}`;
-      let nodeCharacter = nodeData.appendChild(
-        createElement(
-          'character',
-          `
-        <div>${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</div>
-        <div>${TextResource[Character.NameKey.slice(1, -1)]}</div>
-        <img src="${GlobalConstant.assetURL}CharacterIcon/CHR_${ChraracterFile}/CHR_${ChraracterFile}_00_s.png">
-        <div>${Rarity.rarity}${Rarity.plus ? '+' : ''}${'★'.repeat(Rarity.star)}</div>
-        <div>Lv.<a>${LevelLinkList.includes(Card.Guid) ? LinkedLevel + '|' : ''}</a><a id="level">${Card.Level}</a></div>
+  async function levelHelper() {
+    initContent();
+    //初始化选择栏，
+    await initSelect(true, true, false, true);
+    //插入标题
+    document.body.appendChild(createElement('h2', TextResource['CommonFooterCharacterButtonLabel']));
+    //插入数据区
+    let nodeData = document.body.appendChild(createElement('data', ''));
+    document.querySelector('style').append(`
+  data {
+    display: block;
+    width: 100%;
+  }
+      `);
+    nodeData.append(
+      createElement(
+        'style',
         `
-        )
-      );
-      let divButton = nodeCharacter.appendChild(createElement('div', ''));
-      let buttonLevelUp = divButton.appendChild(createElement('button', '+'));
-      let buttonReset = divButton.appendChild(createElement('button', '×'));
-      buttonLevelUp.onclick = async (event, minLevel = Card.Level) => {
-        //const Confirmed = confirm(TextResource['LevelLinkLevelUpMessage']);
-        const Confirmed = prompt(TextResource['LevelLinkLevelUpMessage']) * 1;
-        if (Confirmed > minLevel) {
-          let result = await bulkLevelUp(Card.Guid, Confirmed * 1);
-        }
-      };
-      buttonReset.onclick = async () => {
-        const Confirmed = confirm(TextResource['CharacterResetDialogMessage']);
-        if (Confirmed) {
-          let result = await resetLevel(Card.Guid);
-          console.log(JSON.stringify(result));
-        }
-      };
-    }
-  };
-  FreezeNode.classList.add('hidden');
-}*/
+  character {
+    display: inline-block;
+    text-align: center;
+    border: black 2px solid;
+  }
+        `
+      )
+    );
+    //获取缓存
+    let CacheRegionId = getStorage(GlobalURLList.function + 'RegionId');
+    let CacheGroupId = getStorage(GlobalURLList.function + 'GroupId');
+    let CacheWorldId = getStorage(GlobalURLList.function + 'WorldId');
+    //写入缓存
+    const [selectRegion, selectGroup, selectClass, selectWorld] = [document.querySelector('#listRegion'), document.querySelector('#listGroup'), document.querySelector('#listClass'), document.querySelector('#listWorld')];
+    selectRegion.value = CacheRegionId;
+    selectGroup.value = CacheGroupId;
+    selectClass.value = 0;
+    selectWorld.value = CacheWorldId;
+    changeSelect(CacheRegionId, CacheGroupId, selectClass.value, CacheWorldId);
+    selectGroup.onchange = () => {
+      selectWorld.value = -1;
+      changeSelect(selectRegion.value, selectGroup.value, selectClass.value, -1);
+    };
+    //登录选项
+    const divSelect = document.querySelector('#selectpanel');
+    const pAccount = divSelect.appendChild(createElement('p', `<a>${TextResource['StripeControlTabTypePortal']}</a><a>:</a>`));
+    const aAccount = pAccount.appendChild(createElement('a', ''));
+    const buttonLogin = divSelect.appendChild(createElement('button', TextResource['TutorialAssetDownloadButton']));
+    buttonLogin.onclick = async () => {
+      nodeData.querySelectorAll('character').forEach((node) => {
+        node.remove();
+      });
+      let PlayerData = await loginAccount(true);
+      const Player = PlayerData.UserSyncData.UserStatusDtoInfo;
+      aAccount.innerHTML = `
+  <div>${Player.Name}</div>
+  <div>${Player.Rank}</div>
+  <div>${Player.PlayerId}</div>
+        `;
+      const CardList = PlayerData.UserSyncData.UserCharacterDtoInfos;
+      const LevelLink = PlayerData.UserSyncData.UserLevelLinkMemberDtoInfos;
+      const LinkedLevel = PlayerData.UserSyncData.UserLevelLinkDtoInfo.PartyLevel;
+      const LevelLinkList = LevelLink.map((Card) => {
+        return Card.UserCharacterGuid;
+      });
+      for (const Card of CardList) {
+        const CharacterId = Card.CharacterId;
+        const Character = CharacterList[CharacterId];
+        const Rarity = CharacterRarity[Card.RarityFlags];
+        const ChraracterFile = `${'0'.repeat(6 - CharacterId.toString().length)}${CharacterId}`;
+        let nodeCharacter = nodeData.appendChild(
+          createElement(
+            'character',
+            `
+          <div>${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</div>
+          <div>${TextResource[Character.NameKey.slice(1, -1)]}</div>
+          <img src="${GlobalConstant.assetURL}CharacterIcon/CHR_${ChraracterFile}/CHR_${ChraracterFile}_00_s.png">
+          <div>${Rarity.rarity}${Rarity.plus ? '+' : ''}${'★'.repeat(Rarity.star)}</div>
+          <div>Lv.<a>${LevelLinkList.includes(Card.Guid) ? LinkedLevel + '|' : ''}</a><a id="level">${Card.Level}</a></div>
+          `
+          )
+        );
+        let divButton = nodeCharacter.appendChild(createElement('div', ''));
+        let buttonLevelUp = divButton.appendChild(createElement('button', '+'));
+        let buttonReset = divButton.appendChild(createElement('button', '×'));
+        buttonLevelUp.onclick = async (event, minLevel = Card.Level) => {
+          //const Confirmed = confirm(TextResource['LevelLinkLevelUpMessage']);
+          const Confirmed = prompt(TextResource['LevelLinkLevelUpMessage']) * 1;
+          if (Confirmed > minLevel) {
+            let result = await bulkLevelUp(Card.Guid, Confirmed * 1);
+          }
+        };
+        buttonReset.onclick = async () => {
+          const Confirmed = confirm(TextResource['CharacterResetDialogMessage']);
+          if (Confirmed) {
+            let result = await resetLevel(Card.Guid);
+            console.log(JSON.stringify(result));
+          }
+        };
+      }
+    };
+    FreezeNode.classList.add('hidden');
+  }*/
   /*优化功能*/
   //优化神殿
   async function temple() {
@@ -2065,7 +2144,7 @@ character {
       createElement('input', '', { 'type': 'checkbox', 'name': 'items' }),
       createElement('a', TextResource['ItemName11']),
       createElement('input', '', { 'type': 'checkbox', 'name': 'items' }),
-      createElement('a', TextResource['ItemName43'])
+      createElement('a', TextResource['ItemName43']),
     );
     let listCheckBox = document.querySelectorAll('[name="items"]');
     for (let i = 0; i < listCheckBox.length; i++) {
@@ -2076,11 +2155,11 @@ character {
     document.body.appendChild(createElement('h2', TextResource['CommonHeaderLocalRaidLabel']));
     //插入数据节点
     document.head.querySelector('style').append(`
-  data {
-    display: block;
-    width: 100%;
-  }
-    `);
+    data {
+      display: block;
+      width: 100%;
+    }
+      `);
     document.body.appendChild(createElement('data', ''));
     //插入数据
     await fillTemple();
@@ -2098,14 +2177,14 @@ character {
     //插入数据栏
     document.body.appendChild(createElement('data', ''));
     document.querySelector('style').append(`
-  data {
-    display: flex;
-    position: relative;
-    width: 100%;
-    padding: 0px;
-    justify-content: space-between;
-  }
-    `);
+    data {
+      display: flex;
+      position: relative;
+      width: 100%;
+      padding: 0px;
+      justify-content: space-between;
+    }
+      `);
     //获取缓存
     let CacheRegionId = getStorage(GlobalURLList.function + 'RegionId');
     let CacheGroupId = getStorage(GlobalURLList.function + 'GroupId');
@@ -2136,31 +2215,31 @@ character {
       createElement(
         'p',
         `
-      <a>${TextResource['GuildMemberRecruitSearchTab']}GUID</a>
-      <input type="text" size="36" name="guid">
-      <input type="button" value="${TextResource['GuildMemberRecruitSearchTab']}" name="clearparty">
-      `
+        <a>${TextResource['GuildMemberRecruitSearchTab']}GUID</a>
+        <input type="text" size="36" name="guid">
+        <input type="button" value="${TextResource['GuildMemberRecruitSearchTab']}" name="clearparty">
+        `,
       ),
       createElement(
         'p',
         `
-      <a>${TextResource['GuildMemberRecruitSearchOption']}</a>
-      <a name="payload"></a>
-      `
+        <a>${TextResource['GuildMemberRecruitSearchOption']}</a>
+        <a name="payload"></a>
+        `,
       ),
       createElement('hr', ''),
       createElement('h2', TextResource['BattleClearPartyTitle']),
-      createElement('data', '')
+      createElement('data', ''),
     );
     document.querySelector('style').append(`
-  data {
-    display: flex;
-    position: relative;
-    width: 100%;
-    padding: 0px;
-    justify-content: space-between;
-  }
-    `);
+    data {
+      display: flex;
+      position: relative;
+      width: 100%;
+      padding: 0px;
+      justify-content: space-between;
+    }
+      `);
     //插入功能
     document.querySelector('input[type="button"][name="clearparty"]').onclick = fillTeam;
     if (Id) {
@@ -2189,15 +2268,15 @@ character {
         3: 'TW', //台湾省，HK(香港区)/MO(澳门区)
         4: 'US', //美国，CA(加拿大)/PM(圣皮埃尔和密克隆)
         5: 'GB' /*英国，IS(冰岛)/IE(爱尔兰)/AZ(阿塞拜疆)/AL(阿尔巴尼亚)/AM(亚美尼亚)/
-                          AD(安道尔)/IT(意大利)/UA(乌克兰)/EE(爱沙尼亚)/AT(奥地利)/
-                          AX(奥兰)/GG(根西)/MK(北马其顿)/GR(希腊)/GL(格陵兰)/
-                          HR(克罗地亚)/SM(圣马力诺)/GI(直布罗陀)/JE(泽西)/GE(格鲁吉亚)/
-                          CH(瑞士)/SE(瑞典)/SJ(斯瓦尔巴和扬马延)/ES(西班牙)/SK(斯洛伐克)/
-                          SI(斯洛文尼亚)/RS(塞尔维亚)/CZ(捷克)/DK(丹麦)/DE(德国)/
-                          NO(挪威)/VA(梵蒂冈)/HU(匈牙利)/FI(芬兰)/FO(法罗群岛)/
-                          FR(法国)/BG(保加利亚)/BY(白俄罗斯)/PL(波兰)/BA(波黑)/
-                          PT(葡萄牙)/IM(马恩岛)/MC(摩纳哥)/MD(摩尔多瓦)/ME(黑山)/
-                          LV(拉脱维亚)/LT(立陶宛)/LI(列支敦士登)/RO(罗马尼亚)/LU(卢森堡)*/,
+                            AD(安道尔)/IT(意大利)/UA(乌克兰)/EE(爱沙尼亚)/AT(奥地利)/
+                            AX(奥兰)/GG(根西)/MK(北马其顿)/GR(希腊)/GL(格陵兰)/
+                            HR(克罗地亚)/SM(圣马力诺)/GI(直布罗陀)/JE(泽西)/GE(格鲁吉亚)/
+                            CH(瑞士)/SE(瑞典)/SJ(斯瓦尔巴和扬马延)/ES(西班牙)/SK(斯洛伐克)/
+                            SI(斯洛文尼亚)/RS(塞尔维亚)/CZ(捷克)/DK(丹麦)/DE(德国)/
+                            NO(挪威)/VA(梵蒂冈)/HU(匈牙利)/FI(芬兰)/FO(法罗群岛)/
+                            FR(法国)/BG(保加利亚)/BY(白俄罗斯)/PL(波兰)/BA(波黑)/
+                            PT(葡萄牙)/IM(马恩岛)/MC(摩纳哥)/MD(摩尔多瓦)/ME(黑山)/
+                            LV(拉脱维亚)/LT(立陶宛)/LI(列支敦士登)/RO(罗马尼亚)/LU(卢森堡)*/,
         6: 'CN', //所有不在上面的
       };
       const CountryCode = RegionList[RegionId];
@@ -2496,269 +2575,269 @@ character {
         createElement(
           'style',
           `
-  gvg-viewer {
-    display: block;
-    position: relative;
-    width: 1280px;
-    height: 1280px;
-    font-family: sans-serif;
-    background-size: cover;
-    background-image: url(assets/${Class}gvg.png);
-    padding: 0px;
-    margin: auto;
-  }
-  gvg-castle {
-    display: block;
-    position: absolute;
-    user-select: none;
-  }
-  gvg-status {
-    width: 164px;
-    height: 50px;
-    display: block;
-    position: absolute;
-    left: -82px;
-    right: -82px;
-    bottom: 43px;
-  }
-  gvg-attacker {
-    display: block;
-    width: 165px;
-    position: absolute;
-    text-align: center;
-    font-size: 16px;
-    opacity: 0.8;
-  }
-  gvg-status-icon-defense,
-  gvg-status-icon-offense {
-    display: block;
-    width: 32px;
-    height: 33px;
-    position: absolute;
-    text-align: center;
-    line-height: 37px;
-    font-size: 12px;
-    color: #fff;
-    background-size: cover;
-  }
-  gvg-status-icon-defense {
-    background-image: url(assets/icon_gvg_party_defense.png);
-  }
-  gvg-status-icon-offense {
-    background-image: url(assets/icon_gvg_party_offense.png);
-  }
-  gvg-status-bar-offense,
-  gvg-status-bar-defense {
-    display: block;
-    width: 90px;
-    height: 20px;
-    padding: 0 10px;
-    position: absolute;
-    font-size: 9px;
-    color: #fff;
-    background-size: cover;
-  }
-  gvg-status[state="common"] > gvg-attacker {
-    display: none;
-  }
-  gvg-status[state="common"] > gvg-status-icon-defense {
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-  }
-  gvg-status[state="common"] > gvg-status-icon-offense {
-    display: none;
-  }
-  gvg-status[state="common"] > gvg-status-bar-defense {
-    width: 131px;
-    height: 12px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 35px;
-    text-align: center;
-    line-height: 12px;
-    background-image: url(assets/base_s_08_blue.png);
-  }
-  gvg-status[state="common"] > gvg-status-bar-offense {
-    display: none;
-  }
-  gvg-status[state="active"] > gvg-status-icon-defense {
-    right: 0;
-    bottom: 0;
-  }
-  gvg-status[state="active"] > gvg-status-icon-offense {
-    left: 0;
-    bottom: 0;
-  }
-  gvg-status[state="active"] > gvg-status-bar-defense {
-    right: 25px;
-    bottom: 0;
-    text-align: right;
-    line-height: 24px;
-    background-image: url(assets/base_s_09_blue.png);
-  }
-  gvg-status[state="active"] > gvg-status-bar-offense {
-    left: 25px;
-    bottom: 10px;
-    text-align: left;
-    line-height: 16px;
-    background-image: url(assets/base_s_09_red.png);
-  }
-  gvg-status[state="counter"] > gvg-status-icon-defense {
-    left: 0;
-    bottom: 0;
-    background-image: url(${GlobalConstant.assetURL}icon_gvg_party_offense_counter.png);
-  }
-  gvg-status[state="counter"] > gvg-status-icon-offense {
-    right: 0;
-    bottom: 0;
-    background-image: url(assets/icon_gvg_party_defense.png);
-  }
-  gvg-status[state="counter"] > gvg-status-bar-defense {
-    left: 25px;
-    bottom: 10px;
-    text-align: left;
-    line-height: 16px;
-    background-image: url(assets/base_s_09_red.png);
-  }
-  gvg-status[state="counter"] > gvg-status-bar-offense {
-    right: 25px;
-    bottom: 0;
-    text-align: right;
-    line-height: 24px;
-    background-image: url(assets/base_s_09_blue.png);
-  }
-  gvg-ko-count-container {
-    position: absolute;
-    width: 76px;
-    left: -38px;
-    top: -19px;
-    display: block;
-    color: #eee;
-    text-shadow: red 0 0 30px red 0 0 5px;
-  }
-  gvg-ko-count {
-    display: block;
-    font-size: 26px;
-    text-align: center;
-    width: 100%;
-  }
-  gvg-ko-count-label:after {
-    content: 'KOs';
-    font-size: 14px;
-    position: absolute;
-    display: block;
-    text-align: center;
-    width: 100%;
-    height: 14px;
-    top: 26px;
-    left: 0;
-  }
-  gvg-castle-icon {
-    display: block;
-    position: absolute;
-    background-size: cover;
-  }
-  gvg-castle[church] > gvg-castle-icon {
-    left: -28px;
-    right: -28px;
-    bottom: -25px;
-    width: 56px;
-    height: 50px;
-    background-image: url(assets/Castle_0_0.png);
-  }
-  gvg-castle[castle] > gvg-castle-icon {
-    left: -31px;
-    right: -31px;
-    bottom: -33px;
-    width: 62px;
-    height: 67px;
-    background-image: url(assets/Castle_0_1.png);
-  }
-  gvg-castle[temple] > gvg-castle-icon {
-    left: -39px;
-    right: -39px;
-    bottom: -40px;
-    width: 78px;
-    height: 80px;
-    background-image: url(assets/Castle_0_2.png);
-  }
-  gvg-castle-name {
-    display: block;
-    position: absolute;
-    background-size: cover;
-    width: 140px;
-    height: 26px;
-    font-size: 9px;
-    text-align: center;
-  }
-  gvg-castle-name {
-    background-image: url(assets/${image}.png);
-    width: 140px;
-    height: 26px;
-    left: -70px;
-    right: -70px;
-    color: ${Class == 'local' ? '#473d3b' : 'white'};
-    line-height: 33px;
-  }
-  gvg-castle[church] > gvg-castle-name {
-    bottom: -45px;
-  }
-  gvg-castle[castle] > gvg-castle-name {
-    bottom: -50px;
-  }
-  gvg-castle[temple] > gvg-castle-name {
-    bottom: -58px;
-  }
-  gvg-castle[temple] > .gvg-castle-symbol {
-    left: -70px;
-    bottom: -58px;
-    width: 33px;
-    height: 29px;
-    position: absolute;
-    display: block;
-  }
-  gvg-castle[castle] > .gvg-castle-symbol {
-    left: -70px;
-    bottom: -50px;
-    width: 33px;
-    height: 29px;
-    position: absolute;
-    display: block;
-  }
-  gvg-castle[church] > .gvg-castle-symbol {
-    left: -70px;
-    bottom: -45px;
-    width: 33px;
-    height: 29px;
-    position: absolute;
-    display: block;
-  }
-  gvg-castle-hint {
-    left: -70px;
-    right: -70px;
-    background: rgba(32, 32, 32, 0.5);
-    width: 140px;
-    color: white;
-    position: absolute;
-    display: block;
-    font-size: 10px;
-    text-align: center;
-    word-break: break-word;
-  }
-  gvg-castle[temple] > gvg-castle-hint {
-    top: 58px;
-  }
-  gvg-castle[castle] > gvg-castle-hint {
-    top: 50px;
-  }
-  gvg-castle[church] > gvg-castle-hint {
-    top: 45px;
-  }
-          `
-        )
+    gvg-viewer {
+      display: block;
+      position: relative;
+      width: 1280px;
+      height: 1280px;
+      font-family: sans-serif;
+      background-size: cover;
+      background-image: url(assets/${Class}gvg.png);
+      padding: 0px;
+      margin: auto;
+    }
+    gvg-castle {
+      display: block;
+      position: absolute;
+      user-select: none;
+    }
+    gvg-status {
+      width: 164px;
+      height: 50px;
+      display: block;
+      position: absolute;
+      left: -82px;
+      right: -82px;
+      bottom: 43px;
+    }
+    gvg-attacker {
+      display: block;
+      width: 165px;
+      position: absolute;
+      text-align: center;
+      font-size: 16px;
+      opacity: 0.8;
+    }
+    gvg-status-icon-defense,
+    gvg-status-icon-offense {
+      display: block;
+      width: 32px;
+      height: 33px;
+      position: absolute;
+      text-align: center;
+      line-height: 37px;
+      font-size: 12px;
+      color: #fff;
+      background-size: cover;
+    }
+    gvg-status-icon-defense {
+      background-image: url(assets/icon_gvg_party_defense.png);
+    }
+    gvg-status-icon-offense {
+      background-image: url(assets/icon_gvg_party_offense.png);
+    }
+    gvg-status-bar-offense,
+    gvg-status-bar-defense {
+      display: block;
+      width: 90px;
+      height: 20px;
+      padding: 0 10px;
+      position: absolute;
+      font-size: 9px;
+      color: #fff;
+      background-size: cover;
+    }
+    gvg-status[state="common"] > gvg-attacker {
+      display: none;
+    }
+    gvg-status[state="common"] > gvg-status-icon-defense {
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+    gvg-status[state="common"] > gvg-status-icon-offense {
+      display: none;
+    }
+    gvg-status[state="common"] > gvg-status-bar-defense {
+      width: 131px;
+      height: 12px;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 35px;
+      text-align: center;
+      line-height: 12px;
+      background-image: url(assets/base_s_08_blue.png);
+    }
+    gvg-status[state="common"] > gvg-status-bar-offense {
+      display: none;
+    }
+    gvg-status[state="active"] > gvg-status-icon-defense {
+      right: 0;
+      bottom: 0;
+    }
+    gvg-status[state="active"] > gvg-status-icon-offense {
+      left: 0;
+      bottom: 0;
+    }
+    gvg-status[state="active"] > gvg-status-bar-defense {
+      right: 25px;
+      bottom: 0;
+      text-align: right;
+      line-height: 24px;
+      background-image: url(assets/base_s_09_blue.png);
+    }
+    gvg-status[state="active"] > gvg-status-bar-offense {
+      left: 25px;
+      bottom: 10px;
+      text-align: left;
+      line-height: 16px;
+      background-image: url(assets/base_s_09_red.png);
+    }
+    gvg-status[state="counter"] > gvg-status-icon-defense {
+      left: 0;
+      bottom: 0;
+      background-image: url(${GlobalConstant.assetURL}icon_gvg_party_offense_counter.png);
+    }
+    gvg-status[state="counter"] > gvg-status-icon-offense {
+      right: 0;
+      bottom: 0;
+      background-image: url(assets/icon_gvg_party_defense.png);
+    }
+    gvg-status[state="counter"] > gvg-status-bar-defense {
+      left: 25px;
+      bottom: 10px;
+      text-align: left;
+      line-height: 16px;
+      background-image: url(assets/base_s_09_red.png);
+    }
+    gvg-status[state="counter"] > gvg-status-bar-offense {
+      right: 25px;
+      bottom: 0;
+      text-align: right;
+      line-height: 24px;
+      background-image: url(assets/base_s_09_blue.png);
+    }
+    gvg-ko-count-container {
+      position: absolute;
+      width: 76px;
+      left: -38px;
+      top: -19px;
+      display: block;
+      color: #eee;
+      text-shadow: red 0 0 30px red 0 0 5px;
+    }
+    gvg-ko-count {
+      display: block;
+      font-size: 26px;
+      text-align: center;
+      width: 100%;
+    }
+    gvg-ko-count-label:after {
+      content: 'KOs';
+      font-size: 14px;
+      position: absolute;
+      display: block;
+      text-align: center;
+      width: 100%;
+      height: 14px;
+      top: 26px;
+      left: 0;
+    }
+    gvg-castle-icon {
+      display: block;
+      position: absolute;
+      background-size: cover;
+    }
+    gvg-castle[church] > gvg-castle-icon {
+      left: -28px;
+      right: -28px;
+      bottom: -25px;
+      width: 56px;
+      height: 50px;
+      background-image: url(assets/Castle_0_0.png);
+    }
+    gvg-castle[castle] > gvg-castle-icon {
+      left: -31px;
+      right: -31px;
+      bottom: -33px;
+      width: 62px;
+      height: 67px;
+      background-image: url(assets/Castle_0_1.png);
+    }
+    gvg-castle[temple] > gvg-castle-icon {
+      left: -39px;
+      right: -39px;
+      bottom: -40px;
+      width: 78px;
+      height: 80px;
+      background-image: url(assets/Castle_0_2.png);
+    }
+    gvg-castle-name {
+      display: block;
+      position: absolute;
+      background-size: cover;
+      width: 140px;
+      height: 26px;
+      font-size: 9px;
+      text-align: center;
+    }
+    gvg-castle-name {
+      background-image: url(assets/${image}.png);
+      width: 140px;
+      height: 26px;
+      left: -70px;
+      right: -70px;
+      color: ${Class == 'local' ? '#473d3b' : 'white'};
+      line-height: 33px;
+    }
+    gvg-castle[church] > gvg-castle-name {
+      bottom: -45px;
+    }
+    gvg-castle[castle] > gvg-castle-name {
+      bottom: -50px;
+    }
+    gvg-castle[temple] > gvg-castle-name {
+      bottom: -58px;
+    }
+    gvg-castle[temple] > .gvg-castle-symbol {
+      left: -70px;
+      bottom: -58px;
+      width: 33px;
+      height: 29px;
+      position: absolute;
+      display: block;
+    }
+    gvg-castle[castle] > .gvg-castle-symbol {
+      left: -70px;
+      bottom: -50px;
+      width: 33px;
+      height: 29px;
+      position: absolute;
+      display: block;
+    }
+    gvg-castle[church] > .gvg-castle-symbol {
+      left: -70px;
+      bottom: -45px;
+      width: 33px;
+      height: 29px;
+      position: absolute;
+      display: block;
+    }
+    gvg-castle-hint {
+      left: -70px;
+      right: -70px;
+      background: rgba(32, 32, 32, 0.5);
+      width: 140px;
+      color: white;
+      position: absolute;
+      display: block;
+      font-size: 10px;
+      text-align: center;
+      word-break: break-word;
+    }
+    gvg-castle[temple] > gvg-castle-hint {
+      top: 58px;
+    }
+    gvg-castle[castle] > gvg-castle-hint {
+      top: 50px;
+    }
+    gvg-castle[church] > gvg-castle-hint {
+      top: 45px;
+    }
+            `,
+        ),
       );
       let viewer = nodeData.appendChild(createElement('gvg-viewer'));
       viewer.setAttribute(Class, '');
@@ -2769,7 +2848,7 @@ character {
         let status = castleNode.appendChild(
           createElement('gvg-status', '', {
             state: 'common',
-          })
+          }),
         );
         const NodeOffense = status.appendChild(createElement('gvg-status-bar-offense'));
         NodeOffense.onclick = (e) => {
@@ -2832,11 +2911,11 @@ character {
         kos.classList.add('hidden');
         kos.append(createElement('gvg-ko-count', 0), createElement('gvg-ko-count-label'));
         style.append(`
-  gvg-viewer[${Class}] gvg-castle[castle-id="${CastleId}"] {
-    left: ${castle.left};
-    top: ${castle.top};
-  }
-        `);
+    gvg-viewer[${Class}] gvg-castle[castle-id="${CastleId}"] {
+      left: ${castle.left};
+      top: ${castle.top};
+    }
+          `);
       }
     }
   }
@@ -2857,45 +2936,45 @@ character {
       createElement(
         'style',
         `
-  th,
-  td {
-    height: 24px;
-    border: 1px solid black;
-    text-align: center;
-  }
-  table {
-    width: 300px;
-    border-collapse: collapse;
-    display: inline-table;
-    vertical-align: top;
-  }
-  #guilds1 {
-    margin-left: 20px;
-  }
-  #guilds2 {
-    margin-right: 20px;
-  }
-  tr > * {
-    width: 25px;
-  }
-  tr > :nth-child(2) {
-    width: calc(100% - 25px);
-  }
-      `
-      )
+    th,
+    td {
+      height: 24px;
+      border: 1px solid black;
+      text-align: center;
+    }
+    table {
+      width: 300px;
+      border-collapse: collapse;
+      display: inline-table;
+      vertical-align: top;
+    }
+    #guilds1 {
+      margin-left: 20px;
+    }
+    #guilds2 {
+      margin-right: 20px;
+    }
+    tr > * {
+      width: 25px;
+    }
+    tr > :nth-child(2) {
+      width: calc(100% - 25px);
+    }
+        `,
+      ),
     );
     let textTable = `
-      <thead>
-        <tr>
-          <th>■</th>
-          <th>${TextResource['GuildName']}</th>
-          <th>${LanguageTable['Friendly'][GlobalURLList.lang]}</th>
-          <th>${LanguageTable['Neutral'][GlobalURLList.lang]}</th>
-          <th>${LanguageTable['Enermy'][GlobalURLList.lang]}</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    `;
+        <thead>
+          <tr>
+            <th>■</th>
+            <th>${TextResource['GuildName']}</th>
+            <th>${LanguageTable['Friendly'][GlobalURLList.lang]}</th>
+            <th>${LanguageTable['Neutral'][GlobalURLList.lang]}</th>
+            <th>${LanguageTable['Enermy'][GlobalURLList.lang]}</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
     divGuildList.appendChild(createElement('table', textTable));
     divGuildList.appendChild(createElement('table', textTable));
     if (GuildList) {
@@ -2915,7 +2994,7 @@ character {
           createElement('td', Guild.Name), //
           createElement('td', `<input type="radio" name="${Guid}" value="friendly"${Guild.Relation > 0 ? ' checked="true"' : ''}>`),
           createElement('td', `<input type="radio" name="${Guid}" value="neutral"${Guild.Relation == 0 ? ' checked="true"' : ''}>`),
-          createElement('td', `<input type="radio" name="${Guid}" value="enermy"${Guild.Relation < 0 ? ' checked="true"' : ''}>`)
+          createElement('td', `<input type="radio" name="${Guid}" value="enermy"${Guild.Relation < 0 ? ' checked="true"' : ''}>`),
         );
         listTable[count < GuildList.length / 2 ? 0 : 1].querySelector('tbody').append(nodeGuild);
         count++;
@@ -3001,18 +3080,18 @@ character {
       createElement(
         'style',
         `
-  gvg-castle[defense="${GuildId}"] gvg-castle-icon {
-    background-color: rgba(${Color}, 0.5);
-  }
-  gvg-castle[offense="${GuildId}"] gvg-attacker {
-    background-color: rgba(${Color}, 0.625);
-  }
-  tr[id="${GuildId}"] td:nth-child(1) {
-    color: rgba(${Color}, 1);
-  }
-        `,
-        `style${GuildId}`
-      )
+    gvg-castle[defense="${GuildId}"] gvg-castle-icon {
+      background-color: rgba(${Color}, 0.5);
+    }
+    gvg-castle[offense="${GuildId}"] gvg-attacker {
+      background-color: rgba(${Color}, 0.625);
+    }
+    tr[id="${GuildId}"] td:nth-child(1) {
+      color: rgba(${Color}, 1);
+    }
+          `,
+        `style${GuildId}`,
+      ),
     );
   }
   //战斗布局-修改公会
@@ -3033,19 +3112,19 @@ character {
       createElement('select', '', {
         castle: CastleID,
         target: target.tagName,
-      })
+      }),
     );
     selectGuild.options.add(
       createElement('option', TextResource[`${Class}GvgNpcGuildName${CastleID}`], {
         value: '0',
-      })
+      }),
     );
     for (let i = 0; i < trList.length; i++) {
       const tr = trList[i];
       selectGuild.options.add(
         createElement('option', tr.childNodes[1].innerHTML, {
           value: tr.id,
-        })
+        }),
       );
     }
     selectGuild.value = target.parentNode.parentNode.getAttribute(target.tagName.replace('GVG-STATUS-BAR-', ''));
@@ -3121,45 +3200,45 @@ character {
       createElement(
         'style',
         `
-  table {
-    display: inline-block;
-    vertical-align: top;
-    border: 2px solid black;
-  }
-  td,th {
-    text-align: center;
-    border: 1px solid black;
-  }
-  tbody img {
-    width: 48px;
-    height: 48px;
-    vertical-align: middle;
-  }
-  td > div {
-    display: inline-block;
-    vertical-align: middle;
-    align-content: center;
-    height: 60px;
-    width: 60px;
-  }
-  td > div > div {
-    position: relative;
-    top: -10px;
-  }
-      `
-      )
+    table {
+      display: inline-block;
+      vertical-align: top;
+      border: 2px solid black;
+    }
+    td,th {
+      text-align: center;
+      border: 1px solid black;
+    }
+    tbody img {
+      width: 48px;
+      height: 48px;
+      vertical-align: middle;
+    }
+    td > div {
+      display: inline-block;
+      vertical-align: middle;
+      align-content: center;
+      height: 60px;
+      width: 60px;
+    }
+    td > div > div {
+      position: relative;
+      top: -10px;
+    }
+        `,
+      ),
     );
     const ListPack = await getGuerrillaPack();
     /*
-    PlayerRankingTypePlayerRank
-    PlayerRankingTypeStage
-    PlayerRankingTypeTowerBattle
-    HelpHeadLine4500
-    ElementTowerRankingTypeBlue
-    ElementTowerRankingTypeRed
-    ElementTowerRankingTypeGreen
-    ElementTowerRankingTypeYellow
-    */
+      PlayerRankingTypePlayerRank
+      PlayerRankingTypeStage
+      PlayerRankingTypeTowerBattle
+      HelpHeadLine4500
+      ElementTowerRankingTypeBlue
+      ElementTowerRankingTypeRed
+      ElementTowerRankingTypeGreen
+      ElementTowerRankingTypeYellow
+      */
     const tableSettings = [
       {
         'id': 'Level',
@@ -3182,24 +3261,24 @@ character {
         createElement(
           'table',
           `
-      <thead>
-        <tr>
-          <th colspan="1000">${tableSetting.name}</th>
-        </tr>
-        <tr>
-          <th rowspan="2">${tableSetting.levelName}</th>
-          <th rowspan="2">${TextResource['ItemName1']}</th>
-          <th colspan="3"></th>
-        </tr>
-        <tr>
-          <th>${TextResource['ItemBoxTabMaterial']}1</th>
-          <th>${TextResource['ItemBoxTabMaterial']}2</th>
-          <th>${TextResource['ItemBoxTabMaterial']}3</th>
-        </tr>
-      </thead>
-      `,
-          tableSetting.id
-        )
+        <thead>
+          <tr>
+            <th colspan="1000">${tableSetting.name}</th>
+          </tr>
+          <tr>
+            <th rowspan="2">${tableSetting.levelName}</th>
+            <th rowspan="2">${TextResource['ItemName1']}</th>
+            <th colspan="3"></th>
+          </tr>
+          <tr>
+            <th>${TextResource['ItemBoxTabMaterial']}1</th>
+            <th>${TextResource['ItemBoxTabMaterial']}2</th>
+            <th>${TextResource['ItemBoxTabMaterial']}3</th>
+          </tr>
+        </thead>
+        `,
+          tableSetting.id,
+        ),
       );
       let tbody = table.appendChild(createElement('tbody', ''));
       for (let line in ListPack[tableSetting.id][`${point}PT`]) {
@@ -3233,36 +3312,36 @@ character {
       createElement(
         'table',
         `
-      <thead>
-        <tr>
-          <th colspan="1000">${TextResource['HelpHeadLine4500']}</th>
-        </tr>
-        <tr>
-          <th rowspan="2">${TextResource['RankingTowerBattleLabel']}</th>
-          <th rowspan="2">${TextResource['ItemName1']}</th>
-          <th colspan="3">${TextResource['ElementTowerRankingTypeBlue']}</th>
-          <th colspan="3">${TextResource['ElementTowerRankingTypeRed']}</th>
-          <th colspan="3">${TextResource['ElementTowerRankingTypeGreen']}</th>
-          <th colspan="3">${TextResource['ElementTowerRankingTypeYellow']}</th>
-        </tr>
-        <tr>
-          <th>${TextResource['ItemBoxTabMaterial']}1</th>
-          <th>${TextResource['ItemBoxTabMaterial']}2</th>
-          <th>${TextResource['ItemBoxTabMaterial']}3</th>
-          <th>${TextResource['ItemBoxTabMaterial']}1</th>
-          <th>${TextResource['ItemBoxTabMaterial']}2</th>
-          <th>${TextResource['ItemBoxTabMaterial']}3</th>
-          <th>${TextResource['ItemBoxTabMaterial']}1</th>
-          <th>${TextResource['ItemBoxTabMaterial']}2</th>
-          <th>${TextResource['ItemBoxTabMaterial']}3</th>
-          <th>${TextResource['ItemBoxTabMaterial']}1</th>
-          <th>${TextResource['ItemBoxTabMaterial']}2</th>
-          <th>${TextResource['ItemBoxTabMaterial']}3</th>
-        </tr>
-      </thead>
-      `,
-        'element'
-      )
+        <thead>
+          <tr>
+            <th colspan="1000">${TextResource['HelpHeadLine4500']}</th>
+          </tr>
+          <tr>
+            <th rowspan="2">${TextResource['RankingTowerBattleLabel']}</th>
+            <th rowspan="2">${TextResource['ItemName1']}</th>
+            <th colspan="3">${TextResource['ElementTowerRankingTypeBlue']}</th>
+            <th colspan="3">${TextResource['ElementTowerRankingTypeRed']}</th>
+            <th colspan="3">${TextResource['ElementTowerRankingTypeGreen']}</th>
+            <th colspan="3">${TextResource['ElementTowerRankingTypeYellow']}</th>
+          </tr>
+          <tr>
+            <th>${TextResource['ItemBoxTabMaterial']}1</th>
+            <th>${TextResource['ItemBoxTabMaterial']}2</th>
+            <th>${TextResource['ItemBoxTabMaterial']}3</th>
+            <th>${TextResource['ItemBoxTabMaterial']}1</th>
+            <th>${TextResource['ItemBoxTabMaterial']}2</th>
+            <th>${TextResource['ItemBoxTabMaterial']}3</th>
+            <th>${TextResource['ItemBoxTabMaterial']}1</th>
+            <th>${TextResource['ItemBoxTabMaterial']}2</th>
+            <th>${TextResource['ItemBoxTabMaterial']}3</th>
+            <th>${TextResource['ItemBoxTabMaterial']}1</th>
+            <th>${TextResource['ItemBoxTabMaterial']}2</th>
+            <th>${TextResource['ItemBoxTabMaterial']}3</th>
+          </tr>
+        </thead>
+        `,
+        'element',
+      ),
     );
     let tbodyElement = tableElement.appendChild(createElement('tbody', ''));
     let level = 0;
@@ -3272,7 +3351,7 @@ character {
         Object.keys(ListPack['Crimson'][`${point}PT`]),
         Object.keys(ListPack['Emerald'][`${point}PT`]),
         Object.keys(ListPack['Amber'][`${point}PT`]),
-        Object.keys(ListPack['Universal'][`${point}PT`])
+        Object.keys(ListPack['Universal'][`${point}PT`]),
       )
       .forEach((value) => {
         if (value * 1 > level) {
@@ -3358,46 +3437,46 @@ character {
       createElement(
         'style',
         `
-  table {
-    display: inline-block;
-    vertical-align: top;
-  }
-  th > div {
-    text-align: left;
-    word-break: keep-all;
-  }
-  thead th {
-    text-align: center;
-  }
-  tbody th {
-    width: 140px;
-  }
-  tbody img {
-    width: 32px;
-    height: 32px;
-    vertical-align: middle;
-  }
-  tbody > tr > :nth-child(1) {
-    width: 330px;
-    text-align: left;
-  }
-  tbody > tr > :nth-child(1) > div {
-    display: inline-block;
-    vertical-align: middle;
-    width: 215px;
-  }
-  tbody > tr > :nth-child(1) img {
-    width: 110px;
-    height: 68px;
-  }
-  div[name="banner"] {
-    width: 110px !important;
-  }
-  div[name="desc"] {
-    font-size: x-large;
-  }
-      `
-      )
+    table {
+      display: inline-block;
+      vertical-align: top;
+    }
+    th > div {
+      text-align: left;
+      word-break: keep-all;
+    }
+    thead th {
+      text-align: center;
+    }
+    tbody th {
+      width: 140px;
+    }
+    tbody img {
+      width: 32px;
+      height: 32px;
+      vertical-align: middle;
+    }
+    tbody > tr > :nth-child(1) {
+      width: 330px;
+      text-align: left;
+    }
+    tbody > tr > :nth-child(1) > div {
+      display: inline-block;
+      vertical-align: middle;
+      width: 215px;
+    }
+    tbody > tr > :nth-child(1) img {
+      width: 110px;
+      height: 68px;
+    }
+    div[name="banner"] {
+      width: 110px !important;
+    }
+    div[name="desc"] {
+      font-size: x-large;
+    }
+        `,
+      ),
     );
     const GroupId = getStorage(GlobalURLList.function + 'GroupId');
     if (GroupId != -1) {
@@ -3411,22 +3490,22 @@ character {
           createElement(
             'table',
             `
-              <thead>
-                <tr>
-                  <th colspan="4">
-                    <h3>${TextResource['TitleWarningListWorld']}:W${WorldId % 100}</h3>
-                  </th>
-                </tr>
-                <tr>
-                  <th name="LocalRaidLevel"></th>
-                  <th>${TextResource['CommonFirstRewardLabel']}${LanguageTable['Containfixed'][GlobalURLList.lang]}</th>
-                  <th>${TextResource['CommonFixedRewardLabel']}</th>
-                  <th>${TextResource['LocalRaidQuestEventRewardLabel']}</th>
-                </tr>
-              </thead>
-            `,
-            WorldId
-          )
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      <h3>${TextResource['TitleWarningListWorld']}:W${WorldId % 100}</h3>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th name="LocalRaidLevel"></th>
+                    <th>${TextResource['CommonFirstRewardLabel']}${LanguageTable['Containfixed'][GlobalURLList.lang]}</th>
+                    <th>${TextResource['CommonFixedRewardLabel']}</th>
+                    <th>${TextResource['LocalRaidQuestEventRewardLabel']}</th>
+                  </tr>
+                </thead>
+              `,
+            WorldId,
+          ),
         );
         let nodeTbody = table.appendChild(createElement('tbody', ''));
         for (let j = QuestArray.length - 1; j >= 0; j--) {
@@ -3441,21 +3520,21 @@ character {
             createElement(
               'tr',
               `
-            <th>
-              <div name="banner">
-                <img src="${GlobalConstant.assetURL}Banner/LocalRaid/RQB_${'0'.repeat(6 - QuestBannerId.length)}${QuestBannerId}.png">
-              </div>
-              <div name="desc">
-                <div>${TextResource[QuestNameId]}</div>
-                <div>${'☆'.repeat(Quest.Level > 5 ? 5 : Quest.Level)}${'★'.repeat(Quest.Level > 5 ? Quest.Level - 5 : 0)}</div>
-              </div>
-            </th>
-            <th name="first"></th>
-            <th name="fixed"></th>
-            <th name="event"></th>
-            `,
-              { 'banner': QuestBannerId }
-            )
+              <th>
+                <div name="banner">
+                  <img src="${GlobalConstant.assetURL}Banner/LocalRaid/RQB_${'0'.repeat(6 - QuestBannerId.length)}${QuestBannerId}.png">
+                </div>
+                <div name="desc">
+                  <div>${TextResource[QuestNameId]}</div>
+                  <div>${'☆'.repeat(Quest.Level > 5 ? 5 : Quest.Level)}${'★'.repeat(Quest.Level > 5 ? Quest.Level - 5 : 0)}</div>
+                </div>
+              </th>
+              <th name="first"></th>
+              <th name="fixed"></th>
+              <th name="event"></th>
+              `,
+              { 'banner': QuestBannerId },
+            ),
           );
           for (let k = Quest.FixedBattleReward.length - 1; k >= 0; k--) {
             const FixedBattleReward = Quest.FixedBattleReward[k];
@@ -3470,15 +3549,15 @@ character {
                 createElement(
                   'div',
                   `
-                  <img src="${Icon}" alt="${TextResource[Item.NameKey.slice(1, -1)]}">
-                  <a>×${
-                    (l == 'first' ? FirstBattleReward.ItemCount : 0) + //仅初次
-                    (l != 'event' ? FixedBattleReward.ItemCount : 0) + //初次与固定
-                    (l == 'event' ? Math.ceil(FixedBattleReward.ItemCount * 0.1) : 0) //仅增
-                  }</a>
-                  `,
-                  { 'item': isCoin }
-                )
+                    <img src="${Icon}" alt="${TextResource[Item.NameKey.slice(1, -1)]}">
+                    <a>×${
+                      (l == 'first' ? FirstBattleReward.ItemCount : 0) + //仅初次
+                      (l != 'event' ? FixedBattleReward.ItemCount : 0) + //初次与固定
+                      (l == 'event' ? Math.ceil(FixedBattleReward.ItemCount * 0.1) : 0) //仅增
+                    }</a>
+                    `,
+                  { 'item': isCoin },
+                ),
               );
             }
           }
@@ -3499,27 +3578,27 @@ character {
       createElement(
         'style',
         `
-  div[item="coin"] {
-    display: ${checkList[0] ? 'block' : 'none'};
-  }
-  tr[banner="${checkList[1] ? '1' : '0'}"] {
-    background-color: rgb(128, 255, 255);
-  }
-  tr[banner="${checkList[2] ? '2' : '0'}"] {
-    background-color: rgb(128, 255, 128);
-  }
-  tr[banner="${checkList[3] ? '3' : '0'}"] {
-    background-color: rgb(255, 128, 128);
-  }
-  tr[banner="${checkList[4] ? '4' : '0'}"] {
-    background-color: rgb(255, 128, 255);
-  }
-  tr[banner="${checkList[5] ? '5' : '0'}"] {
-    background-color: rgb(255, 255, 128);
-  }
-        `,
-        'styleItem'
-      )
+    div[item="coin"] {
+      display: ${checkList[0] ? 'block' : 'none'};
+    }
+    tr[banner="${checkList[1] ? '1' : '0'}"] {
+      background-color: rgb(128, 255, 255);
+    }
+    tr[banner="${checkList[2] ? '2' : '0'}"] {
+      background-color: rgb(128, 255, 128);
+    }
+    tr[banner="${checkList[3] ? '3' : '0'}"] {
+      background-color: rgb(255, 128, 128);
+    }
+    tr[banner="${checkList[4] ? '4' : '0'}"] {
+      background-color: rgb(255, 128, 255);
+    }
+    tr[banner="${checkList[5] ? '5' : '0'}"] {
+      background-color: rgb(255, 255, 128);
+    }
+          `,
+        'styleItem',
+      ),
     );
     setStorage('TempleCheckList', JSON.stringify(checkList));
   }
@@ -3533,649 +3612,649 @@ character {
       createElement(
         'style',
         `
-table {
-  display: inline-table;
-  vertical-align: top;
-}
-tbody tr > :nth-child(1) {
-  width: 20px;
-}
-th[name="player"] {
-  position: relative;
-  width: 150px;
-  text-align: left;
-}
-th[name='player'] > [name='world'] {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  font-size: x-large;
-}
-th[name='player'] > div[name="point"] {
-  display: flex;
-  justify-content: space-between;
-}
-th character {
-  display: block;
-  width: 79px;
-}
-icon {
-  display: inline-block;
-  position: relative;
-  width: 138px;
-  height: 138px;
-}
-character icon {
-  zoom: 50%;
-}
-icon > img {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  width: 128px;
-  height: 128px;
-  background-color: grey;
-  background-size: cover;
-}
-rarity {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  width: 138px;
-  height: 138px;
-  background-size: cover;
-}
-[rarity="N"] > icon > rarity {
-  background-image: url('assets/char_frame_n.png');
-}
-[rarity="R"] > icon > rarity {
-  background-image: url('assets/char_frame_r.png');
-}
-[rarity="SR"] > icon > rarity {
-  background-image: url('assets/char_frame_sr.png');
-}
-[rarity="SSR"] > icon > rarity {
-  background-image: url('assets/char_frame_ssr.png');
-}
-[rarity="UR"] > icon > rarity {
-  background-image: url('assets/char_frame_ur.png');
-}
-[rarity="LR"] > icon > rarity {
-  background-image: url('assets/char_frame_lr.png');
-}
-[rarity="S"] > icon > rarity {
-  background-image: url('${GlobalConstant.assetURL}/frame_common_s.png');
-}
-[rarity="A"] > icon > rarity {
-  background-image: url('${GlobalConstant.assetURL}/frame_common_a.png');
-}
-[rarity="B"] > icon > rarity {
-  background-image: url('${GlobalConstant.assetURL}/frame_common_b.png');
-}
-[rarity="C"] > icon > rarity {
-  background-image: url('${GlobalConstant.assetURL}/frame_common_c.png');
-}
-[rarity="D"] > icon > rarity {
-  background-image: url('${GlobalConstant.assetURL}/frame_common_d.png');
-}
-decoration {
-  display: none;
-  position: absolute;
-  right: 1px;
-  bottom: 1px;
-  width: 37px;
-  height: 37px;
-}
-[plus="true"] decoration {
-  display: block;
-}
-[rarity="R"] decoration {
-  background-image: url('${GlobalConstant.assetURL}/frame_decoration_rplus.png');
-}
-[rarity="SR"] decoration {
-  background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
-}
-[rarity="SSR"] decoration {
-  background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
-}
-[rarity="UR"] decoration {
-  background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
-}
-icon > level {
-  display: block;
-  position: absolute;
-  font-size: x-large;
-  font-weight: normal;
-  text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 2px 2px black, -2px -2px black, 2px -2px black, -2px 2px black;
-}
-character > icon > level {
-  right: 10px;
-  top: 5px;
-  color: powderblue;
-}
-stars {
-  position: absolute;
-  width: 100px;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: left;
-}
-stars > * {
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  background-size: cover;
-}
-[star="0"] stars > * {
-  display: none;
-}
-[star="1"] stars > :nth-child(n + 1) {
-  display: none;
-}
-[star="2"] stars > :nth-child(n + 2) {
-  display: none;
-}
-[star="3"] stars > :nth-child(n + 3) {
-  display: none;
-}
-[star="4"] stars > :last-child {
-  display: none;
-}
-star {
-  background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_1.png');
-}
-[star="6"] stars > :first-child {
-  background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
-}
-[star="7"] stars > :nth-child(-n + 2) {
-  background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
-}
-[star="8"] stars > :nth-child(-n + 3) {
-  background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
-}
-[star="9"] stars > :nth-child(-n + 4) {
-  background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
-}
-[star="10"] stars > * {
-  background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
-}
-element {
-  display: block;
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  width: 32px;
-  height: 32px;
-  background-size: cover;
-}
-[element="1"] element {
-  background-image: url('${GlobalConstant.assetURL}/icon_element_1.png');
-}
-[element="2"] element {
-  background-image: url('${GlobalConstant.assetURL}/icon_element_2.png');
-}
-[element="3"] element {
-  background-image: url('${GlobalConstant.assetURL}/icon_element_3.png');
-}
-[element="4"] element {
-  background-image: url('${GlobalConstant.assetURL}/icon_element_4.png');
-}
-[element="5"] element {
-  background-image: url('${GlobalConstant.assetURL}/icon_element_5.png');
-}
-[element="6"] element {
-  background-image: url('${GlobalConstant.assetURL}/icon_element_6.png');
-}
-[element="1"] {
-  background-color: #8080ff;
-}
-[element="2"] {
-  background-color: #ff8080;
-}
-[element="3"] {
-  background-color: #80ff80;
-}
-[element="4"] {
-  background-color: #ffff80;
-}
-[element="5"] {
-  background-color: #ffffff;
-}
-[element="6"] {
-  background-color: #000000;
-  color: white;
-}
-th[selected] character {
-  background-color: #80ffff !important;
-  color: black !important;
-  outline: 4px #ff80ff solid;
-}
-tr[selected] {
-  position: sticky;
-  top: 1vh;
-  bottom: 1vh;
-  z-index: 100;
-  outline: 4px #ff80ff solid;
-}
-info {
-  display: inline-flex;
-  justify-content: space-between;
-  position: sticky;
-  width: calc(100% - 600px);
-  height: 100vh;
-  top: 0vh;
-  margin-left: 10px;
-}
-info > div[name="equipment"] {
-  display: inline-grid;
-  grid-template-rows: 33% 33% 33%;
-  grid-template-columns: 49.5% 49.5%;
-  grid-auto-flow: column;
-  width: 66%;
-  height: 100%;
-  gap: 0.5% 1%;
-}
-equipment {
-  display: block;
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
-  border-width: 2px;
-  border-style: solid;
-  overflow-y: scroll;
-  scrollbar-width: none;
-}
-[rarity="D"] {
-  border-color: #805500;
-}
-[rarity="C"] {
-  border-color: #808080;
-}
-[rarity="B"] {
-  border-color: #808000;
-}
-[rarity="A"] {
-  border-color: #550080;
-}
-[rarity="S"] {
-  border-color: #800000;
-}
-[rarity="R"]{
-  border-color: #c0c0c0;
-}
-[rarity="SR"]{
-  border-color: #c0c000;
-}
-[rarity="SSR"]{
-  border-color: #8000c0;
-}
-[rarity="UR"]{
-  border-color: #c00000;
-}
-[rarity="LR"] {
-  border-color: #404040;
-}
-equipment > icon {
-  zoom: 50%;
-}
-equipment > icon > level {
-  left: 10px;
-  top: 5px;
-  color: white;
-}
-reinforcement {
-  display: block;
-  position: absolute;
-  right: 10px;
-  bottom: 5px;
-  color: palegoldenrod;
-  font-size: x-large;
-  font-weight: normal;
-  text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 2px 2px black, -2px -2px black, 2px -2px black, -2px 2px black;
-}
-desc {
-  display: inline-block;
-  vertical-align: top;
-}
-equipment desc {
-  width: calc(100% - 74px);
-}
-character desc {
-  width: calc(100% - 143px);
-  margin-left: 5px;
-}
-madel {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-size: cover;
-  vertical-align: top;
-}
-[quality="1"] madel {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_1.png');
-}
-[quality="2"] madel {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_2.png');
-}
-[quality="3"] madel {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_3.png');
-}
-[quality="4"] madel {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_4.png');
-}
-raritydesc {
-  display: inline-block;
-  color: #805500;
-  font-size: 18px;
-  width: 56px;
-  vertical-align: top;
-  text-align: center;
-}
-[rarity="C"] raritydesc {
-  color: #808080;
-}
-[rarity="B"] raritydesc {
-  color: #808000;
-}
-[rarity="A"] raritydesc {
-  color: #550080;
-}
-[rarity="S"] raritydesc {
-  color: #800000;
-}
-[rarity="R"] raritydesc{
-  color: #c0c0c0;
-}
-[rarity="SR"] raritydesc{
-  color: #c0c000;
-}
-[rarity="SSR"] raritydesc{
-  color: #8000c0;
-}
-[rarity="UR"] raritydesc{
-  color: #c00000;
-}
-[rarity="LR"] raritydesc {
-  color: #404040;
-}
-equipment desc name {
-  display: inline-block;
-  width: calc(100% - 80px);
-  font-size: 18px;
-}
-setname {
-  display: block;
-}
-equipment desc setname {
-  display: inline-block;
-  font-size: 16px;
-}
-equipment > desc > :nth-child(1) {
-  height: 46px;
-}
-category {
-  display: inline-block;
-  width: 21px;
-  height: 21px;
-  background-size: cover;
-  vertical-align: bottom;
-  margin: 0px 5px;
-}
-category[category="1_0"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_sniper_01.png');
-}
-category[category="1_1"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_warrior_01.png');
-}
-category[category="1_2"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_sorcerer_01.png');
-}
-category[category="2_0"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_sub_01.png');
-}
-category[category="3_0"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_gauntlet_01.png');
-}
-category[category="4_0"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_helmet_01.png');
-}
-category[category="5_0"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_armor_01.png');
-}
-category[category="6_0"] {
-  background-image: url('${GlobalConstant.assetURL}/icon_equipment_shoes_01.png');
-}
-parameter_type {
-  width: 100%;
-  display: block;
-  font-size: medium;
-}
-parameter_subtype {
-  width: 100%;
-  display: block;
-  font-size: small;
-}
-parameter_set {
-  width: 100%;
-  display: block;
-  font-size: x-small;
-}
-treasure {
-  display: inline-block;
-  width: 25%;
-  margin-left: 5px;
-}
-parameter {
-  display: inline-flex;
-  width: calc(50% - 10px);
-  margin: 0px 5px;
-  justify-content: space-between;
-}
-parameter > * {
-  display: inline-block;
-}
-parameter_set[type="sphere"] icon {
-  zoom: 25%;
-}
-sphere {
-  display: inline-block;
-  width: 25%;
-  vertical-align: top;
-  text-align: center;
-  font-size: xx-small;
-}
-sphere level {
-  font-size: xx-large;
-  color: white;
-}
-sphere name {
-  display: block;
-}
-info > div[name="character"] {
-  display: inline-block;
-  width: 33%;
-  height: calc(100% - 4px);
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  border-width: 2px;
-  border-style: solid;
-}
-div[name="character"] character {
-  display: block;
-  width: 100%;
-  background: none;
-  color: black;
-}
-div[name="character"] icon {
-  zoom: 75%;
-}
-job {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  vertical-align: bottom;
-  background-size: cover;
-  margin-right: 5px;
-}
-[job="1"] job {
-  background-image: url('${GlobalConstant.assetURL}/icon_job_warrior.png');
-}
-[job="2"] job {
-  background-image: url('${GlobalConstant.assetURL}/icon_job_sniper.png');
-}
-[job="4"] job {
-  background-image: url('${GlobalConstant.assetURL}/icon_job_sorcerer.png');
-}
-lore {
-  display: block;
-  width: 100%;
-  font-size: small;
-  height: 34px;
-}
-bp {
-  display: block;
-  width: 100%;
-}
-parameter_set[type="exclusive"] p {
-  margin-left: 5px;
-}
-parameter_set[type="exclusive"] effect {
-  color: grey;
-}
-skilllevel {
-  display: inline-block;
-  color: grey;
-}
-skill {
-  display: inline;
-  color: grey;
-}
-unlocked {
-  display: inline;
-  color: red !important;
-}
-parameter_set[type="exclusive"] > div {
-  margin-bottom: 2px;
-}
-parameter_set[type="exclusive"][unlock] effect,
-parameter_set[type="exclusive"][unlock][rarity="SSR"] [order="SSR"] *,
-parameter_set[type="exclusive"][unlock][rarity="UR"] [order="SSR"] *,
-parameter_set[type="exclusive"][unlock][rarity="UR"] [order="UR"] *,
-parameter_set[type="exclusive"][unlock][rarity="LR"] [order="SSR"] *,
-parameter_set[type="exclusive"][unlock][rarity="LR"] [order="UR"] *,
-parameter_set[type="exclusive"][unlock][rarity="LR"] [order="LR"] * {
-  color: black;
-}
-parameter_set[type="exclusive"][rarity="SSR"] [order="SSR"] unlocked,
-parameter_set[type="exclusive"][rarity="UR"] [order="SSR"] unlocked,
-parameter_set[type="exclusive"][rarity="UR"] [order="UR"] unlocked,
-parameter_set[type="exclusive"][rarity="LR"] [order="SSR"] unlocked,
-parameter_set[type="exclusive"][rarity="LR"] [order="UR"] unlocked,
-parameter_set[type="exclusive"][rarity="LR"] [order="LR"] unlocked {
-  display: none;
-}
-effect {
-  display: inline-flex;
-  width: 75%;
-  margin: 0px 5px;
-  justify-content: space-between;
-}
-effect > * {
-  display: inline-block;
-}
-parameter_set[type="set"] div {
-  color: grey;
-}
-parameter_set[type="set"] > div {
-  margin-bottom: 2px;
-}
-parameter_set[type="set"] > [count="2"] > div[require="2"],
-parameter_set[type="set"] > [count="3"] > div[require="2"],
-parameter_set[type="set"] > [count="4"] > div[require="2"],
-parameter_set[type="set"] > [count="5"] > div[require="2"],
-parameter_set[type="set"] > [count="6"] > div[require="2"],
-parameter_set[type="set"] > [count="4"] > div[require="4"],
-parameter_set[type="set"] > [count="5"] > div[require="4"],
-parameter_set[type="set"] > [count="6"] > div[require="4"],
-parameter_set[type="set"] > [count="6"] > div[require="6"] {
-  color: black;
-}
-parameter_set[type="potential"] > div {
-  margin-bottom: 2px;
-}
-parameter[main] {
-  visibility: hidden;
-}
-parameter_set[type="potential"][job="1"] [order="1"] parameter[main],
-parameter_set[type="potential"][job="2"] [order="2"] parameter[main],
-parameter_set[type="potential"][job="4"] [order="3"] parameter[main] {
-  visibility: visible;
-}
-parameter_set[type="skill"] {
-  margin-bottom: 5px;
-}
-parameter_set[type="skill"] skills {
-  display: flex;
-  justify-content: space-between;
-}
-parameter_set[type="skill"] icon {
-  width: 100px;
-  height: 100px;
-  zoom: 60%;
-}
-parameter_set[type="skill"] icon img {
-  height: 100px;
-  width: 100px;
-}
-parameter_set[type="skill"] icon level {
-  display: flex;
-  justify-content: center;
-  align-items: end;
-  height: 100%;
-  width: 100%;
-  font-size: xx-large;
-  color: white;
-}
-parameter_set[type="skill"] icon[level="0"] level {
-  background-color: rgba(0, 0, 0, 0.5);
-  align-items: center;
-}
-parameter_set[type="skill"] > div[type="icon"] {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin: 5px 0px;
-}
-parameter_set[type="skill"] icon[selected] {
-  outline: aqua 8px solid;
-}
-parameter_set[type="skill"] [order] a {
-  display: inline-block;
-}
-parameter_set[type="skill"] div[order] {
-  display: none;
-}
-parameter_set[type="skill"] div[order][selected] {
-  display: block;
-}
-parameter_set[type="skill"] div[order] > :nth-child(1) {
-  font-size: small;
-}
-parameter_set[type="skill"] div[order] > :nth-child(2) > :nth-child(1) {
-  width: 40%;
-}
-parameter_set[type="skill"] div[order] > div[unlock] > * {
-  color: black;
-}
-parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
-  display: none;
-}
-      `
-      )
+  table {
+    display: inline-table;
+    vertical-align: top;
+  }
+  tbody tr > :nth-child(1) {
+    width: 20px;
+  }
+  th[name="player"] {
+    position: relative;
+    width: 150px;
+    text-align: left;
+  }
+  th[name='player'] > [name='world'] {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: x-large;
+  }
+  th[name='player'] > div[name="point"] {
+    display: flex;
+    justify-content: space-between;
+  }
+  th character {
+    display: block;
+    width: 79px;
+  }
+  icon {
+    display: inline-block;
+    position: relative;
+    width: 138px;
+    height: 138px;
+  }
+  character icon {
+    zoom: 50%;
+  }
+  icon > img {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 128px;
+    height: 128px;
+    background-color: grey;
+    background-size: cover;
+  }
+  rarity {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 138px;
+    height: 138px;
+    background-size: cover;
+  }
+  [rarity="N"] > icon > rarity {
+    background-image: url('assets/char_frame_n.png');
+  }
+  [rarity="R"] > icon > rarity {
+    background-image: url('assets/char_frame_r.png');
+  }
+  [rarity="SR"] > icon > rarity {
+    background-image: url('assets/char_frame_sr.png');
+  }
+  [rarity="SSR"] > icon > rarity {
+    background-image: url('assets/char_frame_ssr.png');
+  }
+  [rarity="UR"] > icon > rarity {
+    background-image: url('assets/char_frame_ur.png');
+  }
+  [rarity="LR"] > icon > rarity {
+    background-image: url('assets/char_frame_lr.png');
+  }
+  [rarity="S"] > icon > rarity {
+    background-image: url('${GlobalConstant.assetURL}/frame_common_s.png');
+  }
+  [rarity="A"] > icon > rarity {
+    background-image: url('${GlobalConstant.assetURL}/frame_common_a.png');
+  }
+  [rarity="B"] > icon > rarity {
+    background-image: url('${GlobalConstant.assetURL}/frame_common_b.png');
+  }
+  [rarity="C"] > icon > rarity {
+    background-image: url('${GlobalConstant.assetURL}/frame_common_c.png');
+  }
+  [rarity="D"] > icon > rarity {
+    background-image: url('${GlobalConstant.assetURL}/frame_common_d.png');
+  }
+  decoration {
+    display: none;
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    width: 37px;
+    height: 37px;
+  }
+  [plus="true"] decoration {
+    display: block;
+  }
+  [rarity="R"] decoration {
+    background-image: url('${GlobalConstant.assetURL}/frame_decoration_rplus.png');
+  }
+  [rarity="SR"] decoration {
+    background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
+  }
+  [rarity="SSR"] decoration {
+    background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
+  }
+  [rarity="UR"] decoration {
+    background-image: url('${GlobalConstant.assetURL}/frame_decoration_srplus.png');
+  }
+  icon > level {
+    display: block;
+    position: absolute;
+    font-size: x-large;
+    font-weight: normal;
+    text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 2px 2px black, -2px -2px black, 2px -2px black, -2px 2px black;
+  }
+  character > icon > level {
+    right: 10px;
+    top: 5px;
+    color: powderblue;
+  }
+  stars {
+    position: absolute;
+    width: 100px;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: left;
+  }
+  stars > * {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    background-size: cover;
+  }
+  [star="0"] stars > * {
+    display: none;
+  }
+  [star="1"] stars > :nth-child(n + 1) {
+    display: none;
+  }
+  [star="2"] stars > :nth-child(n + 2) {
+    display: none;
+  }
+  [star="3"] stars > :nth-child(n + 3) {
+    display: none;
+  }
+  [star="4"] stars > :last-child {
+    display: none;
+  }
+  star {
+    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_1.png');
+  }
+  [star="6"] stars > :first-child {
+    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+  }
+  [star="7"] stars > :nth-child(-n + 2) {
+    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+  }
+  [star="8"] stars > :nth-child(-n + 3) {
+    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+  }
+  [star="9"] stars > :nth-child(-n + 4) {
+    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+  }
+  [star="10"] stars > * {
+    background-image: url('${GlobalConstant.assetURL}/icon_rarity_plus_star_2.png');
+  }
+  element {
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+  }
+  [element="1"] element {
+    background-image: url('${GlobalConstant.assetURL}/icon_element_1.png');
+  }
+  [element="2"] element {
+    background-image: url('${GlobalConstant.assetURL}/icon_element_2.png');
+  }
+  [element="3"] element {
+    background-image: url('${GlobalConstant.assetURL}/icon_element_3.png');
+  }
+  [element="4"] element {
+    background-image: url('${GlobalConstant.assetURL}/icon_element_4.png');
+  }
+  [element="5"] element {
+    background-image: url('${GlobalConstant.assetURL}/icon_element_5.png');
+  }
+  [element="6"] element {
+    background-image: url('${GlobalConstant.assetURL}/icon_element_6.png');
+  }
+  [element="1"] {
+    background-color: #8080ff;
+  }
+  [element="2"] {
+    background-color: #ff8080;
+  }
+  [element="3"] {
+    background-color: #80ff80;
+  }
+  [element="4"] {
+    background-color: #ffff80;
+  }
+  [element="5"] {
+    background-color: #ffffff;
+  }
+  [element="6"] {
+    background-color: #000000;
+    color: white;
+  }
+  th[selected] character {
+    background-color: #80ffff !important;
+    color: black !important;
+    outline: 4px #ff80ff solid;
+  }
+  tr[selected] {
+    position: sticky;
+    top: 1vh;
+    bottom: 1vh;
+    z-index: 100;
+    outline: 4px #ff80ff solid;
+  }
+  info {
+    display: inline-flex;
+    justify-content: space-between;
+    position: sticky;
+    width: calc(100% - 600px);
+    height: 100vh;
+    top: 0vh;
+    margin-left: 10px;
+  }
+  info > div[name="equipment"] {
+    display: inline-grid;
+    grid-template-rows: 33% 33% 33%;
+    grid-template-columns: 49.5% 49.5%;
+    grid-auto-flow: column;
+    width: 66%;
+    height: 100%;
+    gap: 0.5% 1%;
+  }
+  equipment {
+    display: block;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    border-width: 2px;
+    border-style: solid;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+  [rarity="D"] {
+    border-color: #805500;
+  }
+  [rarity="C"] {
+    border-color: #808080;
+  }
+  [rarity="B"] {
+    border-color: #808000;
+  }
+  [rarity="A"] {
+    border-color: #550080;
+  }
+  [rarity="S"] {
+    border-color: #800000;
+  }
+  [rarity="R"]{
+    border-color: #c0c0c0;
+  }
+  [rarity="SR"]{
+    border-color: #c0c000;
+  }
+  [rarity="SSR"]{
+    border-color: #8000c0;
+  }
+  [rarity="UR"]{
+    border-color: #c00000;
+  }
+  [rarity="LR"] {
+    border-color: #404040;
+  }
+  equipment > icon {
+    zoom: 50%;
+  }
+  equipment > icon > level {
+    left: 10px;
+    top: 5px;
+    color: white;
+  }
+  reinforcement {
+    display: block;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    color: palegoldenrod;
+    font-size: x-large;
+    font-weight: normal;
+    text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 2px 2px black, -2px -2px black, 2px -2px black, -2px 2px black;
+  }
+  desc {
+    display: inline-block;
+    vertical-align: top;
+  }
+  equipment desc {
+    width: calc(100% - 74px);
+  }
+  character desc {
+    width: calc(100% - 143px);
+    margin-left: 5px;
+  }
+  madel {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    vertical-align: top;
+  }
+  [quality="1"] madel {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_1.png');
+  }
+  [quality="2"] madel {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_2.png');
+  }
+  [quality="3"] madel {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_3.png');
+  }
+  [quality="4"] madel {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_medal_4.png');
+  }
+  raritydesc {
+    display: inline-block;
+    color: #805500;
+    font-size: 18px;
+    width: 56px;
+    vertical-align: top;
+    text-align: center;
+  }
+  [rarity="C"] raritydesc {
+    color: #808080;
+  }
+  [rarity="B"] raritydesc {
+    color: #808000;
+  }
+  [rarity="A"] raritydesc {
+    color: #550080;
+  }
+  [rarity="S"] raritydesc {
+    color: #800000;
+  }
+  [rarity="R"] raritydesc{
+    color: #c0c0c0;
+  }
+  [rarity="SR"] raritydesc{
+    color: #c0c000;
+  }
+  [rarity="SSR"] raritydesc{
+    color: #8000c0;
+  }
+  [rarity="UR"] raritydesc{
+    color: #c00000;
+  }
+  [rarity="LR"] raritydesc {
+    color: #404040;
+  }
+  equipment desc name {
+    display: inline-block;
+    width: calc(100% - 80px);
+    font-size: 18px;
+  }
+  setname {
+    display: block;
+  }
+  equipment desc setname {
+    display: inline-block;
+    font-size: 16px;
+  }
+  equipment > desc > :nth-child(1) {
+    height: 46px;
+  }
+  category {
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background-size: cover;
+    vertical-align: bottom;
+    margin: 0px 5px;
+  }
+  category[category="1_0"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_sniper_01.png');
+  }
+  category[category="1_1"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_warrior_01.png');
+  }
+  category[category="1_2"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_weapon_sorcerer_01.png');
+  }
+  category[category="2_0"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_sub_01.png');
+  }
+  category[category="3_0"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_gauntlet_01.png');
+  }
+  category[category="4_0"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_helmet_01.png');
+  }
+  category[category="5_0"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_armor_01.png');
+  }
+  category[category="6_0"] {
+    background-image: url('${GlobalConstant.assetURL}/icon_equipment_shoes_01.png');
+  }
+  parameter_type {
+    width: 100%;
+    display: block;
+    font-size: medium;
+  }
+  parameter_subtype {
+    width: 100%;
+    display: block;
+    font-size: small;
+  }
+  parameter_set {
+    width: 100%;
+    display: block;
+    font-size: x-small;
+  }
+  treasure {
+    display: inline-block;
+    width: 25%;
+    margin-left: 5px;
+  }
+  parameter {
+    display: inline-flex;
+    width: calc(50% - 10px);
+    margin: 0px 5px;
+    justify-content: space-between;
+  }
+  parameter > * {
+    display: inline-block;
+  }
+  parameter_set[type="sphere"] icon {
+    zoom: 25%;
+  }
+  sphere {
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+    text-align: center;
+    font-size: xx-small;
+  }
+  sphere level {
+    font-size: xx-large;
+    color: white;
+  }
+  sphere name {
+    display: block;
+  }
+  info > div[name="character"] {
+    display: inline-block;
+    width: 33%;
+    height: calc(100% - 4px);
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    border-width: 2px;
+    border-style: solid;
+  }
+  div[name="character"] character {
+    display: block;
+    width: 100%;
+    background: none;
+    color: black;
+  }
+  div[name="character"] icon {
+    zoom: 75%;
+  }
+  job {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: bottom;
+    background-size: cover;
+    margin-right: 5px;
+  }
+  [job="1"] job {
+    background-image: url('${GlobalConstant.assetURL}/icon_job_warrior.png');
+  }
+  [job="2"] job {
+    background-image: url('${GlobalConstant.assetURL}/icon_job_sniper.png');
+  }
+  [job="4"] job {
+    background-image: url('${GlobalConstant.assetURL}/icon_job_sorcerer.png');
+  }
+  lore {
+    display: block;
+    width: 100%;
+    font-size: small;
+    height: 34px;
+  }
+  bp {
+    display: block;
+    width: 100%;
+  }
+  parameter_set[type="exclusive"] p {
+    margin-left: 5px;
+  }
+  parameter_set[type="exclusive"] effect {
+    color: grey;
+  }
+  skilllevel {
+    display: inline-block;
+    color: grey;
+  }
+  skill {
+    display: inline;
+    color: grey;
+  }
+  unlocked {
+    display: inline;
+    color: red !important;
+  }
+  parameter_set[type="exclusive"] > div {
+    margin-bottom: 2px;
+  }
+  parameter_set[type="exclusive"][unlock] effect,
+  parameter_set[type="exclusive"][unlock][rarity="SSR"] [order="SSR"] *,
+  parameter_set[type="exclusive"][unlock][rarity="UR"] [order="SSR"] *,
+  parameter_set[type="exclusive"][unlock][rarity="UR"] [order="UR"] *,
+  parameter_set[type="exclusive"][unlock][rarity="LR"] [order="SSR"] *,
+  parameter_set[type="exclusive"][unlock][rarity="LR"] [order="UR"] *,
+  parameter_set[type="exclusive"][unlock][rarity="LR"] [order="LR"] * {
+    color: black;
+  }
+  parameter_set[type="exclusive"][rarity="SSR"] [order="SSR"] unlocked,
+  parameter_set[type="exclusive"][rarity="UR"] [order="SSR"] unlocked,
+  parameter_set[type="exclusive"][rarity="UR"] [order="UR"] unlocked,
+  parameter_set[type="exclusive"][rarity="LR"] [order="SSR"] unlocked,
+  parameter_set[type="exclusive"][rarity="LR"] [order="UR"] unlocked,
+  parameter_set[type="exclusive"][rarity="LR"] [order="LR"] unlocked {
+    display: none;
+  }
+  effect {
+    display: inline-flex;
+    width: 75%;
+    margin: 0px 5px;
+    justify-content: space-between;
+  }
+  effect > * {
+    display: inline-block;
+  }
+  parameter_set[type="set"] div {
+    color: grey;
+  }
+  parameter_set[type="set"] > div {
+    margin-bottom: 2px;
+  }
+  parameter_set[type="set"] > [count="2"] > div[require="2"],
+  parameter_set[type="set"] > [count="3"] > div[require="2"],
+  parameter_set[type="set"] > [count="4"] > div[require="2"],
+  parameter_set[type="set"] > [count="5"] > div[require="2"],
+  parameter_set[type="set"] > [count="6"] > div[require="2"],
+  parameter_set[type="set"] > [count="4"] > div[require="4"],
+  parameter_set[type="set"] > [count="5"] > div[require="4"],
+  parameter_set[type="set"] > [count="6"] > div[require="4"],
+  parameter_set[type="set"] > [count="6"] > div[require="6"] {
+    color: black;
+  }
+  parameter_set[type="potential"] > div {
+    margin-bottom: 2px;
+  }
+  parameter[main] {
+    visibility: hidden;
+  }
+  parameter_set[type="potential"][job="1"] [order="1"] parameter[main],
+  parameter_set[type="potential"][job="2"] [order="2"] parameter[main],
+  parameter_set[type="potential"][job="4"] [order="3"] parameter[main] {
+    visibility: visible;
+  }
+  parameter_set[type="skill"] {
+    margin-bottom: 5px;
+  }
+  parameter_set[type="skill"] skills {
+    display: flex;
+    justify-content: space-between;
+  }
+  parameter_set[type="skill"] icon {
+    width: 100px;
+    height: 100px;
+    zoom: 60%;
+  }
+  parameter_set[type="skill"] icon img {
+    height: 100px;
+    width: 100px;
+  }
+  parameter_set[type="skill"] icon level {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100%;
+    width: 100%;
+    font-size: xx-large;
+    color: white;
+  }
+  parameter_set[type="skill"] icon[level="0"] level {
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+  }
+  parameter_set[type="skill"] > div[type="icon"] {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 5px 0px;
+  }
+  parameter_set[type="skill"] icon[selected] {
+    outline: aqua 8px solid;
+  }
+  parameter_set[type="skill"] [order] a {
+    display: inline-block;
+  }
+  parameter_set[type="skill"] div[order] {
+    display: none;
+  }
+  parameter_set[type="skill"] div[order][selected] {
+    display: block;
+  }
+  parameter_set[type="skill"] div[order] > :nth-child(1) {
+    font-size: small;
+  }
+  parameter_set[type="skill"] div[order] > :nth-child(2) > :nth-child(1) {
+    width: 40%;
+  }
+  parameter_set[type="skill"] div[order] > div[unlock] > * {
+    color: black;
+  }
+  parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
+    display: none;
+  }
+        `,
+      ),
     );
     let searchURL;
     switch (GlobalURLList.function) {
@@ -4204,19 +4283,19 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
       createElement(
         'table',
         `
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>${TextResource['CommonPlayerNameLabel']}</th>
-            <th>${LanguageTable['Slot 1'][GlobalURLList.lang]}</th>
-            <th>${LanguageTable['Slot 2'][GlobalURLList.lang]}</th>
-            <th>${LanguageTable['Slot 3'][GlobalURLList.lang]}</th>
-            <th>${LanguageTable['Slot 4'][GlobalURLList.lang]}</th>
-            <th>${LanguageTable['Slot 5'][GlobalURLList.lang]}</th>
-          </tr>
-        </thead>
-        `
-      )
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>${TextResource['CommonPlayerNameLabel']}</th>
+              <th>${LanguageTable['Slot 1'][GlobalURLList.lang]}</th>
+              <th>${LanguageTable['Slot 2'][GlobalURLList.lang]}</th>
+              <th>${LanguageTable['Slot 3'][GlobalURLList.lang]}</th>
+              <th>${LanguageTable['Slot 4'][GlobalURLList.lang]}</th>
+              <th>${LanguageTable['Slot 5'][GlobalURLList.lang]}</th>
+            </tr>
+          </thead>
+          `,
+      ),
     );
     let nodePanel = nodeData.appendChild(createElement('info', ''));
     const TeamInfoBuffer = await sendGMRequest(searchURL, {});
@@ -4233,23 +4312,23 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
         createElement(
           'tr',
           `
-          <th>
-            <div>${i + 1}</div>
-            <div name="record"></div>
-          </th>
-          <th name="player">
-            <div name="level"></div>
-            <div>${Player.PlayerName}</div>
-            <div name="world"></div>
-            <div>${TextResource['CommonBattlePowerLabel']}: ${getNumber(Player.DeckBattlePower || Player.BattlePower)}</div>
-            <div name="time"></div>
-            <div name="point">
-              <a></a>
-              <a></a>
-            </div>
-          </th>
-          `
-        )
+            <th>
+              <div>${i + 1}</div>
+              <div name="record"></div>
+            </th>
+            <th name="player">
+              <div name="level"></div>
+              <div>${Player.PlayerName}</div>
+              <div name="world"></div>
+              <div>${TextResource['CommonBattlePowerLabel']}: ${getNumber(Player.DeckBattlePower || Player.BattlePower)}</div>
+              <div name="time"></div>
+              <div name="point">
+                <a></a>
+                <a></a>
+              </div>
+            </th>
+            `,
+        ),
       );
       let nodePlayer = nodeTr.querySelector('th[name="player"]');
       const RegionList = { '1': '🇯🇵', '2': '🇰🇷', '3': '🇨🇳', '4': '🇺🇸', '5': '🇪🇺', '6': '🇺🇳' };
@@ -4292,27 +4371,27 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
           createElement(
             'character',
             `
-            <icon>
-              <img src="${GlobalConstant.assetURL}CharacterIcon/CHR_${CharacterIcon}/CHR_${CharacterIcon}_00_s.png">
-              <rarity></rarity>
-              <decoration></decoration>
-              <stars>
-                <star></star>
-                <star></star>
-                <star></star>
-                <star></star>
-                <star></star>
-              </stars>
-              <element></element>
-              <level>${TextResource['CommonLevelWithDot']}${CharacterInfo.Level}</level>
-            </icon>
-            <div>
-              <div class="hidden">${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</div>
-              <div>${TextResource[Character.NameKey.slice(1, -1)]}</div>
-            </div>
-            `,
-            attributeCharacterInfo
-          )
+              <icon>
+                <img src="${GlobalConstant.assetURL}CharacterIcon/CHR_${CharacterIcon}/CHR_${CharacterIcon}_00_s.png">
+                <rarity></rarity>
+                <decoration></decoration>
+                <stars>
+                  <star></star>
+                  <star></star>
+                  <star></star>
+                  <star></star>
+                  <star></star>
+                </stars>
+                <element></element>
+                <level>${TextResource['CommonLevelWithDot']}${CharacterInfo.Level}</level>
+              </icon>
+              <div>
+                <div class="hidden">${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</div>
+                <div>${TextResource[Character.NameKey.slice(1, -1)]}</div>
+              </div>
+              `,
+            attributeCharacterInfo,
+          ),
         );
         nodeCharacter.onclick = (e) => {
           let listClean = document.querySelectorAll('[selected]');
@@ -4362,120 +4441,120 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
               createElement(
                 'equipment',
                 `
-                <icon>
-                  <img src="${GlobalConstant.assetURL}Icon/Equipment/icon_equipment_${Slot == 1 ? 'weapon' : Type}${Slot == 1 ? '_' + Type[Character.JobFlags] : ''}_02.png">
-                  <rarity></rarity>
-                  <level></level>
-                  <reinforcement></reinforcement>
-                </icon>
-                <desc>
-                  <div>
-                    <raritydesc></raritydesc>
-                    <madel></madel>
-                    <name>${EquipmenOrder[i].name}</name>
-                  </div>
-                  <div>
-                    <category category="${Slot}_${Slot == 1 ? Character.JobFlags : '0'}"></category>
-                    <setname></setname>
-                  </div>
-                </desc>
-                <parameters>
-                  <parameter_set type="base">
-                    <parameter_type>${TextResource['CharacterEquipmentBasicEffect']}</parameter_type>
-                    <parameter>
-                      <parameter_name></parameter_name>
-                      <parameter_value></parameter_value>
-                    </parameter>
-                  </parameter_set>
-                  <parameter_set type="addition">
-                    <parameter_type>${TextResource['CharacterEquipmentAdditionalEffect']}</parameter_type>
+                  <icon>
+                    <img src="${GlobalConstant.assetURL}Icon/Equipment/icon_equipment_${Slot == 1 ? 'weapon' : Type}${Slot == 1 ? '_' + Type[Character.JobFlags] : ''}_02.png">
+                    <rarity></rarity>
+                    <level></level>
+                    <reinforcement></reinforcement>
+                  </icon>
+                  <desc>
                     <div>
-                      <parameter order="1">
-                        <parameter_name>${TextResource['BaseParameterTypeMuscle']}</parameter_name>
-                        <parameter_value></parameter_value>
-                      </parameter>
-                      <parameter order="2">
-                      <parameter_name>${TextResource['BaseParameterTypeIntelligence']}</parameter_name>
-                      <parameter_value></parameter_value>
-                      </parameter>
+                      <raritydesc></raritydesc>
+                      <madel></madel>
+                      <name>${EquipmenOrder[i].name}</name>
                     </div>
                     <div>
-                      <parameter order="3">
-                      <parameter_name>${TextResource['BaseParameterTypeEnergy']}</parameter_name>
-                      <parameter_value></parameter_value>
-                      </parameter>
-                      <parameter order="4">
-                      <parameter_name>${TextResource['BaseParameterTypeHealth']}</parameter_name>
-                        <parameter_value></parameter_value>
-                      </parameter>
+                      <category category="${Slot}_${Slot == 1 ? Character.JobFlags : '0'}"></category>
+                      <setname></setname>
                     </div>
-                  </parameter_set>
-                  <parameter_set type="treasure">
-                    <parameter_type>${TextResource['EquipmentSacredTreasureBonusLabel']}</parameter_type>
-                    <div order="1">
-                      <treasure>${TextResource['CommonLegendaryLevelLabel']}
-                        <level></level>
-                      </treasure>
+                  </desc>
+                  <parameters>
+                    <parameter_set type="base">
+                      <parameter_type>${TextResource['CharacterEquipmentBasicEffect']}</parameter_type>
                       <parameter>
                         <parameter_name></parameter_name>
                         <parameter_value></parameter_value>
                       </parameter>
-                    </div>
-                    <div order="2">
-                      <treasure>${TextResource['CommonMatchlessLevelLabel']}
-                        <level></level>
-                      </treasure>
-                      <parameter>
-                        <parameter_name></parameter_name>
+                    </parameter_set>
+                    <parameter_set type="addition">
+                      <parameter_type>${TextResource['CharacterEquipmentAdditionalEffect']}</parameter_type>
+                      <div>
+                        <parameter order="1">
+                          <parameter_name>${TextResource['BaseParameterTypeMuscle']}</parameter_name>
+                          <parameter_value></parameter_value>
+                        </parameter>
+                        <parameter order="2">
+                        <parameter_name>${TextResource['BaseParameterTypeIntelligence']}</parameter_name>
                         <parameter_value></parameter_value>
-                      </parameter>
-                    </div>
-                  </parameter_set>
-                  <parameter_set type="sphere">
-                    <parameter_type>${TextResource['CommonSphereLabel']}</parameter_type>
-                    <sphere order="1">
-                      <icon>
-                        <img src="${GlobalConstant.assetURL}icon_lock.png">
-                        <rarity></rarity>
-                        <level></level>
-                      </icon>
-                      <name>${TextResource['MissionLockedButton']}</name>
-                      <div><parameter_value>　</parameter_value></div>
-                    </sphere>
-                    <sphere order="2">
-                      <icon>
-                        <img src="${GlobalConstant.assetURL}icon_lock.png">
-                        <rarity></rarity>
-                        <level></level>
-                      </icon>
-                      <name>${TextResource['MissionLockedButton']}</name>
-                      <div><parameter_value>　</parameter_value></div>
-                    </sphere>
-                    <sphere order="3">
-                      <icon>
-                        <img src="${GlobalConstant.assetURL}icon_lock.png">
-                        <rarity></rarity>
-                        <level></level>
-                      </icon>
-                      <name>${TextResource['MissionLockedButton']}</name>
-                      <div><parameter_value>　</parameter_value></div>
-                    </sphere>
-                    <sphere order="4">
-                      <icon>
-                        <img src="${GlobalConstant.assetURL}icon_lock.png">
-                        <rarity></rarity>
-                        <level></level>
-                      </icon>
-                      <name>${TextResource['MissionLockedButton']}</name>
-                      <div><parameter_value>　</parameter_value></div>
-                    </sphere>
-                  </parameter_set>
-                </parameters>
-                `,
+                        </parameter>
+                      </div>
+                      <div>
+                        <parameter order="3">
+                        <parameter_name>${TextResource['BaseParameterTypeEnergy']}</parameter_name>
+                        <parameter_value></parameter_value>
+                        </parameter>
+                        <parameter order="4">
+                        <parameter_name>${TextResource['BaseParameterTypeHealth']}</parameter_name>
+                          <parameter_value></parameter_value>
+                        </parameter>
+                      </div>
+                    </parameter_set>
+                    <parameter_set type="treasure">
+                      <parameter_type>${TextResource['EquipmentSacredTreasureBonusLabel']}</parameter_type>
+                      <div order="1">
+                        <treasure>${TextResource['CommonLegendaryLevelLabel']}
+                          <level></level>
+                        </treasure>
+                        <parameter>
+                          <parameter_name></parameter_name>
+                          <parameter_value></parameter_value>
+                        </parameter>
+                      </div>
+                      <div order="2">
+                        <treasure>${TextResource['CommonMatchlessLevelLabel']}
+                          <level></level>
+                        </treasure>
+                        <parameter>
+                          <parameter_name></parameter_name>
+                          <parameter_value></parameter_value>
+                        </parameter>
+                      </div>
+                    </parameter_set>
+                    <parameter_set type="sphere">
+                      <parameter_type>${TextResource['CommonSphereLabel']}</parameter_type>
+                      <sphere order="1">
+                        <icon>
+                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <rarity></rarity>
+                          <level></level>
+                        </icon>
+                        <name>${TextResource['MissionLockedButton']}</name>
+                        <div><parameter_value>　</parameter_value></div>
+                      </sphere>
+                      <sphere order="2">
+                        <icon>
+                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <rarity></rarity>
+                          <level></level>
+                        </icon>
+                        <name>${TextResource['MissionLockedButton']}</name>
+                        <div><parameter_value>　</parameter_value></div>
+                      </sphere>
+                      <sphere order="3">
+                        <icon>
+                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <rarity></rarity>
+                          <level></level>
+                        </icon>
+                        <name>${TextResource['MissionLockedButton']}</name>
+                        <div><parameter_value>　</parameter_value></div>
+                      </sphere>
+                      <sphere order="4">
+                        <icon>
+                          <img src="${GlobalConstant.assetURL}icon_lock.png">
+                          <rarity></rarity>
+                          <level></level>
+                        </icon>
+                        <name>${TextResource['MissionLockedButton']}</name>
+                        <div><parameter_value>　</parameter_value></div>
+                      </sphere>
+                    </parameter_set>
+                  </parameters>
+                  `,
                 {
                   'slot': Slot,
-                }
-              )
+                },
+              ),
             );
           }
           let nodeCharacterInfo = nodePanel.appendChild(createElement('div', '', { 'name': 'character' }));
@@ -4487,205 +4566,205 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
             createElement(
               'desc',
               `
-              <div>
-                <raritydesc>${CharacterRarity[CharacterInfo.RarityFlags].rarity}${CharacterRarity[CharacterInfo.RarityFlags].star > 0 ? '+' + CharacterRarity[CharacterInfo.RarityFlags].star : ''}</raritydesc>
-                <job></job>
-                <level>${TextResource['CommonLevelWithDot']}${CharacterInfo.Level}</level>
-              </div>
-              <lore>${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</lore>
-              <div>
-                <name>${TextResource[Character.NameKey.slice(1, -1)]}</name>
-              </div>
-              <bp>🗡️${getNumber(CharacterInfo.BattlePower)}</bp>
-              `
-            )
+                <div>
+                  <raritydesc>${CharacterRarity[CharacterInfo.RarityFlags].rarity}${CharacterRarity[CharacterInfo.RarityFlags].star > 0 ? '+' + CharacterRarity[CharacterInfo.RarityFlags].star : ''}</raritydesc>
+                  <job></job>
+                  <level>${TextResource['CommonLevelWithDot']}${CharacterInfo.Level}</level>
+                </div>
+                <lore>${Character.Name2Key ? TextResource[Character.Name2Key.slice(1, -1)] : '　'}</lore>
+                <div>
+                  <name>${TextResource[Character.NameKey.slice(1, -1)]}</name>
+                </div>
+                <bp>🗡️${getNumber(CharacterInfo.BattlePower)}</bp>
+                `,
+            ),
           );
           nodeCharacterInfo.appendChild(
             createElement(
               'parameters',
               `
-              <parameter_set type="skill">
-              </parameter_set>
-              <parameter_set type="exclusive">
-                <parameter_type>${TextResource['CharacterEquipmentExclusiveEffect']}</parameter_type>
-                <parameter_subtype>${TextResource['CharacterEquipmentExclusiveSkillEffect']}</parameter_subtype>
-                <div order="SSR">
-                  <skilllevel>${TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', '1')}</skilllevel>
-                  <skill></skill>
-                  <unlocked>${TextResource['EquipmentExclusiveSkillReleaseConditionFormat'].replace('{0}', 'SSR')}</unlocked>
-                </div>
-                <div order="UR">
-                  <skilllevel>${TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', '2')}</skilllevel>
-                  <skill></skill>
-                  <unlocked>${TextResource['EquipmentExclusiveSkillReleaseConditionFormat'].replace('{0}', 'UR')}</unlocked>
-                </div>
-                <div order="LR">
-                  <skilllevel>${TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', '3')}</skilllevel>
-                  <skill></skill>
-                  <unlocked>${TextResource['EquipmentExclusiveSkillReleaseConditionFormat'].replace('{0}', 'LR')}</unlocked>
-                </div>
-                <parameter_subtype>${TextResource['CharacterEquipmentExclusivePassiveEffect']}</parameter_subtype>
-                <div type="parameter"></div>
-              </parameter_set>
-              <parameter_set type="set">
-                <parameter_type>${TextResource['CharacterEquipmentSeriesEffect']}</parameter_type>
-              </parameter_set>
-              <parameter_set type="common">
-                <parameter_type>${TextResource['CommonStatusLabel']}</parameter_type>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.AttackPower)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeHp']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.HP)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeSpeed']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.Speed)}</parameter_value>
-                </parameter>
-                <parameter></parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeDefensePenetration']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.DefensePenetration)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeDefense']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.Defense)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeDamageEnhance']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.DamageEnhance)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypePhysicalDamageRelax']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.PhysicalDamageRelax)}</parameter_value>
-                </parameter>
-                <parameter></parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeMagicDamageRelax']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.MagicDamageRelax)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeHit']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.Hit)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeAvoidance']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.Avoidance)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeCritical']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.Critical)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeCriticalResist']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.CriticalResist)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeCriticalDamageEnhance']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.CriticalDamageEnhance)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypePhysicalCriticalDamageRelax']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.PhysicalCriticalDamageRelax)}</parameter_value>
-                </parameter>
-                <parameter></parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeMagicCriticalDamageRelax']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.MagicCriticalDamageRelax)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeDebuffHit']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.DebuffHit)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeDebuffResist']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.DebuffResist)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeHpDrain']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.HpDrain)}</parameter_value>
-                </parameter>
-                <parameter>
-                  <parameter_name>${TextResource['BattleParameterTypeDamageReflect']}</parameter_name>
-                  <parameter_value>${getNumber(CharacterInfo.BattleParameter.DamageReflect)}</parameter_value>
-                </parameter>
-              </parameter_set>
-              <parameter_set type="potential" job="${nodecharacter.getAttribute('job')}">
-                <parameter_type>${TextResource['CommonPotentialParameterLabel']}</parameter_type>
-                <div order="1">
+                <parameter_set type="skill">
+                </parameter_set>
+                <parameter_set type="exclusive">
+                  <parameter_type>${TextResource['CharacterEquipmentExclusiveEffect']}</parameter_type>
+                  <parameter_subtype>${TextResource['CharacterEquipmentExclusiveSkillEffect']}</parameter_subtype>
+                  <div order="SSR">
+                    <skilllevel>${TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', '1')}</skilllevel>
+                    <skill></skill>
+                    <unlocked>${TextResource['EquipmentExclusiveSkillReleaseConditionFormat'].replace('{0}', 'SSR')}</unlocked>
+                  </div>
+                  <div order="UR">
+                    <skilllevel>${TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', '2')}</skilllevel>
+                    <skill></skill>
+                    <unlocked>${TextResource['EquipmentExclusiveSkillReleaseConditionFormat'].replace('{0}', 'UR')}</unlocked>
+                  </div>
+                  <div order="LR">
+                    <skilllevel>${TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', '3')}</skilllevel>
+                    <skill></skill>
+                    <unlocked>${TextResource['EquipmentExclusiveSkillReleaseConditionFormat'].replace('{0}', 'LR')}</unlocked>
+                  </div>
+                  <parameter_subtype>${TextResource['CharacterEquipmentExclusivePassiveEffect']}</parameter_subtype>
+                  <div type="parameter"></div>
+                </parameter_set>
+                <parameter_set type="set">
+                  <parameter_type>${TextResource['CharacterEquipmentSeriesEffect']}</parameter_type>
+                </parameter_set>
+                <parameter_set type="common">
+                  <parameter_type>${TextResource['CommonStatusLabel']}</parameter_type>
                   <parameter>
-                    <parameter_name>${TextResource['BaseParameterTypeMuscle']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Muscle)}</parameter_value>
-                  </parameter>
-                  <parameter main="">
                     <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Muscle)}</parameter_value>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.AttackPower)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeHp']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.HP)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeSpeed']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.Speed)}</parameter_value>
+                  </parameter>
+                  <parameter></parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeDefensePenetration']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.DefensePenetration)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeDefense']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.Defense)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeDamageEnhance']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.DamageEnhance)}</parameter_value>
                   </parameter>
                   <parameter>
                     <parameter_name>${TextResource['BattleParameterTypePhysicalDamageRelax']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Muscle)}</parameter_value>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.PhysicalDamageRelax)}</parameter_value>
+                  </parameter>
+                  <parameter></parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeMagicDamageRelax']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.MagicDamageRelax)}</parameter_value>
                   </parameter>
                   <parameter>
                     <parameter_name>${TextResource['BattleParameterTypeHit']}</parameter_name>
-                    <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Muscle / 2))}</parameter_value>
-                  </parameter>
-                </div>
-                <div order="2">
-                  <parameter>
-                    <parameter_name>${TextResource['BaseParameterTypeEnergy']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Energy)}</parameter_value>
-                  </parameter>
-                  <parameter main="">
-                    <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Energy)}</parameter_value>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.Hit)}</parameter_value>
                   </parameter>
                   <parameter>
                     <parameter_name>${TextResource['BattleParameterTypeAvoidance']}</parameter_name>
-                    <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Energy / 2))}</parameter_value>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.Avoidance)}</parameter_value>
                   </parameter>
                   <parameter>
                     <parameter_name>${TextResource['BattleParameterTypeCritical']}</parameter_name>
-                    <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Energy / 2))}</parameter_value>
-                  </parameter>
-                </div>
-                <div order="3">
-                  <parameter>
-                    <parameter_name>${TextResource['BaseParameterTypeIntelligence']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Intelligence)}</parameter_value>
-                  </parameter>
-                  <parameter main="">
-                    <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Intelligence)}</parameter_value>
-                  </parameter>
-                  <parameter>
-                    <parameter_name>${TextResource['BattleParameterTypeMagicDamageRelax']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Intelligence)}</parameter_value>
-                  </parameter>
-                  <parameter>
-                    <parameter_name>${TextResource['BattleParameterTypeDebuffHit']}</parameter_name>
-                    <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Intelligence / 2))}</parameter_value>
-                  </parameter>
-                </div>
-                <div>
-                  <parameter>
-                    <parameter_name>${TextResource['BaseParameterTypeHealth']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Health)}</parameter_value>
-                  </parameter>
-                  <parameter main=""></parameter>
-                  <parameter>
-                    <parameter_name>${TextResource['BattleParameterTypeHp']}</parameter_name>
-                    <parameter_value>${getNumber(CharacterInfo.BaseParameter.Health)}</parameter_value>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.Critical)}</parameter_value>
                   </parameter>
                   <parameter>
                     <parameter_name>${TextResource['BattleParameterTypeCriticalResist']}</parameter_name>
-                    <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Health / 2))}</parameter_value>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.CriticalResist)}</parameter_value>
                   </parameter>
-                </div>
-              </parameter_set>
-            `
-            )
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeCriticalDamageEnhance']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.CriticalDamageEnhance)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypePhysicalCriticalDamageRelax']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.PhysicalCriticalDamageRelax)}</parameter_value>
+                  </parameter>
+                  <parameter></parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeMagicCriticalDamageRelax']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.MagicCriticalDamageRelax)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeDebuffHit']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.DebuffHit)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeDebuffResist']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.DebuffResist)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeHpDrain']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.HpDrain)}</parameter_value>
+                  </parameter>
+                  <parameter>
+                    <parameter_name>${TextResource['BattleParameterTypeDamageReflect']}</parameter_name>
+                    <parameter_value>${getNumber(CharacterInfo.BattleParameter.DamageReflect)}</parameter_value>
+                  </parameter>
+                </parameter_set>
+                <parameter_set type="potential" job="${nodecharacter.getAttribute('job')}">
+                  <parameter_type>${TextResource['CommonPotentialParameterLabel']}</parameter_type>
+                  <div order="1">
+                    <parameter>
+                      <parameter_name>${TextResource['BaseParameterTypeMuscle']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Muscle)}</parameter_value>
+                    </parameter>
+                    <parameter main="">
+                      <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Muscle)}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypePhysicalDamageRelax']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Muscle)}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeHit']}</parameter_name>
+                      <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Muscle / 2))}</parameter_value>
+                    </parameter>
+                  </div>
+                  <div order="2">
+                    <parameter>
+                      <parameter_name>${TextResource['BaseParameterTypeEnergy']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Energy)}</parameter_value>
+                    </parameter>
+                    <parameter main="">
+                      <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Energy)}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeAvoidance']}</parameter_name>
+                      <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Energy / 2))}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeCritical']}</parameter_name>
+                      <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Energy / 2))}</parameter_value>
+                    </parameter>
+                  </div>
+                  <div order="3">
+                    <parameter>
+                      <parameter_name>${TextResource['BaseParameterTypeIntelligence']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Intelligence)}</parameter_value>
+                    </parameter>
+                    <parameter main="">
+                      <parameter_name>${TextResource['BattleParameterTypeAttackPower']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Intelligence)}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeMagicDamageRelax']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Intelligence)}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeDebuffHit']}</parameter_name>
+                      <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Intelligence / 2))}</parameter_value>
+                    </parameter>
+                  </div>
+                  <div>
+                    <parameter>
+                      <parameter_name>${TextResource['BaseParameterTypeHealth']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Health)}</parameter_value>
+                    </parameter>
+                    <parameter main=""></parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeHp']}</parameter_name>
+                      <parameter_value>${getNumber(CharacterInfo.BaseParameter.Health)}</parameter_value>
+                    </parameter>
+                    <parameter>
+                      <parameter_name>${TextResource['BattleParameterTypeCriticalResist']}</parameter_name>
+                      <parameter_value>${getNumber(Math.round(CharacterInfo.BaseParameter.Health / 2))}</parameter_value>
+                    </parameter>
+                  </div>
+                </parameter_set>
+              `,
+            ),
           );
           let SkillArray = (!Character.ActiveSkillIds ? [] : Character.ActiveSkillIds).concat(!Character.PassiveSkillIds ? [] : Character.PassiveSkillIds);
           let nodeSkill = nodeCharacterInfo.querySelector('parameter_set[type="skill"]');
@@ -4698,25 +4777,25 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
               createElement(
                 'icon',
                 `
-              <img src="${GlobalConstant.assetURL}Icon/Skill/CSK_${'0'.repeat(9 - Skill.Id.toString().length)}${Skill.Id}.png">
-              <level></level>
-              `,
-                { 'order': i + 1 }
-              )
+                <img src="${GlobalConstant.assetURL}Icon/Skill/CSK_${'0'.repeat(9 - Skill.Id.toString().length)}${Skill.Id}.png">
+                <level></level>
+                `,
+                { 'order': i + 1 },
+              ),
             );
             let nodeSkillInfo = nodeSkillInfos.appendChild(
               createElement(
                 'div',
                 `
-              <div>${TextResource[Skill.NameKey.slice(1, -1)]}</div>
-              <div>
-                <a>${TextResource['SkillCategory' + skillType]}</a>
-                <a>⏳ ${Skill.SkillMaxCoolTime == undefined ? '-' : TextResource['CommonTurnFormat'].replace('{0}', Skill.SkillMaxCoolTime)}</a>
-              </div>
-              <hr>
-              `,
-                { 'order': i }
-              )
+                <div>${TextResource[Skill.NameKey.slice(1, -1)]}</div>
+                <div>
+                  <a>${TextResource['SkillCategory' + skillType]}</a>
+                  <a>⏳ ${Skill.SkillMaxCoolTime == undefined ? '-' : TextResource['CommonTurnFormat'].replace('{0}', Skill.SkillMaxCoolTime)}</a>
+                </div>
+                <hr>
+                `,
+                { 'order': i },
+              ),
             );
             if (i == 0) {
               nodeSkillIcon.setAttribute('selected', '');
@@ -4736,11 +4815,11 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
                 createElement(
                   'div',
                   `
-                <skilllevel>${j == 0 ? '' : TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', j + 1)}</skilllevel>
-                <skill>${TextResource[SkillInfo.DescriptionKey.slice(1, -1)]}</skill>
-                <unlocked>${j == 0 ? '' : TextResource['DialogCharacterSkillLockSkillDescriptionFormat'].replace('{0}', '').replace('<color=#BE5742>', '').replace('{1}', SkillInfo.CharacterLevel)}</unlocked>
-                `
-                )
+                  <skilllevel>${j == 0 ? '' : TextResource['DialogCharacterSkillLockSkillLevelFormat'].replace('{0}', j + 1)}</skilllevel>
+                  <skill>${TextResource[SkillInfo.DescriptionKey.slice(1, -1)]}</skill>
+                  <unlocked>${j == 0 ? '' : TextResource['DialogCharacterSkillLockSkillDescriptionFormat'].replace('{0}', '').replace('<color=#BE5742>', '').replace('{1}', SkillInfo.CharacterLevel)}</unlocked>
+                  `,
+                ),
               );
               if (j == 0) {
                 if (SkillInfo.CharacterLevel > CharacterInfo.Level) {
@@ -4821,16 +4900,16 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
                   createElement(
                     'div',
                     `
-                    <effect>
-                      <effect_name>${TextResource[parameterExclusive.name]}</effect_name>
-                      <effect_value>${getNumber(parameterExclusive.value)}</effect_value>
-                    </effect>
-                    `
-                  )
+                      <effect>
+                        <effect_name>${TextResource[parameterExclusive.name]}</effect_name>
+                        <effect_value>${getNumber(parameterExclusive.value)}</effect_value>
+                      </effect>
+                      `,
+                  ),
                 );
               }
             }
-            const EquipmentSkill = EquipmenSkillList[Equipment.EquipmentExclusiveSkillDescriptionId];
+            const EquipmentSkill = EquipmentSkillList[Equipment.EquipmentExclusiveSkillDescriptionId];
             if (EquipmentSkill) {
               nodeCharacterInfo.querySelector('parameter_set[type="exclusive"]').setAttribute('rarity', EquipmenRarity[Equipment.RarityFlags].rarity);
               nodeCharacterInfo.querySelector('parameter_set[type="exclusive"] [order="SSR"] skill').innerHTML = TextResource[EquipmentSkill.Description1Key.slice(1, -1)];
@@ -4852,9 +4931,9 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
                 createElement(
                   'div',
                   `
-                  `,
-                  { 'count': countEquipmenSet[i] }
-                )
+                    `,
+                  { 'count': countEquipmenSet[i] },
+                ),
               );
               for (let j = 0; j < EquipmenSet.EffectList.length; j++) {
                 const Set = EquipmenSet.EffectList[j];
@@ -4863,14 +4942,14 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
                   createElement(
                     'div',
                     `
-                  <treasure>${TextResource['EquipmentSet'].replace('{0}', Set.RequiredEquipmentCount)}</treasure>
-                  <parameter>
-                    <parameter_name>${TextResource[parameterSet.name]}</parameter_name>
-                    <parameter_value>${getNumber(parameterSet.value)}</parameter_value>
-                  </parameter>
-                  `,
-                    { 'require': Set.RequiredEquipmentCount }
-                  )
+                    <treasure>${TextResource['EquipmentSet'].replace('{0}', Set.RequiredEquipmentCount)}</treasure>
+                    <parameter>
+                      <parameter_name>${TextResource[parameterSet.name]}</parameter_name>
+                      <parameter_value>${getNumber(parameterSet.value)}</parameter_value>
+                    </parameter>
+                    `,
+                    { 'require': Set.RequiredEquipmentCount },
+                  ),
                 );
               }
             }
@@ -4932,1979 +5011,1979 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
     let x = {
       'Level': {
         '80PT': `20：:Item_0009:x80 :Item_0016:x30 :Item_0052:x5 :Item_0019:x2
-40：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-80：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-100：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-120：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-140：:Item_0009:x80 :Item_0052:x5 :Item_0071:x60 :Item_0018:x10
-160：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-180：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-200：:Item_0009:x80 :Item_0052:x5 :Item_0071:x60 :Item_0018:x10
-220：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-240：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-260：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-280：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-300：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-320：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-340：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-360：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-380：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-400：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-420：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-440：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-460：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-480：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-500：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-520：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-540：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-560：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-580：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-600：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
-620：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
-640：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
-660：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-680：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-700：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0038:x800
-720：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
-740：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
-760：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-780：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-800：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5`,
+  40：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  80：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  100：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  120：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  140：:Item_0009:x80 :Item_0052:x5 :Item_0071:x60 :Item_0018:x10
+  160：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  180：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  200：:Item_0009:x80 :Item_0052:x5 :Item_0071:x60 :Item_0018:x10
+  220：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  240：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  260：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  280：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  300：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  320：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  340：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  360：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  380：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  400：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  420：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  440：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  460：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  480：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  500：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  520：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  540：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  560：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  580：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  600：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
+  620：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
+  640：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
+  660：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  680：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  700：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0038:x800
+  720：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
+  740：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
+  760：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  780：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  800：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5`,
         '325PT': `20：:Item_0009:x325 :Item_0016:x75 :Item_0052:x5 :Item_0019:x5
-40：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-80：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-100：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-120：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-140：:Item_0009:x325 :Item_0052:x5 :Item_0071:x60 :Item_0018:x25
-160：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-180：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-200：:Item_0009:x325 :Item_0052:x5 :Item_0071:x60 :Item_0018:x25
-220：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-240：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-260：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-280：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-300：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-320：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-340：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-360：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-380：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-400：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-420：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-440：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-460：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-480：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-500：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-520：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-540：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-560：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx4
-580：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-600：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
-620：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
-640：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
-660：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-680：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-700：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0038:x3500
-720：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
-740：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
-760：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-780：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-800：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3`,
+  40：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  80：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  100：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  120：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  140：:Item_0009:x325 :Item_0052:x5 :Item_0071:x60 :Item_0018:x25
+  160：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  180：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  200：:Item_0009:x325 :Item_0052:x5 :Item_0071:x60 :Item_0018:x25
+  220：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  240：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  260：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  280：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  300：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  320：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  340：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  360：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  380：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  400：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  420：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  440：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  460：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  480：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  500：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  520：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  540：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  560：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx4
+  580：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  600：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
+  620：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
+  640：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
+  660：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  680：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  700：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0038:x3500
+  720：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
+  740：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
+  760：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  780：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  800：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3`,
         '500PT': `20：:Item_0009:x500 :Item_0016:x150 :Item_0052:x10 :Item_0019:x7
-40：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
-80：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
-100：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
-120：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
-140：:Item_0009:x500 :Item_0052:x10 :Item_0071:x60 :Item_0018:x40
-160：:Item_0009:x500 :Item_0016:6hx5 :Item_0019:x7
-180：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
-200：:Item_0009:x500 :Item_0052:x10 :Item_0071:x60 :Item_0018:x40
-220：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
-240：:Item_0009:x500 :Item_0016:6hx5 :Item_0019:x7
-260：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
-280：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
-300：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
-320：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-340：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-360：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-380：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-400：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-420：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-440：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-460：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-480：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-500：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-520：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-540：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-560：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx8
-580：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-600：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
-620：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
-640：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
-660：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-680：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-700：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
-720：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
-740：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
-760：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-780：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-800：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5`,
+  40：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
+  80：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
+  100：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
+  120：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
+  140：:Item_0009:x500 :Item_0052:x10 :Item_0071:x60 :Item_0018:x40
+  160：:Item_0009:x500 :Item_0016:6hx5 :Item_0019:x7
+  180：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
+  200：:Item_0009:x500 :Item_0052:x10 :Item_0071:x60 :Item_0018:x40
+  220：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
+  240：:Item_0009:x500 :Item_0016:6hx5 :Item_0019:x7
+  260：:Item_0009:x500 :Item_0071:x60 :Item_0019:x7
+  280：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
+  300：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
+  320：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  340：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  360：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  380：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  400：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  420：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  440：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  460：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  480：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  500：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  520：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  540：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  560：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx8
+  580：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  600：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
+  620：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
+  640：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
+  660：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  680：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  700：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
+  720：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
+  740：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
+  760：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  780：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  800：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5`,
         '750PT': `20：:Item_0009:x750 :Item_0016:x300 :Item_0052:x10 :Item_0019:x12
-40：:Item_0009:x750 :Item_0053:x10 :Item_0068:x1 :Item_0019:x12
-80：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
-100：:Item_0009:x750 :Item_0053:x10 :Item_0068:x1 :Item_0019:x12
-120：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
-140：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0018:x60
-160：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-180：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
-200：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0018:x60
-220：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
-240：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-260：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
-280：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
-300：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
-320：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-340：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-360：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-380：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-400：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-420：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-440：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-460：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-480：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-500：:Item_0009:x750 :Item_0054:x10 :Item_0023:24hx10
-520：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-540：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-560：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0028:6hx10
-580：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-600：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
-620：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
-640：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
-660：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-680：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-700：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
-720：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
-740：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
-760：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-780：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-800：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10`,
+  40：:Item_0009:x750 :Item_0053:x10 :Item_0068:x1 :Item_0019:x12
+  80：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
+  100：:Item_0009:x750 :Item_0053:x10 :Item_0068:x1 :Item_0019:x12
+  120：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
+  140：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0018:x60
+  160：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  180：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
+  200：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0018:x60
+  220：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
+  240：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  260：:Item_0009:x750 :Item_0053:x10 :Item_0071:x60 :Item_0019:x12
+  280：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
+  300：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
+  320：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  340：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  360：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  380：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  400：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  420：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  440：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  460：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  480：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  500：:Item_0009:x750 :Item_0054:x10 :Item_0023:24hx10
+  520：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  540：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  560：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0028:6hx10
+  580：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  600：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
+  620：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
+  640：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
+  660：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  680：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  700：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
+  720：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
+  740：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
+  760：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  780：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  800：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10`,
         '1500PT': `20：:Item_0009:x1500 :Item_0016:x600 :Item_0052:x20 :Item_0020:x7
-40：:Item_0009:x1500 :Item_0053:x10 :Item_0068:x2 :Item_0020:x7
-80：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
-100：:Item_0009:x1500 :Item_0053:x10 :Item_0068:x2 :Item_0020:x7
-120：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
-140：:Item_0009:x1500 :Item_0053:x10 :Item_0039:x60 :Item_0018:x120
-160：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-180：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
-200：:Item_0009:x1500 :Item_0053:x10 :Item_0039:x60 :Item_0018:x120
-220：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
-240：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-260：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
-280：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
-300：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
-320：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-340：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-360：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-380：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
-400：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-420：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-440：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-460：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-480：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-500：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0023:24hx15
-520：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-540：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-560：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0029:24hx5
-580：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-600：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
-620：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
-640：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
-660：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-680：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-700：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
-720：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
-740：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
-760：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-780：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-800：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15`,
+  40：:Item_0009:x1500 :Item_0053:x10 :Item_0068:x2 :Item_0020:x7
+  80：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
+  100：:Item_0009:x1500 :Item_0053:x10 :Item_0068:x2 :Item_0020:x7
+  120：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
+  140：:Item_0009:x1500 :Item_0053:x10 :Item_0039:x60 :Item_0018:x120
+  160：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  180：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
+  200：:Item_0009:x1500 :Item_0053:x10 :Item_0039:x60 :Item_0018:x120
+  220：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
+  240：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  260：:Item_0009:x1500 :Item_0053:x10 :Item_0071:x120 :Item_0020:x7
+  280：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
+  300：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
+  320：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  340：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  360：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  380：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
+  400：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  420：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  440：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  460：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  480：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  500：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0023:24hx15
+  520：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  540：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  560：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0029:24hx5
+  580：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  600：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
+  620：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
+  640：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
+  660：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  680：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  700：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
+  720：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
+  740：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
+  760：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  780：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  800：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15`,
         '3000PT': `20：:Item_0009:x3000 :Item_0016:x1250 :Item_0052:x40 :Item_0020:x15
-40：:Item_0009:x3000 :Item_0053:x20 :Item_0068:x4 :Item_0020:x15
-80：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
-100：:Item_0009:x3000 :Item_0053:x20 :Item_0068:x4 :Item_0020:x15
-120：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
-140：:Item_0009:x3000 :Item_0053:x20 :Item_0039:x120 :Item_0018:x240
-160：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-180：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
-200：:Item_0009:x3000 :Item_0053:x20 :Item_0039:x120 :Item_0018:x240
-220：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
-240：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-260：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
-280：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
-300：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
-320：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-340：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-360：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-380：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
-400：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-420：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-440：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-460：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-480：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-500：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0023:24hx30
-520：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-540：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-560：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx10
-580：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-600：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
-620：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
-640：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
-660：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-680：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-700：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
-720：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
-740：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
-760：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-780：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-800：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30`,
+  40：:Item_0009:x3000 :Item_0053:x20 :Item_0068:x4 :Item_0020:x15
+  80：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
+  100：:Item_0009:x3000 :Item_0053:x20 :Item_0068:x4 :Item_0020:x15
+  120：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
+  140：:Item_0009:x3000 :Item_0053:x20 :Item_0039:x120 :Item_0018:x240
+  160：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  180：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
+  200：:Item_0009:x3000 :Item_0053:x20 :Item_0039:x120 :Item_0018:x240
+  220：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
+  240：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  260：:Item_0009:x3000 :Item_0053:x20 :Item_0071:x240 :Item_0020:x15
+  280：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
+  300：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
+  320：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  340：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  360：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  380：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
+  400：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  420：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  440：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  460：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  480：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  500：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0023:24hx30
+  520：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  540：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  560：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx10
+  580：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  600：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
+  620：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
+  640：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
+  660：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  680：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  700：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
+  720：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
+  740：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
+  760：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  780：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  800：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30`,
         '5900PT': `20：:Item_0009:x5900 :Item_0016:x2500 :Item_0052:x80 :Item_0020:x30
-40：:Item_0009:x5900 :Item_0053:x40 :Item_0068:x8 :Item_0020:x30
-80：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
-100：:Item_0009:x5900 :Item_0053:x40 :Item_0068:x8 :Item_0020:x30
-120：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
-140：:Item_0009:x5900 :Item_0053:x40 :Item_0039:x240 :Item_0018:x480
-160：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-180：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
-200：:Item_0009:x5900 :Item_0053:x40 :Item_0039:x240 :Item_0018:x480
-220：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
-240：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-260：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
-280：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
-300：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
-320：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-340：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-360：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-380：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
-400：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-420：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-440：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-460：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-480：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-500：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0023:24hx60
-520：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-540：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-560：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx20
-580：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-600：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
-620：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
-640：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
-660：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-680：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-700：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-720：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
-740：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
-760：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-780：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-800：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60`,
+  40：:Item_0009:x5900 :Item_0053:x40 :Item_0068:x8 :Item_0020:x30
+  80：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
+  100：:Item_0009:x5900 :Item_0053:x40 :Item_0068:x8 :Item_0020:x30
+  120：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
+  140：:Item_0009:x5900 :Item_0053:x40 :Item_0039:x240 :Item_0018:x480
+  160：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  180：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
+  200：:Item_0009:x5900 :Item_0053:x40 :Item_0039:x240 :Item_0018:x480
+  220：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
+  240：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  260：:Item_0009:x5900 :Item_0053:x40 :Item_0071:x480 :Item_0020:x30
+  280：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
+  300：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
+  320：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  340：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  360：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  380：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
+  400：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  420：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  440：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  460：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  480：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  500：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0023:24hx60
+  520：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  540：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  560：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx20
+  580：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  600：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
+  620：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
+  640：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
+  660：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  680：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  700：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  720：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
+  740：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
+  760：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  780：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  800：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60`,
       },
       'Quest': {
         '80PT': `7-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x75 :Item_0033:x8
-9-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x150
-10-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x150 :Item_0034:x8
-11-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x150
-12-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x150 :Item_0034:x8
-13-28：:Item_0009:x80 :Item_0052:x5 :Item_0039:x5 :Item_0018:x10
-14-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x200 :Item_0019:x1
-15-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x200 :Item_0015:8hx2
-16-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x250 :Item_0017:x200
-17-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x250 :Item_0019:x1
-18-28：:Item_0009:x80 :Item_0052:x5 :Item_0015:6hx2 :Item_0019:x2
-19-28：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-20-28：:Item_0009:x80 :Item_0151:x1 :Item_0015:6hx2 :Item_0018:x5
-21-28：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-22-28：:Item_0009:x80 :Item_0151:x1 :Item_0015:6hx2 :Item_0018:x5
-23-28：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-24-28：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-25-28：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-26-28：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-27-40：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-28-40：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-29-40：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-30-40：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-31-40：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-32-40：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-33-40：:Item_0009:x80 :Item_0051:x5 :Item_0010:6hx5
-34-40：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-35-30：:Item_0009:x80 :Item_0039:x50 :Item_0058:Lv2x10 :Item_0010:6hx5
-35-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
-36-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-36-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-37-30：:Item_0009:x80 :Item_0039:x50 :Item_0058:Lv2x10 :Item_0010:6hx5
-37-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
-38-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-38-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-39-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-39-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
-40-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-40-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-41-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
-41-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
-42-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-42-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-43-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
-43-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
-44-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-44-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-45-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
-45-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
-46-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-46-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
-47-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
-47-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5`,
+  9-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x150
+  10-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x150 :Item_0034:x8
+  11-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x150
+  12-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x150 :Item_0034:x8
+  13-28：:Item_0009:x80 :Item_0052:x5 :Item_0039:x5 :Item_0018:x10
+  14-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x200 :Item_0019:x1
+  15-28：:Item_0009:x80 :Item_0071:x60 :Item_0016:x200 :Item_0015:8hx2
+  16-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x250 :Item_0017:x200
+  17-28：:Item_0009:x80 :Item_0052:x5 :Item_0016:x250 :Item_0019:x1
+  18-28：:Item_0009:x80 :Item_0052:x5 :Item_0015:6hx2 :Item_0019:x2
+  19-28：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  20-28：:Item_0009:x80 :Item_0151:x1 :Item_0015:6hx2 :Item_0018:x5
+  21-28：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  22-28：:Item_0009:x80 :Item_0151:x1 :Item_0015:6hx2 :Item_0018:x5
+  23-28：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  24-28：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  25-28：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  26-28：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  27-40：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  28-40：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  29-40：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  30-40：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  31-40：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  32-40：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  33-40：:Item_0009:x80 :Item_0051:x5 :Item_0010:6hx5
+  34-40：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  35-30：:Item_0009:x80 :Item_0039:x50 :Item_0058:Lv2x10 :Item_0010:6hx5
+  35-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
+  36-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  36-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  37-30：:Item_0009:x80 :Item_0039:x50 :Item_0058:Lv2x10 :Item_0010:6hx5
+  37-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
+  38-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  38-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  39-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  39-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
+  40-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  40-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  41-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
+  41-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
+  42-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  42-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  43-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
+  43-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
+  44-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  44-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  45-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
+  45-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5
+  46-30：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  46-60：:Item_0009:x80 :Item_0039:x50 :Item_0028:2hx5
+  47-30：:Item_0009:x80 :Item_0054:x5 :Item_0039:x20 :Item_0018:x5
+  47-60：:Item_0009:x80 :Item_0054:x5 :Item_0028:2hx5`,
         '325PT': `7-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x150 :Item_0033:x15
-9-28：:Item_0009:x325 :Item_0052:x10 :Item_0016:x300
-10-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x300 :Item_0034:x15
-11-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x350
-12-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x400 :Item_0034:x15
-13-28：:Item_0009:x325 :Item_0052:x5 :Item_0039:x15 :Item_0018:x20
-14-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x400 :Item_0019:x3
-15-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x450 :Item_0015:8hx6
-16-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x500 :Item_0017:x850
-17-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x500 :Item_0019:x3
-18-28：:Item_0009:x325 :Item_0052:x5 :Item_0025:24hx2 :Item_0018:x10
-19-28：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-20-28：:Item_0009:x325 :Item_0151:x1 :Item_0025:24hx2 :Item_0018:x10
-21-28：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-22-28：:Item_0009:x325 :Item_0151:x1 :Item_0025:24hx2 :Item_0018:x10
-23-28：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-24-28：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0018:x10
-25-28：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-26-28：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0018:x10
-27-40：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-28-40：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-29-40：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-30-40：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-31-40：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-32-40：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-33-40：:Item_0009:x325 :Item_0051:x5 :Item_0023:24hx3
-34-40：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0023:24hx3
-35-30：:Item_0009:x325 :Item_0039:x50 :Item_0058:Lv3x10 :Item_0023:24hx3
-35-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
-36-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-36-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
-37-30：:Item_0009:x325 :Item_0039:x50 :Item_0058:Lv3x10 :Item_0023:24hx3
-37-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
-38-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-38-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
-39-30：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0023:24hx3
-39-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
-40-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-40-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
-41-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
-41-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
-42-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-42-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
-43-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
-43-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
-44-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-44-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
-45-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
-45-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
-46-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-46-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx4
-47-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
-47-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1`,
+  9-28：:Item_0009:x325 :Item_0052:x10 :Item_0016:x300
+  10-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x300 :Item_0034:x15
+  11-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x350
+  12-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x400 :Item_0034:x15
+  13-28：:Item_0009:x325 :Item_0052:x5 :Item_0039:x15 :Item_0018:x20
+  14-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x400 :Item_0019:x3
+  15-28：:Item_0009:x325 :Item_0071:x60 :Item_0016:x450 :Item_0015:8hx6
+  16-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x500 :Item_0017:x850
+  17-28：:Item_0009:x325 :Item_0052:x5 :Item_0016:x500 :Item_0019:x3
+  18-28：:Item_0009:x325 :Item_0052:x5 :Item_0025:24hx2 :Item_0018:x10
+  19-28：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  20-28：:Item_0009:x325 :Item_0151:x1 :Item_0025:24hx2 :Item_0018:x10
+  21-28：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  22-28：:Item_0009:x325 :Item_0151:x1 :Item_0025:24hx2 :Item_0018:x10
+  23-28：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  24-28：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0018:x10
+  25-28：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  26-28：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0018:x10
+  27-40：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  28-40：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  29-40：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  30-40：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  31-40：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  32-40：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  33-40：:Item_0009:x325 :Item_0051:x5 :Item_0023:24hx3
+  34-40：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0023:24hx3
+  35-30：:Item_0009:x325 :Item_0039:x50 :Item_0058:Lv3x10 :Item_0023:24hx3
+  35-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
+  36-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  36-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
+  37-30：:Item_0009:x325 :Item_0039:x50 :Item_0058:Lv3x10 :Item_0023:24hx3
+  37-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
+  38-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  38-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
+  39-30：:Item_0009:x325 :Item_0054:x5 :Item_0025:24hx2 :Item_0023:24hx3
+  39-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
+  40-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  40-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
+  41-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
+  41-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
+  42-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  42-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
+  43-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
+  43-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
+  44-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  44-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx1
+  45-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
+  45-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1
+  46-30：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  46-60：:Item_0009:x325 :Item_0039:x50 :Item_0028:6hx4
+  47-30：:Item_0009:x325 :Item_0054:x5 :Item_0039:x20 :Item_0018:x20
+  47-60：:Item_0009:x325 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx1`,
         '500PT': `7-28：:Item_0009:x500 :Item_0071:x60 :Item_0016:x375 :Item_0033:x20
-9-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x575 :Item_0025:24hx3
-10-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x575 :Item_0034:x20
-11-28：:Item_0009:x500 :Item_0071:x60 :Item_0016:x725 :Item_0025:24hx3
-12-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x750 :Item_0034:x20
-13-28：:Item_0009:x500 :Item_0052:x10 :Item_0039:x20 :Item_0018:x40
-14-28：:Item_0009:x500 :Item_0071:x60 :Item_0016:x800 :Item_0019:x5
-15-28：:Item_0009:x500 :Item_0068:x1 :Item_0016:x900 :Item_0015:8hx8
-16-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x1000 :Item_0017:x1000
-17-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x1000 :Item_0019:x5
-18-28：:Item_0009:x500 :Item_0052:x10 :Item_0025:24hx3 :Item_0018:x15
-19-28：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
-20-28：:Item_0009:x500 :Item_0151:x2 :Item_0025:24hx3 :Item_0018:x15
-21-28：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-22-28：:Item_0009:x500 :Item_0151:x2 :Item_0025:24hx3 :Item_0018:x15
-23-28：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-24-28：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
-25-28：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-26-28：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
-27-40：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-28-40：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-29-40：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-30-40：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-31-40：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-32-40：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-33-40：:Item_0009:x500 :Item_0051:x5 :Item_0023:24hx5
-34-40：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0023:24hx5
-35-30：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0023:24hx5
-35-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
-36-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-36-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
-37-30：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0023:24hx5
-37-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
-38-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-38-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
-39-30：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0023:24hx5
-39-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
-40-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-40-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
-41-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
-41-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
-42-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-42-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
-43-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
-43-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
-44-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-44-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
-45-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
-45-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
-46-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-46-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx8
-47-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
-47-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4`,
+  9-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x575 :Item_0025:24hx3
+  10-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x575 :Item_0034:x20
+  11-28：:Item_0009:x500 :Item_0071:x60 :Item_0016:x725 :Item_0025:24hx3
+  12-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x750 :Item_0034:x20
+  13-28：:Item_0009:x500 :Item_0052:x10 :Item_0039:x20 :Item_0018:x40
+  14-28：:Item_0009:x500 :Item_0071:x60 :Item_0016:x800 :Item_0019:x5
+  15-28：:Item_0009:x500 :Item_0068:x1 :Item_0016:x900 :Item_0015:8hx8
+  16-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x1000 :Item_0017:x1000
+  17-28：:Item_0009:x500 :Item_0052:x10 :Item_0016:x1000 :Item_0019:x5
+  18-28：:Item_0009:x500 :Item_0052:x10 :Item_0025:24hx3 :Item_0018:x15
+  19-28：:Item_0009:x500 :Item_0052:x10 :Item_0019:x7
+  20-28：:Item_0009:x500 :Item_0151:x2 :Item_0025:24hx3 :Item_0018:x15
+  21-28：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  22-28：:Item_0009:x500 :Item_0151:x2 :Item_0025:24hx3 :Item_0018:x15
+  23-28：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  24-28：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
+  25-28：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  26-28：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
+  27-40：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  28-40：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  29-40：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  30-40：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  31-40：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  32-40：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  33-40：:Item_0009:x500 :Item_0051:x5 :Item_0023:24hx5
+  34-40：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0023:24hx5
+  35-30：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0023:24hx5
+  35-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
+  36-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  36-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
+  37-30：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0023:24hx5
+  37-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
+  38-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  38-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
+  39-30：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0023:24hx5
+  39-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
+  40-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  40-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
+  41-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
+  41-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
+  42-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  42-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
+  43-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
+  43-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
+  44-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  44-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx4
+  45-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
+  45-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4
+  46-30：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  46-60：:Item_0009:x500 :Item_0039:x50 :Item_0028:6hx8
+  47-30：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0018:x30
+  47-60：:Item_0009:x500 :Item_0054:x5 :Item_0039:x50 :Item_0028:6hx4`,
         '750PT': `7-28：:Item_0009:x750 :Item_0068:x1 :Item_0016:x750 :Item_0033:x40
-9-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x1150 :Item_0025:24hx4
-10-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x1150 :Item_0034:x40
-11-28：:Item_0009:x750 :Item_0071:x60 :Item_0016:x1250 :Item_0025:24hx4
-12-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x1500 :Item_0034:x40
-13-28：:Item_0009:x750 :Item_0053:x10 :Item_0039:x30 :Item_0018:x60
-14-28：:Item_0009:x750 :Item_0068:x1 :Item_0016:x1625 :Item_0019:x5
-15-28：:Item_0009:x750 :Item_0068:x1 :Item_0016:x1750 :Item_0025:24hx4
-16-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x2000 :Item_0017:x1250
-17-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x2000 :Item_0019:x5
-18-28：:Item_0009:x750 :Item_0053:x10 :Item_0025:24hx5 :Item_0018:x30
-19-28：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
-20-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
-21-28：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-22-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
-23-28：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-24-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
-25-28：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-26-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
-27-40：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-28-40：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-29-40：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-30-40：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-31-40：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-32-40：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-33-40：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0023:24hx10
-34-40：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0023:24hx10
-35-30：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0023:24hx10
-35-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
-36-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-36-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
-37-30：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0023:24hx10
-37-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
-38-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-38-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
-39-30：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0023:24hx10
-39-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
-40-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-40-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
-41-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
-41-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
-42-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-42-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
-43-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
-43-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
-44-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-44-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
-45-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
-45-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
-46-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-46-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0028:6hx10
-47-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
-47-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5`,
+  9-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x1150 :Item_0025:24hx4
+  10-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x1150 :Item_0034:x40
+  11-28：:Item_0009:x750 :Item_0071:x60 :Item_0016:x1250 :Item_0025:24hx4
+  12-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x1500 :Item_0034:x40
+  13-28：:Item_0009:x750 :Item_0053:x10 :Item_0039:x30 :Item_0018:x60
+  14-28：:Item_0009:x750 :Item_0068:x1 :Item_0016:x1625 :Item_0019:x5
+  15-28：:Item_0009:x750 :Item_0068:x1 :Item_0016:x1750 :Item_0025:24hx4
+  16-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x2000 :Item_0017:x1250
+  17-28：:Item_0009:x750 :Item_0053:x10 :Item_0016:x2000 :Item_0019:x5
+  18-28：:Item_0009:x750 :Item_0053:x10 :Item_0025:24hx5 :Item_0018:x30
+  19-28：:Item_0009:x750 :Item_0053:x10 :Item_0019:x12
+  20-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
+  21-28：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  22-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
+  23-28：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  24-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
+  25-28：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  26-28：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
+  27-40：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  28-40：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  29-40：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  30-40：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  31-40：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  32-40：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  33-40：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0023:24hx10
+  34-40：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0023:24hx10
+  35-30：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0023:24hx10
+  35-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
+  36-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  36-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
+  37-30：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0023:24hx10
+  37-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
+  38-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  38-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
+  39-30：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0023:24hx10
+  39-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
+  40-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  40-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
+  41-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
+  41-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
+  42-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  42-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
+  43-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
+  43-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
+  44-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  44-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0029:8hx5
+  45-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
+  45-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5
+  46-30：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  46-60：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0028:6hx10
+  47-30：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0018:x45
+  47-60：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0029:8hx5`,
         '1500PT': `7-28：:Item_0009:x1500 :Item_0068:x2 :Item_0016:x1500 :Item_0020:x5
-9-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x2500 :Item_0025:24hx8
-10-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x2500 :Item_0020:x5
-11-28：:Item_0009:x1500 :Item_0071:x120 :Item_0016:x2500 :Item_0025:24hx8
-12-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x3000 :Item_0020:x5
-13-28：:Item_0009:x1500 :Item_0053:x10 :Item_0039:x60 :Item_0018:x120
-14-28：:Item_0009:x1500 :Item_0068:x2 :Item_0016:x3250 :Item_0019:x10
-15-28：:Item_0009:x1500 :Item_0051:x20 :Item_0016:x3500 :Item_0025:24hx8
-16-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x3500 :Item_0017:x2500
-17-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x4000 :Item_0019:x10
-18-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-19-28：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
-20-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-21-28：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-22-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-23-28：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-24-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-25-28：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-26-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-27-40：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-28-40：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-29-40：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-30-40：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-31-40：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-32-40：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-33-40：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0023:24hx15
-34-40：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0023:24hx15
-35-30：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0023:24hx15
-35-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
-36-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-36-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
-37-30：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0023:24hx15
-37-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
-38-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-38-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
-39-30：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0023:24hx15
-39-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
-40-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-40-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
-41-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
-41-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
-42-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-42-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
-43-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
-43-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
-44-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-44-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
-45-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
-45-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
-46-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-46-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0029:24hx5
-47-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
-47-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10`,
+  9-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x2500 :Item_0025:24hx8
+  10-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x2500 :Item_0020:x5
+  11-28：:Item_0009:x1500 :Item_0071:x120 :Item_0016:x2500 :Item_0025:24hx8
+  12-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x3000 :Item_0020:x5
+  13-28：:Item_0009:x1500 :Item_0053:x10 :Item_0039:x60 :Item_0018:x120
+  14-28：:Item_0009:x1500 :Item_0068:x2 :Item_0016:x3250 :Item_0019:x10
+  15-28：:Item_0009:x1500 :Item_0051:x20 :Item_0016:x3500 :Item_0025:24hx8
+  16-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x3500 :Item_0017:x2500
+  17-28：:Item_0009:x1500 :Item_0053:x10 :Item_0016:x4000 :Item_0019:x10
+  18-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  19-28：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x10 :Item_0020:x7
+  20-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  21-28：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  22-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  23-28：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  24-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  25-28：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  26-28：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  27-40：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  28-40：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  29-40：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  30-40：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  31-40：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  32-40：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  33-40：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0023:24hx15
+  34-40：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0023:24hx15
+  35-30：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0023:24hx15
+  35-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
+  36-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  36-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
+  37-30：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0023:24hx15
+  37-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
+  38-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  38-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
+  39-30：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0023:24hx15
+  39-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
+  40-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  40-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
+  41-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
+  41-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
+  42-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  42-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
+  43-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
+  43-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
+  44-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  44-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0028:6hx10
+  45-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
+  45-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10
+  46-30：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  46-60：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0029:24hx5
+  47-30：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0018:x90
+  47-60：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0028:6hx10`,
         '3000PT': `7-28：:Item_0009:x3000 :Item_0068:x4 :Item_0016:x3000 :Item_0020:x10
-9-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x4375 :Item_0025:24hx16
-10-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x4375 :Item_0020:x10
-11-28：:Item_0009:x3000 :Item_0071:x240 :Item_0016:x5000 :Item_0025:24hx16
-12-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x6000 :Item_0020:x10
-13-28：:Item_0009:x3000 :Item_0053:x20 :Item_0039:x120 :Item_0018:x240
-14-28：:Item_0009:x3000 :Item_0068:x4 :Item_0016:x6500 :Item_0019:x20
-15-28：:Item_0009:x3000 :Item_0051:x40 :Item_0016:x7000 :Item_0025:24hx16
-16-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x7500 :Item_0017:x4000
-17-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x8000 :Item_0019:x20
-18-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-19-28：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
-20-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-21-28：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-22-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-23-28：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-24-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-25-28：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-26-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-27-40：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-28-40：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-29-40：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-30-40：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-31-40：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-32-40：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-33-40：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0023:24hx30
-34-40：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0023:24hx30
-35-30：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0023:24hx30
-35-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
-36-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-36-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
-37-30：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0023:24hx30
-37-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
-38-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-38-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
-39-30：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0023:24hx30
-39-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
-40-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-40-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
-41-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
-41-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
-42-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-42-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
-43-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
-43-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
-44-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-44-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
-45-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
-45-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
-46-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-46-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx10
-47-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
-47-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5`,
+  9-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x4375 :Item_0025:24hx16
+  10-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x4375 :Item_0020:x10
+  11-28：:Item_0009:x3000 :Item_0071:x240 :Item_0016:x5000 :Item_0025:24hx16
+  12-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x6000 :Item_0020:x10
+  13-28：:Item_0009:x3000 :Item_0053:x20 :Item_0039:x120 :Item_0018:x240
+  14-28：:Item_0009:x3000 :Item_0068:x4 :Item_0016:x6500 :Item_0019:x20
+  15-28：:Item_0009:x3000 :Item_0051:x40 :Item_0016:x7000 :Item_0025:24hx16
+  16-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x7500 :Item_0017:x4000
+  17-28：:Item_0009:x3000 :Item_0053:x20 :Item_0016:x8000 :Item_0019:x20
+  18-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  19-28：:Item_0009:x3000 :Item_0054:x20 :Item_0051:x20 :Item_0020:x15
+  20-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  21-28：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  22-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  23-28：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  24-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  25-28：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  26-28：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  27-40：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  28-40：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  29-40：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  30-40：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  31-40：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  32-40：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  33-40：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0023:24hx30
+  34-40：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0023:24hx30
+  35-30：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0023:24hx30
+  35-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
+  36-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  36-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
+  37-30：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0023:24hx30
+  37-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
+  38-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  38-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
+  39-30：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0023:24hx30
+  39-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
+  40-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  40-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
+  41-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
+  41-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
+  42-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  42-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
+  43-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
+  43-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
+  44-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  44-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx5
+  45-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
+  45-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5
+  46-30：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  46-60：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0029:24hx10
+  47-30：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0018:x180
+  47-60：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0029:24hx5`,
         '5900PT': `7-28：:Item_0009:x5900 :Item_0068:x8 :Item_0016:x6000 :Item_0020:x20
-9-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x8750 :Item_0025:24hx32
-10-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x8750 :Item_0020:x20
-11-28：:Item_0009:x5900 :Item_0071:x480 :Item_0016:x1万 :Item_0025:24hx32
-12-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x1.2万 :Item_0020:x20
-13-28：:Item_0009:x5900 :Item_0053:x40 :Item_0039:x240 :Item_0018:x480
-14-28：:Item_0009:x5900 :Item_0068:x8 :Item_0016:x1.3万 :Item_0019:x40
-15-28：:Item_0009:x5900 :Item_0051:x80 :Item_0016:x1.4万 :Item_0025:24hx32
-16-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x1.5万 :Item_0017:x8000
-17-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x1.6万 :Item_0019:x40
-18-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-19-28：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
-20-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-21-28：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-22-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-23-28：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-24-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-25-28：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-26-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-27-40：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-28-40：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-29-40：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-30-40：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-31-40：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-32-40：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-33-40：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0023:24hx60
-34-40：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0023:24hx60
-35-30：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0023:24hx60
-35-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
-36-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-36-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
-37-30：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0023:24hx60
-37-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
-38-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-38-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
-39-30：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0023:24hx60
-39-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
-40-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-40-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
-41-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
-41-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
-42-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-42-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
-43-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
-43-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
-44-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-44-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
-45-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
-45-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
-46-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-46-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx20
-47-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
-47-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10`,
+  9-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x8750 :Item_0025:24hx32
+  10-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x8750 :Item_0020:x20
+  11-28：:Item_0009:x5900 :Item_0071:x480 :Item_0016:x1万 :Item_0025:24hx32
+  12-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x1.2万 :Item_0020:x20
+  13-28：:Item_0009:x5900 :Item_0053:x40 :Item_0039:x240 :Item_0018:x480
+  14-28：:Item_0009:x5900 :Item_0068:x8 :Item_0016:x1.3万 :Item_0019:x40
+  15-28：:Item_0009:x5900 :Item_0051:x80 :Item_0016:x1.4万 :Item_0025:24hx32
+  16-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x1.5万 :Item_0017:x8000
+  17-28：:Item_0009:x5900 :Item_0053:x40 :Item_0016:x1.6万 :Item_0019:x40
+  18-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  19-28：:Item_0009:x5900 :Item_0054:x40 :Item_0051:x40 :Item_0020:x30
+  20-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  21-28：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  22-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  23-28：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  24-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  25-28：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  26-28：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  27-40：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  28-40：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  29-40：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  30-40：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  31-40：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  32-40：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  33-40：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0023:24hx60
+  34-40：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0023:24hx60
+  35-30：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0023:24hx60
+  35-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
+  36-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  36-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
+  37-30：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0023:24hx60
+  37-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
+  38-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  38-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
+  39-30：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0023:24hx60
+  39-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
+  40-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  40-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
+  41-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
+  41-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
+  42-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  42-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
+  43-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
+  43-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
+  44-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  44-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx10
+  45-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
+  45-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10
+  46-30：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  46-60：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0029:24hx20
+  47-30：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0018:x360
+  47-60：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0029:24hx10`,
       },
       'Infinite': {
         '80PT': `50階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
-150階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-200階：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-250階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-300階：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
-350階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-400階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-450階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-500階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
-550階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-600階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-650階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
-700階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-750階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-800階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
-850階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-900階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-950階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-1000階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-1050階：:Item_0009:x80 :Item_0085:x5 :Item_0018:x5 :Item_0039:x20
-1100階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1150階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-1200階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-1250階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1300階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1350階：:Item_0009:x80 :Item_0085:x5 :Item_0018:x5 :Item_0039:x20
-1400階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1450階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1500階：:Item_0009:x80 :Item_0051:x5 :Item_0018:x5 :Item_0039:x20
-1550階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1600階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-1650階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1700階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
-1750階：:Item_0009:x80 :Item_0051:x5 :Item_0018:x5 :Item_0039:x20
-1800階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-1850階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
-1900階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
-1950階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-2000階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
-2050階：:Item_0009:x80 :Item_0051:x5 :Item_0018:x5 :Item_0039:x20
-2100階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5`,
+  150階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  200階：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  250階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  300階：:Item_0009:x80 :Item_0071:x60 :Item_0019:x2
+  350階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  400階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  450階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  500階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
+  550階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  600階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  650階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
+  700階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  750階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  800階：:Item_0009:x80 :Item_0071:x60 :Item_0028:6hx1 :Item_0019:x1
+  850階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  900階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  950階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  1000階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  1050階：:Item_0009:x80 :Item_0085:x5 :Item_0018:x5 :Item_0039:x20
+  1100階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1150階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  1200階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  1250階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1300階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1350階：:Item_0009:x80 :Item_0085:x5 :Item_0018:x5 :Item_0039:x20
+  1400階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1450階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1500階：:Item_0009:x80 :Item_0051:x5 :Item_0018:x5 :Item_0039:x20
+  1550階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1600階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  1650階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1700階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
+  1750階：:Item_0009:x80 :Item_0051:x5 :Item_0018:x5 :Item_0039:x20
+  1800階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  1850階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
+  1900階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
+  1950階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  2000階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
+  2050階：:Item_0009:x80 :Item_0051:x5 :Item_0018:x5 :Item_0039:x20
+  2100階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5`,
         '325PT': `50階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
-150階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-200階：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-250階：:Item_0009:x325 :Item_0071:x60 :Item_0018:x25
-300階：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
-350階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-400階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-450階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-500階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
-550階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-600階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-650階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
-700階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-750階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-800階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
-850階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-900階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-950階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-1000階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-1050階：:Item_0009:x325 :Item_0085:x5 :Item_0018:x20 :Item_0039:x20
-1100階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1150階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-1200階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-1250階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1300階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1350階：:Item_0009:x325 :Item_0085:x5 :Item_0018:x20 :Item_0039:x20
-1400階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1450階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1500階：:Item_0009:x325 :Item_0051:x5 :Item_0018:x20 :Item_0039:x20
-1550階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1600階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-1650階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1700階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
-1750階：:Item_0009:x325 :Item_0051:x5 :Item_0018:x20 :Item_0039:x20
-1800階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-1850階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
-1900階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
-1950階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-2000階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
-2050階：:Item_0009:x325 :Item_0051:x5 :Item_0018:x20 :Item_0039:x20
-2100階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1`,
+  150階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  200階：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  250階：:Item_0009:x325 :Item_0071:x60 :Item_0018:x25
+  300階：:Item_0009:x325 :Item_0071:x60 :Item_0019:x5
+  350階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  400階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  450階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  500階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
+  550階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  600階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  650階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
+  700階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  750階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  800階：:Item_0009:x325 :Item_0071:x60 :Item_0028:6hx4 :Item_0019:x2
+  850階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  900階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  950階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  1000階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  1050階：:Item_0009:x325 :Item_0085:x5 :Item_0018:x20 :Item_0039:x20
+  1100階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1150階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  1200階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  1250階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1300階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1350階：:Item_0009:x325 :Item_0085:x5 :Item_0018:x20 :Item_0039:x20
+  1400階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1450階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1500階：:Item_0009:x325 :Item_0051:x5 :Item_0018:x20 :Item_0039:x20
+  1550階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1600階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  1650階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1700階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
+  1750階：:Item_0009:x325 :Item_0051:x5 :Item_0018:x20 :Item_0039:x20
+  1800階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  1850階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
+  1900階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
+  1950階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  2000階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
+  2050階：:Item_0009:x325 :Item_0051:x5 :Item_0018:x20 :Item_0039:x20
+  2100階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1`,
         '500PT': `50階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
-150階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-200階：:Item_0009:x500 :Item_0017:x375 :Item_0071:x60 :Item_0019:x7
-250階：:Item_0009:x500 :Item_0068:x1 :Item_0018:x40
-300階：:Item_0009:x500 :Item_0017:x375 :Item_0071:x60 :Item_0019:x7
-350階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-400階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-450階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-500階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
-550階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-600階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-650階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
-700階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-750階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-800階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
-850階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-900階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-950階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-1000階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-1050階：:Item_0009:x500 :Item_0085:x5 :Item_0018:x30 :Item_0039:x100
-1100階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1150階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-1200階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-1250階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1300階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1350階：:Item_0009:x500 :Item_0085:x5 :Item_0018:x30 :Item_0039:x100
-1400階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1450階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1500階：:Item_0009:x500 :Item_0051:x5 :Item_0018:x30 :Item_0039:x100
-1550階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1600階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-1650階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1700階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
-1750階：:Item_0009:x500 :Item_0051:x5 :Item_0018:x30 :Item_0039:x100
-1800階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-1850階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
-1900階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
-1950階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-2000階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
-2050階：:Item_0009:x500 :Item_0051:x5 :Item_0018:x30 :Item_0039:x100
-2100階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4`,
+  150階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  200階：:Item_0009:x500 :Item_0017:x375 :Item_0071:x60 :Item_0019:x7
+  250階：:Item_0009:x500 :Item_0068:x1 :Item_0018:x40
+  300階：:Item_0009:x500 :Item_0017:x375 :Item_0071:x60 :Item_0019:x7
+  350階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  400階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  450階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  500階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
+  550階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  600階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  650階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
+  700階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  750階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  800階：:Item_0009:x500 :Item_0071:x60 :Item_0028:6hx8 :Item_0019:x2
+  850階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  900階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  950階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  1000階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  1050階：:Item_0009:x500 :Item_0085:x5 :Item_0018:x30 :Item_0039:x100
+  1100階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1150階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  1200階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  1250階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1300階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1350階：:Item_0009:x500 :Item_0085:x5 :Item_0018:x30 :Item_0039:x100
+  1400階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1450階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1500階：:Item_0009:x500 :Item_0051:x5 :Item_0018:x30 :Item_0039:x100
+  1550階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1600階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  1650階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1700階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
+  1750階：:Item_0009:x500 :Item_0051:x5 :Item_0018:x30 :Item_0039:x100
+  1800階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  1850階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
+  1900階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
+  1950階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  2000階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
+  2050階：:Item_0009:x500 :Item_0051:x5 :Item_0018:x30 :Item_0039:x100
+  2100階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4`,
         '750PT': `50階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
-150階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-200階：:Item_0009:x750 :Item_0017:x750 :Item_0071:x60 :Item_0019:x12
-250階：:Item_0009:x750 :Item_0068:x1 :Item_0018:x60
-300階：:Item_0009:x750 :Item_0017:x750 :Item_0071:x60 :Item_0019:x12
-350階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-400階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-450階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-500階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
-550階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-600階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-650階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
-700階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-750階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-800階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
-850階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-900階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-950階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-1000階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-1050階：:Item_0009:x750 :Item_0085:x10 :Item_0018:x45 :Item_0039:x60
-1100階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1150階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-1200階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-1250階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1300階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1350階：:Item_0009:x750 :Item_0085:x10 :Item_0018:x45 :Item_0039:x60
-1400階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1450階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1500階：:Item_0009:x750 :Item_0051:x10 :Item_0018:x45 :Item_0039:x60
-1550階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1600階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-1650階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1700階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
-1750階：:Item_0009:x750 :Item_0051:x10 :Item_0018:x45 :Item_0039:x60
-1800階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-1850階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
-1900階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
-1950階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-2000階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
-2050階：:Item_0009:x750 :Item_0051:x10 :Item_0018:x45 :Item_0039:x60
-2100階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5`,
+  150階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  200階：:Item_0009:x750 :Item_0017:x750 :Item_0071:x60 :Item_0019:x12
+  250階：:Item_0009:x750 :Item_0068:x1 :Item_0018:x60
+  300階：:Item_0009:x750 :Item_0017:x750 :Item_0071:x60 :Item_0019:x12
+  350階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  400階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  450階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  500階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
+  550階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  600階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  650階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
+  700階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  750階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  800階：:Item_0009:x750 :Item_0071:x60 :Item_0028:6hx10 :Item_0019:x3
+  850階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  900階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  950階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  1000階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  1050階：:Item_0009:x750 :Item_0085:x10 :Item_0018:x45 :Item_0039:x60
+  1100階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1150階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  1200階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  1250階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1300階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1350階：:Item_0009:x750 :Item_0085:x10 :Item_0018:x45 :Item_0039:x60
+  1400階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1450階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1500階：:Item_0009:x750 :Item_0051:x10 :Item_0018:x45 :Item_0039:x60
+  1550階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1600階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  1650階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1700階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
+  1750階：:Item_0009:x750 :Item_0051:x10 :Item_0018:x45 :Item_0039:x60
+  1800階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  1850階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
+  1900階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
+  1950階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  2000階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
+  2050階：:Item_0009:x750 :Item_0051:x10 :Item_0018:x45 :Item_0039:x60
+  2100階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5`,
         '1500PT': `50階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
-150階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-200階：:Item_0009:x1500 :Item_0017:x1500 :Item_0071:x120 :Item_0020:x7
-250階：:Item_0009:x1500 :Item_0068:x1 :Item_0018:x120
-300階：:Item_0009:x1500 :Item_0017:x1500 :Item_0071:x120 :Item_0020:x7
-350階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-400階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-450階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-500階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
-550階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-600階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-650階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
-700階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-750階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-800階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
-850階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-900階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-950階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-1000階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-1050階：:Item_0009:x1500 :Item_0085:x20 :Item_0018:x90 :Item_0039:x200
-1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1150階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-1250階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1300階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1350階：:Item_0009:x1500 :Item_0085:x20 :Item_0018:x90 :Item_0039:x200
-1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1500階：:Item_0009:x1500 :Item_0051:x20 :Item_0018:x90 :Item_0039:x200
-1550階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1600階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-1650階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1700階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
-1750階：:Item_0009:x1500 :Item_0051:x20 :Item_0018:x90 :Item_0039:x200
-1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-1850階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
-1900階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
-1950階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-2000階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
-2050階：:Item_0009:x1500 :Item_0051:x20 :Item_0018:x90 :Item_0039:x200
-2100階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10`,
+  150階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  200階：:Item_0009:x1500 :Item_0017:x1500 :Item_0071:x120 :Item_0020:x7
+  250階：:Item_0009:x1500 :Item_0068:x1 :Item_0018:x120
+  300階：:Item_0009:x1500 :Item_0017:x1500 :Item_0071:x120 :Item_0020:x7
+  350階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  400階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  450階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  500階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
+  550階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  600階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  650階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
+  700階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  750階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  800階：:Item_0009:x1500 :Item_0071:x120 :Item_0029:24hx5 :Item_0020:x2
+  850階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  900階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  950階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  1000階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  1050階：:Item_0009:x1500 :Item_0085:x20 :Item_0018:x90 :Item_0039:x200
+  1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1150階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  1250階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1300階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1350階：:Item_0009:x1500 :Item_0085:x20 :Item_0018:x90 :Item_0039:x200
+  1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1500階：:Item_0009:x1500 :Item_0051:x20 :Item_0018:x90 :Item_0039:x200
+  1550階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1600階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  1650階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1700階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
+  1750階：:Item_0009:x1500 :Item_0051:x20 :Item_0018:x90 :Item_0039:x200
+  1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  1850階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
+  1900階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
+  1950階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  2000階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
+  2050階：:Item_0009:x1500 :Item_0051:x20 :Item_0018:x90 :Item_0039:x200
+  2100階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10`,
         '3000PT': `50階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
-150階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-200階：:Item_0009:x3000 :Item_0017:x3000 :Item_0071:x240 :Item_0020:x15
-250階：:Item_0009:x3000 :Item_0068:x2 :Item_0018:x240
-300階：:Item_0009:x3000 :Item_0017:x3000 :Item_0071:x240 :Item_0020:x15
-350階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-400階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-450階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-500階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
-550階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-600階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-650階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
-700階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-750階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-800階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
-850階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-900階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-950階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-1000階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-1050階：:Item_0009:x3000 :Item_0085:x40 :Item_0018:x180 :Item_0039:x200
-1100階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1150階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-1200階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-1250階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1300階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1350階：:Item_0009:x3000 :Item_0085:x40 :Item_0018:x180 :Item_0039:x200
-1400階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1450階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1500階：:Item_0009:x3000 :Item_0051:x40 :Item_0018:x180 :Item_0039:x200
-1550階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1600階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-1650階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1700階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
-1750階：:Item_0009:x3000 :Item_0051:x40 :Item_0018:x180 :Item_0039:x200
-1800階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-1850階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200
-1900階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
-1950階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-2000階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
-2050階：:Item_0009:x3000 :Item_0051:x40 :Item_0018:x180 :Item_0039:x200
-2100階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5`,
+  150階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  200階：:Item_0009:x3000 :Item_0017:x3000 :Item_0071:x240 :Item_0020:x15
+  250階：:Item_0009:x3000 :Item_0068:x2 :Item_0018:x240
+  300階：:Item_0009:x3000 :Item_0017:x3000 :Item_0071:x240 :Item_0020:x15
+  350階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  400階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  450階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  500階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
+  550階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  600階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  650階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
+  700階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  750階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  800階：:Item_0009:x3000 :Item_0071:x240 :Item_0029:24hx10 :Item_0020:x4
+  850階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  900階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  950階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  1000階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  1050階：:Item_0009:x3000 :Item_0085:x40 :Item_0018:x180 :Item_0039:x200
+  1100階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1150階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  1200階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  1250階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1300階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1350階：:Item_0009:x3000 :Item_0085:x40 :Item_0018:x180 :Item_0039:x200
+  1400階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1450階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1500階：:Item_0009:x3000 :Item_0051:x40 :Item_0018:x180 :Item_0039:x200
+  1550階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1600階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  1650階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1700階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
+  1750階：:Item_0009:x3000 :Item_0051:x40 :Item_0018:x180 :Item_0039:x200
+  1800階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  1850階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200
+  1900階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
+  1950階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  2000階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
+  2050階：:Item_0009:x3000 :Item_0051:x40 :Item_0018:x180 :Item_0039:x200
+  2100階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5`,
         '5900PT': `50階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
-150階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-200階：:Item_0009:x5900 :Item_0017:x6000 :Item_0071:x480 :Item_0020:x30
-250階：:Item_0009:x5900 :Item_0068:x4 :Item_0018:x480
-300階：:Item_0009:x5900 :Item_0017:x6000 :Item_0071:x480 :Item_0020:x30
-350階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-400階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-450階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-500階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
-550階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-600階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-650階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
-700階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-750階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-800階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
-850階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-900階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-950階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-1000階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-1050階：:Item_0009:x5900 :Item_0085:x80 :Item_0018:x360 :Item_0039:x500
-1100階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1150階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-1200階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-1250階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1300階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1350階：:Item_0009:x5900 :Item_0085:x80 :Item_0018:x360 :Item_0039:x500
-1400階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1450階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1500階：:Item_0009:x5900 :Item_0051:x80 :Item_0018:x360 :Item_0039:x500
-1550階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1600階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-1650階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1700階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-1750階：:Item_0009:x5900 :Item_0051:x80 :Item_0018:x360 :Item_0039:x500
-1800階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-1850階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
-1900階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
-1950階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-2000階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-2050階：:Item_0009:x5900 :Item_0051:x80 :Item_0018:x360 :Item_0039:x500
-2100階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10`,
+  150階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  200階：:Item_0009:x5900 :Item_0017:x6000 :Item_0071:x480 :Item_0020:x30
+  250階：:Item_0009:x5900 :Item_0068:x4 :Item_0018:x480
+  300階：:Item_0009:x5900 :Item_0017:x6000 :Item_0071:x480 :Item_0020:x30
+  350階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  400階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  450階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  500階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
+  550階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  600階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  650階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
+  700階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  750階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  800階：:Item_0009:x5900 :Item_0071:x480 :Item_0029:24hx20 :Item_0020:x9
+  850階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  900階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  950階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  1000階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  1050階：:Item_0009:x5900 :Item_0085:x80 :Item_0018:x360 :Item_0039:x500
+  1100階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1150階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  1200階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  1250階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1300階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1350階：:Item_0009:x5900 :Item_0085:x80 :Item_0018:x360 :Item_0039:x500
+  1400階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1450階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1500階：:Item_0009:x5900 :Item_0051:x80 :Item_0018:x360 :Item_0039:x500
+  1550階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1600階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  1650階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1700階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  1750階：:Item_0009:x5900 :Item_0051:x80 :Item_0018:x360 :Item_0039:x500
+  1800階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  1850階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
+  1900階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
+  1950階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  2000階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  2050階：:Item_0009:x5900 :Item_0051:x80 :Item_0018:x360 :Item_0039:x500
+  2100階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10`,
       },
       'Azure': {
         '80PT': `250階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-300階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-350階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-400階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-450階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-500階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-550階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-600階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-650階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-700階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-750階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-800階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-850階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-900階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-950階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1000階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
-1050階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1100階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1150階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1200階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
-1250階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1300階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1350階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
-1400階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1450階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
-1500階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-1550階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
-1700階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
-1750階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1800階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5`,
+  300階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  350階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  400階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  450階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  500階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  550階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  600階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  650階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  700階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  750階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  800階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  850階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  900階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  950階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1000階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
+  1050階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1100階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1150階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1200階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
+  1250階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1300階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1350階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
+  1400階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1450階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
+  1500階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  1550階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
+  1700階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
+  1750階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1800階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5`,
         '325PT': `250階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-300階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-350階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-400階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-450階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-500階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-550階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-600階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-650階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-700階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-750階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-800階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-850階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-900階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-950階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1000階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
-1050階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1100階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1150階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1200階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
-1250階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1300階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1350階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
-1400階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1450階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
-1500階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-1550階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
-1700階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
-1750階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1800階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3`,
+  300階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  350階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  400階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  450階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  500階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  550階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  600階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  650階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  700階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  750階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  800階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  850階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  900階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  950階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1000階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
+  1050階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1100階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1150階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1200階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
+  1250階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1300階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1350階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
+  1400階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1450階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
+  1500階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  1550階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
+  1700階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
+  1750階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1800階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3`,
         '500PT': `250階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-300階：:Item_0009:x500 :Item_0067_1:x1 :Item_0016:6hx5 :Item_0018:x30
-350階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-400階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-450階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-500階：:Item_0009:x500 :Item_0067_1:x1 :Item_0016:6hx5 :Item_0018:x30
-550階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-600階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-650階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-700階：:Item_0009:x500 :Item_0067_1:x1 :Item_0016:6hx5 :Item_0018:x30
-750階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-800階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-850階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-900階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-950階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1000階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
-1050階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1100階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1150階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1200階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
-1250階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1300階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1350階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
-1400階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1450階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
-1500階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-1550階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
-1700階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
-1750階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1800階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5`,
+  300階：:Item_0009:x500 :Item_0067_1:x1 :Item_0016:6hx5 :Item_0018:x30
+  350階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  400階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  450階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  500階：:Item_0009:x500 :Item_0067_1:x1 :Item_0016:6hx5 :Item_0018:x30
+  550階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  600階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  650階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  700階：:Item_0009:x500 :Item_0067_1:x1 :Item_0016:6hx5 :Item_0018:x30
+  750階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  800階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  850階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  900階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  950階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1000階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
+  1050階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1100階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1150階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1200階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
+  1250階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1300階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1350階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
+  1400階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1450階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
+  1500階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  1550階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
+  1700階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
+  1750階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1800階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5`,
         '750PT': `250階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-300階：:Item_0009:x750 :Item_0067_1:x1 :Item_0016:6hx10 :Item_0018:x40
-350階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-400階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-450階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-500階：:Item_0009:x750 :Item_0067_1:x1 :Item_0016:6hx10 :Item_0018:x40
-550階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-600階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-650階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-700階：:Item_0009:x750 :Item_0067_1:x1 :Item_0016:6hx10 :Item_0018:x40
-750階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-800階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-850階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-900階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-950階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1000階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
-1050階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1100階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1150階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1200階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
-1250階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1300階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1350階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
-1400階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1450階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
-1500階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-1550階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
-1700階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
-1750階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1800階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10`,
+  300階：:Item_0009:x750 :Item_0067_1:x1 :Item_0016:6hx10 :Item_0018:x40
+  350階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  400階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  450階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  500階：:Item_0009:x750 :Item_0067_1:x1 :Item_0016:6hx10 :Item_0018:x40
+  550階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  600階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  650階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  700階：:Item_0009:x750 :Item_0067_1:x1 :Item_0016:6hx10 :Item_0018:x40
+  750階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  800階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  850階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  900階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  950階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1000階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
+  1050階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1100階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1150階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1200階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
+  1250階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1300階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1350階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
+  1400階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1450階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
+  1500階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  1550階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
+  1700階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
+  1750階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1800階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10`,
         '1500PT': `250階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-300階：:Item_0009:x1500 :Item_0067_1:x1 :Item_0027:24hx5 :Item_0018:x80
-350階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-400階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-450階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-500階：:Item_0009:x1500 :Item_0067_1:x1 :Item_0027:24hx5 :Item_0018:x80
-550階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-600階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-650階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-700階：:Item_0009:x1500 :Item_0067_1:x1 :Item_0027:24hx5 :Item_0018:x80
-750階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-800階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-850階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-900階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-950階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1000階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
-1050階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1150階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1200階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
-1250階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1300階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1350階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
-1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1450階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
-1500階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-1550階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
-1700階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
-1750階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15`,
+  300階：:Item_0009:x1500 :Item_0067_1:x1 :Item_0027:24hx5 :Item_0018:x80
+  350階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  400階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  450階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  500階：:Item_0009:x1500 :Item_0067_1:x1 :Item_0027:24hx5 :Item_0018:x80
+  550階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  600階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  650階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  700階：:Item_0009:x1500 :Item_0067_1:x1 :Item_0027:24hx5 :Item_0018:x80
+  750階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  800階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  850階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  900階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  950階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1000階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1050階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1150階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1200階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1250階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1300階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1350階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
+  1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1450階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
+  1500階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  1550階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
+  1700階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
+  1750階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15`,
         '3000PT': `250階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-300階：:Item_0009:x3000 :Item_0067_1:x2 :Item_0027:24hx10 :Item_0018:x160
-350階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-400階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-450階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-500階：:Item_0009:x3000 :Item_0067_1:x2 :Item_0027:24hx10 :Item_0018:x160
-550階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-600階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-650階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-700階：:Item_0009:x3000 :Item_0067_1:x2 :Item_0027:24hx10 :Item_0018:x160
-750階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-800階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-850階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-900階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-950階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1000階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
-1050階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1100階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1150階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1200階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
-1250階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-1300階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1350階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
-1400階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1450階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
-1500階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-1550階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
-1700階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
-1750階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15`,
+  300階：:Item_0009:x3000 :Item_0067_1:x2 :Item_0027:24hx10 :Item_0018:x160
+  350階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  400階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  450階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  500階：:Item_0009:x3000 :Item_0067_1:x2 :Item_0027:24hx10 :Item_0018:x160
+  550階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  600階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  650階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  700階：:Item_0009:x3000 :Item_0067_1:x2 :Item_0027:24hx10 :Item_0018:x160
+  750階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  800階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  850階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  900階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  950階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1000階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
+  1050階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1100階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1150階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1200階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
+  1250階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  1300階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1350階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
+  1400階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1450階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
+  1500階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  1550階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
+  1700階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
+  1750階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15`,
         '5900PT': `250階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-300階：:Item_0009:x5900 :Item_0067_1:x4 :Item_0027:24hx20 :Item_0018:x320
-350階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-400階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-450階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-500階：:Item_0009:x5900 :Item_0067_1:x4 :Item_0027:24hx20 :Item_0018:x320
-550階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-600階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-650階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-700階：:Item_0009:x5900 :Item_0067_1:x4 :Item_0027:24hx20 :Item_0018:x320
-750階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-800階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-850階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-900階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-950階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1000階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
-1050階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1100階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1150階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1200階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
-1250階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1300階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1350階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
-1400階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1450階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
-1500階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-1550階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
-1700階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-1750階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1800階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60`,
+  300階：:Item_0009:x5900 :Item_0067_1:x4 :Item_0027:24hx20 :Item_0018:x320
+  350階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  400階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  450階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  500階：:Item_0009:x5900 :Item_0067_1:x4 :Item_0027:24hx20 :Item_0018:x320
+  550階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  600階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  650階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  700階：:Item_0009:x5900 :Item_0067_1:x4 :Item_0027:24hx20 :Item_0018:x320
+  750階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  800階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  850階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  900階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  950階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1000階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
+  1050階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1100階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1150階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1200階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
+  1250階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1300階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1350階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
+  1400階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1450階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
+  1500階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  1550階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
+  1700階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  1750階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1800階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60`,
       },
       'Crimson': {
         '80PT': `250階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-300階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-350階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-400階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-450階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-500階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-550階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-600階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-650階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-700階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-750階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-800階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-850階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-900階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-950階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
-1000階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1050階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
-1100階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1150階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1200階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1250階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-1300階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1350階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1400階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
-1450階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1500階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
-1550階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1600階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
-1750階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
-1800階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5`,
+  300階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  350階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  400階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  450階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  500階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  550階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  600階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  650階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  700階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  750階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  800階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  850階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  900階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  950階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
+  1000階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1050階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
+  1100階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1150階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1200階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1250階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  1300階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1350階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1400階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
+  1450階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1500階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
+  1550階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1600階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
+  1750階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
+  1800階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5`,
         '325PT': `250階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-300階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-350階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-400階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-450階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-500階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-550階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-600階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-650階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-700階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-750階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-800階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-850階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-900階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-950階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
-1000階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1050階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
-1100階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1150階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1200階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1250階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-1300階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1350階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1400階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
-1450階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1500階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
-1550階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1600階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
-1750階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
-1800階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20`,
+  300階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  350階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  400階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  450階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  500階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  550階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  600階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  650階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  700階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  750階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  800階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  850階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  900階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  950階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
+  1000階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1050階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
+  1100階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1150階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1200階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1250階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  1300階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1350階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1400階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
+  1450階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1500階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
+  1550階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1600階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
+  1750階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
+  1800階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20`,
         '500PT': `250階：:Item_0009:x500 :Item_0067_2:x1 :Item_0016:6hx5 :Item_0018:x30
-300階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-350階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-400階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-450階：:Item_0009:x500 :Item_0067_2:x1 :Item_0016:6hx5 :Item_0018:x30
-500階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-550階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-600階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-650階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-700階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-750階：:Item_0009:x500 :Item_0067_2:x1 :Item_0016:6hx5 :Item_0018:x30
-800階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-850階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-900階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-950階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
-1000階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1050階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
-1100階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1150階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1200階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1250階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-1300階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1350階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1400階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
-1450階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1500階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
-1550階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1600階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
-1750階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
-1800階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30`,
+  300階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  350階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  400階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  450階：:Item_0009:x500 :Item_0067_2:x1 :Item_0016:6hx5 :Item_0018:x30
+  500階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  550階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  600階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  650階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  700階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  750階：:Item_0009:x500 :Item_0067_2:x1 :Item_0016:6hx5 :Item_0018:x30
+  800階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  850階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  900階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  950階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
+  1000階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1050階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
+  1100階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1150階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1200階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1250階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  1300階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1350階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1400階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
+  1450階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1500階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
+  1550階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1600階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
+  1750階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
+  1800階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30`,
         '750PT': `250階：:Item_0009:x750 :Item_0067_2:x1 :Item_0016:6hx10 :Item_0018:x40
-300階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-350階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-400階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-450階：:Item_0009:x750 :Item_0067_2:x1 :Item_0016:6hx10 :Item_0018:x40
-500階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-550階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-600階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-650階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-700階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-750階：:Item_0009:x750 :Item_0067_2:x1 :Item_0016:6hx10 :Item_0018:x40
-800階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-850階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-900階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-950階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
-1000階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1050階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
-1100階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1150階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1200階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1250階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-1300階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1350階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1400階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
-1450階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1500階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
-1550階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1600階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
-1750階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
-1800階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45`,
+  300階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  350階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  400階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  450階：:Item_0009:x750 :Item_0067_2:x1 :Item_0016:6hx10 :Item_0018:x40
+  500階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  550階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  600階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  650階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  700階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  750階：:Item_0009:x750 :Item_0067_2:x1 :Item_0016:6hx10 :Item_0018:x40
+  800階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  850階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  900階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  950階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
+  1000階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1050階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
+  1100階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1150階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1200階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1250階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  1300階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1350階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1400階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
+  1450階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1500階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
+  1550階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1600階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
+  1750階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
+  1800階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45`,
         '1500PT': `250階：:Item_0009:x1500 :Item_0067_2:x1 :Item_0027:24hx5 :Item_0018:x80
-300階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-350階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-400階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-450階：:Item_0009:x1500 :Item_0067_2:x1 :Item_0027:24hx5 :Item_0018:x80
-500階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-550階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-600階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-650階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-700階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-750階：:Item_0009:x1500 :Item_0067_2:x1 :Item_0027:24hx5 :Item_0018:x80
-800階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-850階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-900階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-950階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
-1000階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1050階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
-1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1150階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1250階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-1300階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1350階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
-1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1500階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
-1550階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1600階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
-1750階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
-1800階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90`,
+  300階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  350階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  400階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  450階：:Item_0009:x1500 :Item_0067_2:x1 :Item_0027:24hx5 :Item_0018:x80
+  500階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  550階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  600階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  650階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  700階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  750階：:Item_0009:x1500 :Item_0067_2:x1 :Item_0027:24hx5 :Item_0018:x80
+  800階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  850階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  900階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  950階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1000階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1050階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1150階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1250階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  1300階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1350階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
+  1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1500階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
+  1550階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1600階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
+  1750階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万
+  1800階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90`,
         '3000PT': `250階：:Item_0009:x3000 :Item_0067_2:x2 :Item_0027:24hx10 :Item_0018:x160
-300階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-350階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-400階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-450階：:Item_0009:x3000 :Item_0067_2:x2 :Item_0027:24hx10 :Item_0018:x160
-500階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-550階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-600階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-650階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-700階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-750階：:Item_0009:x3000 :Item_0067_2:x2 :Item_0027:24hx10 :Item_0018:x160
-800階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-850階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-900階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-950階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
-1000階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1050階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
-1100階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1150階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1200階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1250階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-1300階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-1350階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1400階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
-1450階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1500階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
-1550階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1600階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200
-1750階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
-1800階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180`,
+  300階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  350階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  400階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  450階：:Item_0009:x3000 :Item_0067_2:x2 :Item_0027:24hx10 :Item_0018:x160
+  500階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  550階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  600階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  650階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  700階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  750階：:Item_0009:x3000 :Item_0067_2:x2 :Item_0027:24hx10 :Item_0018:x160
+  800階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  850階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  900階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  950階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
+  1000階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1050階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
+  1100階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1150階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1200階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1250階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  1300階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  1350階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1400階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
+  1450階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1500階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
+  1550階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1600階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200
+  1750階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
+  1800階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180`,
         '5900PT': `250階：:Item_0009:x5900 :Item_0067_2:x4 :Item_0027:24hx20 :Item_0018:x320
-300階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-350階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-400階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-450階：:Item_0009:x5900 :Item_0067_2:x4 :Item_0027:24hx20 :Item_0018:x320
-500階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-550階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-600階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-650階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-700階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-750階：:Item_0009:x5900 :Item_0067_2:x4 :Item_0027:24hx20 :Item_0018:x320
-800階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-850階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-900階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-950階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
-1000階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1050階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
-1100階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1150階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1200階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1250階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-1300階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1350階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1400階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
-1450階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1500階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
-1550階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1600階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
-1750階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-1800階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360`,
+  300階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  350階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  400階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  450階：:Item_0009:x5900 :Item_0067_2:x4 :Item_0027:24hx20 :Item_0018:x320
+  500階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  550階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  600階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  650階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  700階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  750階：:Item_0009:x5900 :Item_0067_2:x4 :Item_0027:24hx20 :Item_0018:x320
+  800階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  850階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  900階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  950階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
+  1000階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1050階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
+  1100階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1150階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1200階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1250階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  1300階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1350階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1400階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
+  1450階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1500階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
+  1550階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1600階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
+  1750階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  1800階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360`,
       },
       'Emerald': {
         '80PT': `250階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-300階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-350階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-400階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-450階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-500階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-550階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-600階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-650階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-700階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-750階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-800階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-850階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-900階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-950階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1000階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1050階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
-1100階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1150階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
-1200階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1250階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1300階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
-1350階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-1400階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1450階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1500階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
-1550階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
-1600階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1650階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1700階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20`,
+  300階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  350階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  400階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  450階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  500階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  550階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  600階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  650階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  700階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  750階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  800階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  850階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  900階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  950階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1000階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1050階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
+  1100階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1150階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
+  1200階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1250階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1300階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
+  1350階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  1400階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1450階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1500階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
+  1550階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800
+  1600階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1650階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1700階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20`,
         '325PT': `250階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-300階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-350階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-400階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-450階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-500階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-550階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-600階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-650階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-700階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-750階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-800階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-850階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-900階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-950階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1000階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1050階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
-1100階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1150階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
-1200階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1250階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1300階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
-1350階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-1400階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1450階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1500階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
-1550階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
-1600階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1650階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1700階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20`,
+  300階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  350階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  400階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  450階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  500階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  550階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  600階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  650階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  700階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  750階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  800階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  850階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  900階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  950階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1000階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1050階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
+  1100階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1150階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
+  1200階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1250階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1300階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
+  1350階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  1400階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1450階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1500階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
+  1550階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500
+  1600階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1650階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1700階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20`,
         '500PT': `250階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-300階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-350階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-400階：:Item_0009:x500 :Item_0067_3:x1 :Item_0016:6hx5 :Item_0018:x30
-450階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-500階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-550階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-600階：:Item_0009:x500 :Item_0067_3:x1 :Item_0016:6hx5 :Item_0018:x30
-650階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-700階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-750階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-800階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-850階：:Item_0009:x500 :Item_0067_3:x1 :Item_0016:6hx5 :Item_0018:x30
-900階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-950階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1000階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1050階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
-1100階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1150階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
-1200階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1250階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1300階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
-1350階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-1400階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1450階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1500階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
-1550階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
-1600階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1650階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1700階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100`,
+  300階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  350階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  400階：:Item_0009:x500 :Item_0067_3:x1 :Item_0016:6hx5 :Item_0018:x30
+  450階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  500階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  550階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  600階：:Item_0009:x500 :Item_0067_3:x1 :Item_0016:6hx5 :Item_0018:x30
+  650階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  700階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  750階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  800階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  850階：:Item_0009:x500 :Item_0067_3:x1 :Item_0016:6hx5 :Item_0018:x30
+  900階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  950階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1000階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1050階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
+  1100階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1150階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
+  1200階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1250階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1300階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
+  1350階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  1400階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1450階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1500階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
+  1550階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500
+  1600階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1650階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1700階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100`,
         '750PT': `250階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-300階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-350階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-400階：:Item_0009:x750 :Item_0067_3:x1 :Item_0016:6hx10 :Item_0018:x40
-450階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-500階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-550階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-600階：:Item_0009:x750 :Item_0067_3:x1 :Item_0016:6hx10 :Item_0018:x40
-650階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-700階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-750階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-800階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-850階：:Item_0009:x750 :Item_0067_3:x1 :Item_0016:6hx10 :Item_0018:x40
-900階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-950階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1000階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1050階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
-1100階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1150階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
-1200階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1250階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1300階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
-1350階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-1400階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1450階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1500階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
-1550階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
-1600階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1650階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1700階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60`,
+  300階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  350階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  400階：:Item_0009:x750 :Item_0067_3:x1 :Item_0016:6hx10 :Item_0018:x40
+  450階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  500階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  550階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  600階：:Item_0009:x750 :Item_0067_3:x1 :Item_0016:6hx10 :Item_0018:x40
+  650階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  700階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  750階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  800階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  850階：:Item_0009:x750 :Item_0067_3:x1 :Item_0016:6hx10 :Item_0018:x40
+  900階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  950階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1000階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1050階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
+  1100階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1150階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
+  1200階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1250階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1300階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
+  1350階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  1400階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1450階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1500階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
+  1550階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000
+  1600階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1650階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1700階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60`,
         '1500PT': `250階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-300階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-350階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-400階：:Item_0009:x1500 :Item_0067_3:x1 :Item_0027:24hx5 :Item_0018:x80
-450階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-500階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-550階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-600階：:Item_0009:x1500 :Item_0067_3:x1 :Item_0027:24hx5 :Item_0018:x80
-650階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-700階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-750階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-800階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-850階：:Item_0009:x1500 :Item_0067_3:x1 :Item_0027:24hx5 :Item_0018:x80
-900階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-950階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1000階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1050階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
-1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1150階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
-1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1250階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1300階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
-1350階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-1400階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1500階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
-1550階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
-1600階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-1650階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1700階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200`,
+  300階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  350階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  400階：:Item_0009:x1500 :Item_0067_3:x1 :Item_0027:24hx5 :Item_0018:x80
+  450階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  500階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  550階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  600階：:Item_0009:x1500 :Item_0067_3:x1 :Item_0027:24hx5 :Item_0018:x80
+  650階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  700階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  750階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  800階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  850階：:Item_0009:x1500 :Item_0067_3:x1 :Item_0027:24hx5 :Item_0018:x80
+  900階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  950階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1000階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1050階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1100階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1150階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1250階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1300階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
+  1350階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  1400階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1500階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
+  1550階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万
+  1600階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  1650階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1700階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200`,
         '3000PT': `250階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-300階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-350階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-400階：:Item_0009:x3000 :Item_0067_3:x2 :Item_0027:24hx10 :Item_0018:x160
-450階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-500階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-550階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-600階：:Item_0009:x3000 :Item_0067_3:x2 :Item_0027:24hx10 :Item_0018:x160
-650階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-700階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-750階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-800階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-850階：:Item_0009:x3000 :Item_0067_3:x2 :Item_0027:24hx10 :Item_0018:x160
-900階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-950階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1000階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1050階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
-1100階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1150階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
-1200階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1250階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1300階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
-1350階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-1400階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-1450階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1500階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
-1550階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-1600階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1650階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1700階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500`,
+  300階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  350階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  400階：:Item_0009:x3000 :Item_0067_3:x2 :Item_0027:24hx10 :Item_0018:x160
+  450階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  500階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  550階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  600階：:Item_0009:x3000 :Item_0067_3:x2 :Item_0027:24hx10 :Item_0018:x160
+  650階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  700階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  750階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  800階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  850階：:Item_0009:x3000 :Item_0067_3:x2 :Item_0027:24hx10 :Item_0018:x160
+  900階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  950階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1000階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1050階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
+  1100階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1150階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
+  1200階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1250階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1300階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
+  1350階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  1400階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  1450階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1500階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
+  1550階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  1600階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1650階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1700階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500`,
         '5900PT': `250階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-300階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-350階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-400階：:Item_0009:x5900 :Item_0067_3:x4 :Item_0027:24hx20 :Item_0018:x320
-450階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-500階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-550階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-600階：:Item_0009:x5900 :Item_0067_3:x4 :Item_0027:24hx20 :Item_0018:x320
-650階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-700階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-750階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-800階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-850階：:Item_0009:x5900 :Item_0067_3:x4 :Item_0027:24hx20 :Item_0018:x320
-900階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-950階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1000階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1050階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
-1100階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1150階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
-1200階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1250階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1300階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
-1350階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-1400階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1450階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1500階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
-1550階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
-1600階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1650階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1700階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500`,
+  300階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  350階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  400階：:Item_0009:x5900 :Item_0067_3:x4 :Item_0027:24hx20 :Item_0018:x320
+  450階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  500階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  550階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  600階：:Item_0009:x5900 :Item_0067_3:x4 :Item_0027:24hx20 :Item_0018:x320
+  650階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  700階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  750階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  800階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  850階：:Item_0009:x5900 :Item_0067_3:x4 :Item_0027:24hx20 :Item_0018:x320
+  900階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  950階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1000階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1050階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
+  1100階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1150階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
+  1200階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1250階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1300階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
+  1350階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  1400階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1450階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1500階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
+  1550階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万
+  1600階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1650階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1700階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500`,
       },
       'Amber': {
         '80PT': `250階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-300階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-350階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-400階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-450階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-500階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-550階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-600階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-650階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-700階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-750階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-800階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
-850階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-900階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-950階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1000階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
-1050階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1100階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
-1150階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1200階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1250階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
-1300階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
-1350階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1400階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
-1450階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
-1500階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1550階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-1600階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1650階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
-1800階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800`,
+  300階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  350階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  400階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  450階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  500階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  550階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  600階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  650階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  700階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  750階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  800階：:Item_0009:x80 :Item_0071:x60 :Item_0018:x10
+  850階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  900階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  950階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1000階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0038:x800
+  1050階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1100階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0038:x800
+  1150階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1200階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1250階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x10
+  1300階：:Item_0009:x80 :Item_0054:x5 :Item_0058:Lv2x10 :Item_0028:2hx5
+  1350階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1400階：:Item_0009:x80 :Item_0054:x5 :Item_0034:x8
+  1450階：:Item_0009:x80 :Item_0178:x5 :Item_0010:6hx5
+  1500階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1550階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  1600階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1650階：:Item_0009:x80 :Item_0178:x5 :Item_0018:x5 :Item_0039:x20
+  1800階：:Item_0009:x80 :Item_0052:x5 :Item_0039:x20 :Item_0038:x800`,
         '325PT': `250階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-300階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-350階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-400階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-450階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-500階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
-550階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-600階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-650階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-700階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-750階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-800階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
-850階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-900階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-950階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1000階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
-1050階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1100階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
-1150階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1200階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1250階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
-1300階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
-1350階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1400階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
-1450階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
-1500階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1550階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-1600階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1650階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
-1800階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500`,
+  300階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  350階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  400階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  450階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  500階：:Item_0009:x325 :Item_0052:x5 :Item_0019:x5
+  550階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  600階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  650階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  700階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  750階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  800階：:Item_0009:x325 :Item_0071:x60 :Item_0016:6hx2 :Item_0018:x20
+  850階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  900階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  950階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1000階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0038:x3500
+  1050階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1100階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0038:x3500
+  1150階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1200階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1250階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x25
+  1300階：:Item_0009:x325 :Item_0054:x5 :Item_0058:Lv3x10 :Item_0028:6hx1
+  1350階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1400階：:Item_0009:x325 :Item_0054:x5 :Item_0034:x8 :Item_0019:x5
+  1450階：:Item_0009:x325 :Item_0178:x5 :Item_0023:24hx3
+  1500階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1550階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  1600階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1650階：:Item_0009:x325 :Item_0178:x5 :Item_0018:x20 :Item_0039:x20
+  1800階：:Item_0009:x325 :Item_0052:x5 :Item_0039:x20 :Item_0038:x3500`,
         '500PT': `250階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-300階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-350階：:Item_0009:x500 :Item_0067_4:x1 :Item_0016:6hx5 :Item_0018:x30
-400階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-450階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-500階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-550階：:Item_0009:x500 :Item_0067_4:x1 :Item_0016:6hx5 :Item_0018:x30
-600階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-650階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-700階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-750階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-800階：:Item_0009:x500 :Item_0067_4:x1 :Item_0016:6hx5 :Item_0018:x30
-850階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-900階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-950階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1000階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
-1050階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1100階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
-1150階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1200階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1250階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
-1300階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
-1350階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1400階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
-1450階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
-1500階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1550階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-1600階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1650階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
-1800階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500`,
+  300階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  350階：:Item_0009:x500 :Item_0067_4:x1 :Item_0016:6hx5 :Item_0018:x30
+  400階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  450階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  500階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  550階：:Item_0009:x500 :Item_0067_4:x1 :Item_0016:6hx5 :Item_0018:x30
+  600階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  650階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  700階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  750階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  800階：:Item_0009:x500 :Item_0067_4:x1 :Item_0016:6hx5 :Item_0018:x30
+  850階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  900階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  950階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1000階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0038:x7500
+  1050階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1100階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0038:x7500
+  1150階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1200階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1250階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x40
+  1300階：:Item_0009:x500 :Item_0054:x5 :Item_0058:Lv4x10 :Item_0028:6hx4
+  1350階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1400階：:Item_0009:x500 :Item_0054:x5 :Item_0034:x10 :Item_0019:x7
+  1450階：:Item_0009:x500 :Item_0054:x5 :Item_0178:x5 :Item_0023:24hx5
+  1500階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1550階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  1600階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1650階：:Item_0009:x500 :Item_0178:x5 :Item_0018:x30 :Item_0039:x100
+  1800階：:Item_0009:x500 :Item_0054:x5 :Item_0039:x100 :Item_0038:x7500`,
         '750PT': `250階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-300階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-350階：:Item_0009:x750 :Item_0067_4:x1 :Item_0016:6hx10 :Item_0018:x40
-400階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-450階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-500階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
-550階：:Item_0009:x750 :Item_0067_4:x1 :Item_0016:6hx10 :Item_0018:x40
-600階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-650階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-700階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-750階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-800階：:Item_0009:x750 :Item_0067_4:x1 :Item_0016:6hx10 :Item_0018:x40
-850階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-900階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-950階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1000階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
-1050階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1100階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
-1150階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1200階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1250階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
-1300階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
-1350階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1400階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
-1450階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
-1500階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
-1550階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-1600階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1650階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
-1800階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000`,
+  300階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  350階：:Item_0009:x750 :Item_0067_4:x1 :Item_0016:6hx10 :Item_0018:x40
+  400階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  450階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  500階：:Item_0009:x750 :Item_0054:x10 :Item_0019:x12
+  550階：:Item_0009:x750 :Item_0067_4:x1 :Item_0016:6hx10 :Item_0018:x40
+  600階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  650階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  700階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  750階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  800階：:Item_0009:x750 :Item_0067_4:x1 :Item_0016:6hx10 :Item_0018:x40
+  850階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  900階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  950階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1000階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0038:x8000
+  1050階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1100階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0038:x8000
+  1150階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1200階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1250階：:Item_0009:x750 :Item_0051:x5 :Item_0178:x10 :Item_0018:x60
+  1300階：:Item_0009:x750 :Item_0054:x5 :Item_0058:Lv5x10 :Item_0029:8hx5
+  1350階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1400階：:Item_0009:x750 :Item_0054:x10 :Item_0034:x10 :Item_0019:x12
+  1450階：:Item_0009:x750 :Item_0054:x5 :Item_0178:x10 :Item_0023:24hx10
+  1500階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0023:24hx10
+  1550階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  1600階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1650階：:Item_0009:x750 :Item_0178:x10 :Item_0018:x45 :Item_0039:x60
+  1800階：:Item_0009:x750 :Item_0054:x10 :Item_0039:x60 :Item_0038:x8000`,
         '1500PT': `250階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-300階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-350階：:Item_0009:x1500 :Item_0067_4:x1 :Item_0027:24hx5 :Item_0018:x80
-400階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-450階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-500階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
-550階：:Item_0009:x1500 :Item_0067_4:x1 :Item_0027:24hx5 :Item_0018:x80
-600階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-650階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-700階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-750階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-800階：:Item_0009:x1500 :Item_0067_4:x1 :Item_0027:24hx5 :Item_0018:x80
-850階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-900階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-950階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1000階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
-1050階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1100階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
-1150階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1250階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
-1300階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
-1350階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
-1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
-1500階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
-1550階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-1600階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1650階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
-1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万`,
+  300階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  350階：:Item_0009:x1500 :Item_0067_4:x1 :Item_0027:24hx5 :Item_0018:x80
+  400階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  450階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  500階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x10 :Item_0020:x7
+  550階：:Item_0009:x1500 :Item_0067_4:x1 :Item_0027:24hx5 :Item_0018:x80
+  600階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  650階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  700階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  750階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  800階：:Item_0009:x1500 :Item_0067_4:x1 :Item_0027:24hx5 :Item_0018:x80
+  850階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  900階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  950階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1000階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1050階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1100階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0038:x1.5万
+  1150階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1200階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1250階：:Item_0009:x1500 :Item_0051:x15 :Item_0178:x15 :Item_0018:x120
+  1300階：:Item_0009:x1500 :Item_0054:x10 :Item_0058:Lv6x10 :Item_0028:6hx10
+  1350階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1400階：:Item_0009:x1500 :Item_0054:x10 :Item_0034:x20 :Item_0020:x7
+  1450階：:Item_0009:x1500 :Item_0054:x10 :Item_0178:x15 :Item_0023:24hx15
+  1500階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0023:24hx15
+  1550階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  1600階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1650階：:Item_0009:x1500 :Item_0178:x20 :Item_0018:x90 :Item_0039:x200
+  1800階：:Item_0009:x1500 :Item_0054:x10 :Item_0039:x200 :Item_0038:x1.5万`,
         '3000PT': `250階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-300階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-350階：:Item_0009:x3000 :Item_0067_4:x2 :Item_0027:24hx10 :Item_0018:x160
-400階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-450階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-500階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
-550階：:Item_0009:x3000 :Item_0067_4:x2 :Item_0027:24hx10 :Item_0018:x160
-600階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-650階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-700階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-750階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-800階：:Item_0009:x3000 :Item_0067_4:x2 :Item_0027:24hx10 :Item_0018:x160
-850階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-900階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-950階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1000階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
-1050階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1100階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
-1150階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1200階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1250階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
-1300階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
-1350階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-1400階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
-1450階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
-1500階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
-1550階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-1600階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1650階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200
-1800階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万`,
+  300階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  350階：:Item_0009:x3000 :Item_0067_4:x2 :Item_0027:24hx10 :Item_0018:x160
+  400階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  450階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  500階：:Item_0009:x3000 :Item_0054:x20 :Item_0085:x20 :Item_0020:x15
+  550階：:Item_0009:x3000 :Item_0067_4:x2 :Item_0027:24hx10 :Item_0018:x160
+  600階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  650階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  700階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  750階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  800階：:Item_0009:x3000 :Item_0067_4:x2 :Item_0027:24hx10 :Item_0018:x160
+  850階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  900階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  950階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1000階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0038:x3万
+  1050階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1100階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0038:x3万
+  1150階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1200階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1250階：:Item_0009:x3000 :Item_0051:x30 :Item_0178:x30 :Item_0018:x240
+  1300階：:Item_0009:x3000 :Item_0054:x15 :Item_0058:Lv7x20 :Item_0029:24hx5
+  1350階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  1400階：:Item_0009:x3000 :Item_0054:x20 :Item_0034:x40 :Item_0020:x15
+  1450階：:Item_0009:x3000 :Item_0054:x15 :Item_0178:x30 :Item_0023:24hx30
+  1500階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0023:24hx30
+  1550階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  1600階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1650階：:Item_0009:x3000 :Item_0178:x40 :Item_0018:x180 :Item_0039:x200
+  1800階：:Item_0009:x3000 :Item_0054:x20 :Item_0039:x200 :Item_0038:x3万`,
         '5900PT': `250階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-300階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-350階：:Item_0009:x5900 :Item_0067_4:x4 :Item_0027:24hx20 :Item_0018:x320
-400階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-450階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-500階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
-550階：:Item_0009:x5900 :Item_0067_4:x4 :Item_0027:24hx20 :Item_0018:x320
-600階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-650階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-700階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-750階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-800階：:Item_0009:x5900 :Item_0067_4:x4 :Item_0027:24hx20 :Item_0018:x320
-850階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-900階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-950階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1000階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
-1050階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1100階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
-1150階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1200階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1250階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
-1300階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
-1350階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1400階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
-1450階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
-1500階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
-1550階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-1600階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1650階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
-1800階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万`,
+  300階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  350階：:Item_0009:x5900 :Item_0067_4:x4 :Item_0027:24hx20 :Item_0018:x320
+  400階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  450階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  500階：:Item_0009:x5900 :Item_0054:x40 :Item_0085:x40 :Item_0020:x30
+  550階：:Item_0009:x5900 :Item_0067_4:x4 :Item_0027:24hx20 :Item_0018:x320
+  600階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  650階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  700階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  750階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  800階：:Item_0009:x5900 :Item_0067_4:x4 :Item_0027:24hx20 :Item_0018:x320
+  850階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  900階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  950階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1000階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0038:x6万
+  1050階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1100階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0038:x6万
+  1150階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1200階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1250階：:Item_0009:x5900 :Item_0051:x60 :Item_0178:x60 :Item_0018:x480
+  1300階：:Item_0009:x5900 :Item_0054:x25 :Item_0058:Lv7x40 :Item_0029:24hx10
+  1350階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1400階：:Item_0009:x5900 :Item_0054:x40 :Item_0034:x80 :Item_0020:x30
+  1450階：:Item_0009:x5900 :Item_0054:x25 :Item_0178:x60 :Item_0023:24hx60
+  1500階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0023:24hx60
+  1550階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  1600階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1650階：:Item_0009:x5900 :Item_0178:x80 :Item_0018:x360 :Item_0039:x500
+  1800階：:Item_0009:x5900 :Item_0054:x40 :Item_0039:x500 :Item_0038:x6万`,
       },
       'Universal': {
         '80PT': `225階：:Item_0009:x80 :Item_0021:x5
-275階：:Item_0009:x80 :Item_0071:x60 :Item_0058:Lv2x10 :Item_0018:x10
-325階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-375階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
-425階：:Item_0009:x80 :Item_0021:x5
-475階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-525階：:Item_0009:x80 :Item_0071:x60 :Item_0058:Lv2x10 :Item_0018:x10
-575階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
-625階：:Item_0009:x80 :Item_0021:x5
-675階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-725階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0018:x5
-775階：:Item_0009:x80 :Item_0021:x5
-825階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
-875階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
-925階：:Item_0009:x80 :Item_0021:x5
-975階：:Item_0009:x80 :Item_0052:x5 :Item_0018:x5
-1025階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-1075階：:Item_0009:x80 :Item_0021:x5
-1125階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-1175階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1225階：:Item_0009:x80 :Item_0021:x5
-1275階：:Item_0009:x80 :Item_0052:x5 :Item_0018:x5
-1325階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
-1375階：:Item_0009:x80 :Item_0021:x5
-1425階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
-1475階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
-1525階：:Item_0009:x80 :Item_0021:x5`,
+  275階：:Item_0009:x80 :Item_0071:x60 :Item_0058:Lv2x10 :Item_0018:x10
+  325階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  375階：:Item_0009:x80 :Item_0052:x5 :Item_0019:x2
+  425階：:Item_0009:x80 :Item_0021:x5
+  475階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  525階：:Item_0009:x80 :Item_0071:x60 :Item_0058:Lv2x10 :Item_0018:x10
+  575階：:Item_0009:x80 :Item_0051:x5 :Item_0019:x2
+  625階：:Item_0009:x80 :Item_0021:x5
+  675階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  725階：:Item_0009:x80 :Item_0085:x5 :Item_0039:x20 :Item_0018:x5
+  775階：:Item_0009:x80 :Item_0021:x5
+  825階：:Item_0009:x80 :Item_0054:x5 :Item_0019:x2
+  875階：:Item_0009:x80 :Item_0051:x5 :Item_0039:x20 :Item_0018:x5
+  925階：:Item_0009:x80 :Item_0021:x5
+  975階：:Item_0009:x80 :Item_0052:x5 :Item_0018:x5
+  1025階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  1075階：:Item_0009:x80 :Item_0021:x5
+  1125階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  1175階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1225階：:Item_0009:x80 :Item_0021:x5
+  1275階：:Item_0009:x80 :Item_0052:x5 :Item_0018:x5
+  1325階：:Item_0009:x80 :Item_0039:x20 :Item_0058:Lv2x10
+  1375階：:Item_0009:x80 :Item_0021:x5
+  1425階：:Item_0009:x80 :Item_0052:x5 :Item_0016:6hx2 :Item_0018:x5
+  1475階：:Item_0009:x80 :Item_0054:x5 :Item_0010:6hx5
+  1525階：:Item_0009:x80 :Item_0021:x5`,
         '325PT': `225階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-275階：:Item_0009:x325 :Item_0071:x60 :Item_0058:Lv3x10 :Item_0018:x20
-325階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-375階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
-425階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-475階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-525階：:Item_0009:x325 :Item_0071:x60 :Item_0058:Lv3x10 :Item_0018:x20
-575階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
-625階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-675階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-725階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0018:x20
-775階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-825階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
-875階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
-925階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-975階：:Item_0009:x325 :Item_0052:x5 :Item_0025:24hx2 :Item_0018:x10
-1025階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-1075階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-1125階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-1175階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1225階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-1275階：:Item_0009:x325 :Item_0052:x5 :Item_0025:24hx2 :Item_0018:x10
-1325階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
-1375階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
-1425階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
-1475階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
-1525階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20`,
+  275階：:Item_0009:x325 :Item_0071:x60 :Item_0058:Lv3x10 :Item_0018:x20
+  325階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  375階：:Item_0009:x325 :Item_0052:x5 :Item_0016:6hx2 :Item_0019:x5
+  425階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  475階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  525階：:Item_0009:x325 :Item_0071:x60 :Item_0058:Lv3x10 :Item_0018:x20
+  575階：:Item_0009:x325 :Item_0051:x5 :Item_0019:x5
+  625階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  675階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  725階：:Item_0009:x325 :Item_0085:x5 :Item_0039:x20 :Item_0018:x20
+  775階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  825階：:Item_0009:x325 :Item_0054:x5 :Item_0019:x5
+  875階：:Item_0009:x325 :Item_0051:x5 :Item_0039:x20 :Item_0018:x20
+  925階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  975階：:Item_0009:x325 :Item_0052:x5 :Item_0025:24hx2 :Item_0018:x10
+  1025階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  1075階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  1125階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  1175階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1225階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  1275階：:Item_0009:x325 :Item_0052:x5 :Item_0025:24hx2 :Item_0018:x10
+  1325階：:Item_0009:x325 :Item_0039:x20 :Item_0058:Lv3x10 :Item_0018:x10
+  1375階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20
+  1425階：:Item_0009:x325 :Item_0052:x5 :Item_0027:24hx2 :Item_0018:x10
+  1475階：:Item_0009:x325 :Item_0054:x5 :Item_0023:24hx3
+  1525階：:Item_0009:x325 :Item_0021:x5 :Item_0018:x20`,
         '500PT': `225階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-275階：:Item_0009:x500 :Item_0068:x1 :Item_0058:Lv4x10 :Item_0018:x30
-325階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-375階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
-425階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-475階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-525階：:Item_0009:x500 :Item_0068:x1 :Item_0058:Lv4x10 :Item_0018:x30
-575階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
-625階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-675階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-725階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0018:x30
-775階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-825階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
-875階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
-925階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-975階：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
-1025階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-1075階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-1125階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-1175階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1225階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-1275階：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
-1325階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
-1375階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
-1425階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
-1475階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
-1525階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30`,
+  275階：:Item_0009:x500 :Item_0068:x1 :Item_0058:Lv4x10 :Item_0018:x30
+  325階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  375階：:Item_0009:x500 :Item_0052:x10 :Item_0016:6hx5 :Item_0019:x7
+  425階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  475階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  525階：:Item_0009:x500 :Item_0068:x1 :Item_0058:Lv4x10 :Item_0018:x30
+  575階：:Item_0009:x500 :Item_0051:x5 :Item_0019:x7
+  625階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  675階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  725階：:Item_0009:x500 :Item_0085:x5 :Item_0039:x100 :Item_0018:x30
+  775階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  825階：:Item_0009:x500 :Item_0054:x5 :Item_0019:x7
+  875階：:Item_0009:x500 :Item_0051:x5 :Item_0039:x100 :Item_0018:x30
+  925階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  975階：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
+  1025階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  1075階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  1125階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  1175階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1225階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  1275階：:Item_0009:x500 :Item_0054:x5 :Item_0025:24hx3 :Item_0018:x15
+  1325階：:Item_0009:x500 :Item_0039:x100 :Item_0058:Lv4x10 :Item_0018:x15
+  1375階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30
+  1425階：:Item_0009:x500 :Item_0054:x5 :Item_0027:24hx3 :Item_0018:x15
+  1475階：:Item_0009:x500 :Item_0054:x5 :Item_0023:24hx5
+  1525階：:Item_0009:x500 :Item_0021:x5 :Item_0018:x30`,
         '750PT': `225階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-275階：:Item_0009:x750 :Item_0068:x1 :Item_0058:Lv5x10 :Item_0018:x40
-325階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-375階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
-425階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-475階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-525階：:Item_0009:x750 :Item_0068:x1 :Item_0058:Lv5x10 :Item_0018:x40
-575階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
-625階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-675階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
-725階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0018:x45
-775階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-825階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
-875階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
-925階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-975階：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
-1025階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-1075階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-1125階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-1175階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1225階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-1275階：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
-1325階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
-1375階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
-1425階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
-1475階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
-1525階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45`,
+  275階：:Item_0009:x750 :Item_0068:x1 :Item_0058:Lv5x10 :Item_0018:x40
+  325階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  375階：:Item_0009:x750 :Item_0053:x10 :Item_0016:6hx10 :Item_0019:x12
+  425階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  475階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  525階：:Item_0009:x750 :Item_0068:x1 :Item_0058:Lv5x10 :Item_0018:x40
+  575階：:Item_0009:x750 :Item_0051:x5 :Item_0085:x10 :Item_0019:x12
+  625階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  675階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0019:x12
+  725階：:Item_0009:x750 :Item_0085:x10 :Item_0039:x60 :Item_0018:x45
+  775階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  825階：:Item_0009:x750 :Item_0054:x5 :Item_0085:x10 :Item_0019:x12
+  875階：:Item_0009:x750 :Item_0051:x10 :Item_0039:x60 :Item_0018:x45
+  925階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  975階：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
+  1025階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  1075階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  1125階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  1175階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1225階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  1275階：:Item_0009:x750 :Item_0054:x10 :Item_0025:24hx5 :Item_0018:x30
+  1325階：:Item_0009:x750 :Item_0039:x60 :Item_0058:Lv5x10 :Item_0018:x30
+  1375階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45
+  1425階：:Item_0009:x750 :Item_0054:x10 :Item_0027:24hx5 :Item_0018:x30
+  1475階：:Item_0009:x750 :Item_0054:x5 :Item_0051:x5 :Item_0023:24hx10
+  1525階：:Item_0009:x750 :Item_0021:x5 :Item_0018:x45`,
         '1500PT': `225階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
-275階：:Item_0009:x1500 :Item_0068:x1 :Item_0058:Lv6x10 :Item_0018:x80
-325階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-375階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
-425階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
-475階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-525階：:Item_0009:x1500 :Item_0068:x1 :Item_0058:Lv6x10 :Item_0018:x80
-575階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
-625階：:Item_0009:x1500 :Item_0021:x5 :Item_0085:x10 :Item_0018:x90
-675階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
-725階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0018:x90
-775階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
-825階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
-875階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
-925階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
-975階：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-1025階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-1075階：:Item_0009:x1500 :Item_0021:x5 :Item_0085:x10 :Item_0018:x90
-1125階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-1175階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1225階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
-1275階：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
-1325階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
-1375階：:Item_0009:x1500 :Item_0021:x5 :Item_0085:x10 :Item_0018:x90
-1425階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
-1475階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
-1525階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90`,
+  275階：:Item_0009:x1500 :Item_0068:x1 :Item_0058:Lv6x10 :Item_0018:x80
+  325階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  375階：:Item_0009:x1500 :Item_0053:x10 :Item_0027:24hx5 :Item_0020:x7
+  425階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
+  475階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  525階：:Item_0009:x1500 :Item_0068:x1 :Item_0058:Lv6x10 :Item_0018:x80
+  575階：:Item_0009:x1500 :Item_0051:x15 :Item_0085:x15 :Item_0020:x7
+  625階：:Item_0009:x1500 :Item_0021:x5 :Item_0085:x10 :Item_0018:x90
+  675階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0020:x7
+  725階：:Item_0009:x1500 :Item_0085:x20 :Item_0039:x200 :Item_0018:x90
+  775階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
+  825階：:Item_0009:x1500 :Item_0054:x10 :Item_0085:x15 :Item_0020:x7
+  875階：:Item_0009:x1500 :Item_0051:x20 :Item_0039:x200 :Item_0018:x90
+  925階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
+  975階：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  1025階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  1075階：:Item_0009:x1500 :Item_0021:x5 :Item_0085:x10 :Item_0018:x90
+  1125階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  1175階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1225階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90
+  1275階：:Item_0009:x1500 :Item_0054:x10 :Item_0025:24hx10 :Item_0018:x30
+  1325階：:Item_0009:x1500 :Item_0039:x200 :Item_0058:Lv6x10 :Item_0018:x30
+  1375階：:Item_0009:x1500 :Item_0021:x5 :Item_0085:x10 :Item_0018:x90
+  1425階：:Item_0009:x1500 :Item_0054:x10 :Item_0027:24hx10 :Item_0018:x30
+  1475階：:Item_0009:x1500 :Item_0054:x10 :Item_0051:x15 :Item_0023:24hx15
+  1525階：:Item_0009:x1500 :Item_0021:x5 :Item_0051:x10 :Item_0018:x90`,
         '3000PT': `225階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
-275階：:Item_0009:x3000 :Item_0068:x2 :Item_0058:Lv7x10 :Item_0018:x160
-325階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-375階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
-425階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
-475階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-525階：:Item_0009:x3000 :Item_0068:x2 :Item_0058:Lv7x10 :Item_0018:x160
-575階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
-625階：:Item_0009:x3000 :Item_0021:x10 :Item_0085:x20 :Item_0018:x180
-675階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
-725階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0018:x180
-775階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
-825階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
-875階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
-925階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
-975階：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-1025階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-1075階：:Item_0009:x3000 :Item_0021:x10 :Item_0085:x20 :Item_0018:x180
-1125階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-1175階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1225階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
-1275階：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
-1325階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
-1375階：:Item_0009:x3000 :Item_0021:x10 :Item_0085:x20 :Item_0018:x180
-1425階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
-1475階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
-1525階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180`,
+  275階：:Item_0009:x3000 :Item_0068:x2 :Item_0058:Lv7x10 :Item_0018:x160
+  325階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  375階：:Item_0009:x3000 :Item_0053:x20 :Item_0027:24hx10 :Item_0020:x15
+  425階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
+  475階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  525階：:Item_0009:x3000 :Item_0068:x2 :Item_0058:Lv7x10 :Item_0018:x160
+  575階：:Item_0009:x3000 :Item_0051:x30 :Item_0085:x30 :Item_0020:x15
+  625階：:Item_0009:x3000 :Item_0021:x10 :Item_0085:x20 :Item_0018:x180
+  675階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0020:x15
+  725階：:Item_0009:x3000 :Item_0085:x40 :Item_0039:x200 :Item_0018:x180
+  775階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
+  825階：:Item_0009:x3000 :Item_0054:x15 :Item_0085:x30 :Item_0020:x15
+  875階：:Item_0009:x3000 :Item_0051:x40 :Item_0039:x200 :Item_0018:x180
+  925階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
+  975階：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  1025階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  1075階：:Item_0009:x3000 :Item_0021:x10 :Item_0085:x20 :Item_0018:x180
+  1125階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  1175階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1225階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180
+  1275階：:Item_0009:x3000 :Item_0054:x20 :Item_0025:24hx20 :Item_0018:x60
+  1325階：:Item_0009:x3000 :Item_0039:x200 :Item_0058:Lv7x20 :Item_0018:x60
+  1375階：:Item_0009:x3000 :Item_0021:x10 :Item_0085:x20 :Item_0018:x180
+  1425階：:Item_0009:x3000 :Item_0054:x20 :Item_0027:24hx20 :Item_0018:x60
+  1475階：:Item_0009:x3000 :Item_0054:x15 :Item_0051:x30 :Item_0023:24hx30
+  1525階：:Item_0009:x3000 :Item_0021:x10 :Item_0051:x20 :Item_0018:x180`,
         '5900PT': `225階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
-275階：:Item_0009:x5900 :Item_0068:x4 :Item_0058:Lv7x20 :Item_0018:x320
-325階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-375階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
-425階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
-475階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-525階：:Item_0009:x5900 :Item_0068:x4 :Item_0058:Lv7x20 :Item_0018:x320
-575階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
-625階：:Item_0009:x5900 :Item_0021:x20 :Item_0085:x40 :Item_0018:x360
-675階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
-725階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0018:x360
-775階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
-825階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
-875階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
-925階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
-975階：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-1025階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-1075階：:Item_0009:x5900 :Item_0021:x20 :Item_0085:x40 :Item_0018:x360
-1125階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-1175階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1225階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
-1275階：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
-1325階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
-1375階：:Item_0009:x5900 :Item_0021:x20 :Item_0085:x40 :Item_0018:x360
-1425階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
-1475階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
-1525階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360`,
+  275階：:Item_0009:x5900 :Item_0068:x4 :Item_0058:Lv7x20 :Item_0018:x320
+  325階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  375階：:Item_0009:x5900 :Item_0053:x40 :Item_0027:24hx20 :Item_0020:x30
+  425階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
+  475階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  525階：:Item_0009:x5900 :Item_0068:x4 :Item_0058:Lv7x20 :Item_0018:x320
+  575階：:Item_0009:x5900 :Item_0051:x60 :Item_0085:x60 :Item_0020:x30
+  625階：:Item_0009:x5900 :Item_0021:x20 :Item_0085:x40 :Item_0018:x360
+  675階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0020:x30
+  725階：:Item_0009:x5900 :Item_0085:x80 :Item_0039:x500 :Item_0018:x360
+  775階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
+  825階：:Item_0009:x5900 :Item_0054:x25 :Item_0085:x60 :Item_0020:x30
+  875階：:Item_0009:x5900 :Item_0051:x80 :Item_0039:x500 :Item_0018:x360
+  925階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
+  975階：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  1025階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  1075階：:Item_0009:x5900 :Item_0021:x20 :Item_0085:x40 :Item_0018:x360
+  1125階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  1175階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1225階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360
+  1275階：:Item_0009:x5900 :Item_0054:x40 :Item_0025:24hx40 :Item_0018:x120
+  1325階：:Item_0009:x5900 :Item_0039:x500 :Item_0058:Lv7x40 :Item_0018:x120
+  1375階：:Item_0009:x5900 :Item_0021:x20 :Item_0085:x40 :Item_0018:x360
+  1425階：:Item_0009:x5900 :Item_0054:x40 :Item_0027:24hx40 :Item_0018:x120
+  1475階：:Item_0009:x5900 :Item_0054:x25 :Item_0051:x60 :Item_0023:24hx60
+  1525階：:Item_0009:x5900 :Item_0021:x20 :Item_0051:x40 :Item_0018:x360`,
       },
     };
     for (let [type, value] of Object.entries(x)) {
@@ -6949,10 +7028,10 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
                       break;
                     }
                     /*case '0068': {
-                    item.id = 20 + condition * 1;
-                    item.id = item.id + '@17';
-                    break;
-                  }*/
+                      item.id = 20 + condition * 1;
+                      item.id = item.id + '@17';
+                      break;
+                    }*/
                     case '0058': {
                       item.id = 3 + condition.replace('Lv', '') * 1;
                       item.id += '@17';
@@ -7496,6 +7575,32 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
         DataList[CharacterId] = {};
       }
       DataList[CharacterId][UnlockedVoiceButtonTextKey.slice(1, -1)] = Data;
+    }
+    return DataList;
+  }
+  //获取装备技能信息
+  async function getCharacterProfile() {
+    const Type = 'CharacterProfile';
+    let DataList = {};
+    const DataMB = await sendGMRequest(`https://cdn-mememori.akamaized.net/master/prd1/version/${getStorage('MasterVersion')}/${Type}MB`, { type: 'arraybuffer', msgpack: true });
+    if (!DataMB) return;
+    for (let i = 0; i < DataMB.length; i++) {
+      let Data = DataMB[i];
+      const CharacterId = Data.Id;
+      DataList[CharacterId] = Data;
+    }
+    return DataList;
+  }
+  //获取装备技能信息
+  async function getEquipmentComposite() {
+    const Type = 'EquipmentComposite';
+    let DataList = {};
+    const DataMB = await sendGMRequest(`https://cdn-mememori.akamaized.net/master/prd1/version/${getStorage('MasterVersion')}/${Type}MB`, { type: 'arraybuffer', msgpack: true });
+    if (!DataMB) return;
+    for (let i = 0; i < DataMB.length; i++) {
+      let Data = DataMB[i];
+      const CharacterId = Data.Id;
+      DataList[CharacterId] = Data;
     }
     return DataList;
   }
@@ -8258,6 +8363,12 @@ parameter_set[type="skill"] div[order] > div[unlock] > unlocked {
               });
               objectStore.createIndex('LastUpdate', 'LastUpdate', {
                 unique: false,
+              });
+            }
+            //表Character是否存在,否则创建
+            if (!db.objectStoreNames.contains('CharacterProfile')) {
+              let objectStore = db.createObjectStore('Character', {
+                keyPath: 'Guid',
               });
             }
             //表Battle是否存在,否则创建

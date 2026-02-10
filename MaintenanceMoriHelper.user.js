@@ -17,8 +17,8 @@
 // @connect      githubusercontent.com
 // @connect      tamamo.dev
 // @grant        GM_xmlhttpRequest
-// @require      https://raw.githubusercontent.com/kawanet/msgpack-lite/master/dist/msgpack.min.js
-// @require      https://raw.githubusercontent.com/kawanet/int64-buffer/master/dist/int64-buffer.min.js
+// @require      https://cdn.jsdelivr.net/npm/msgpack-lite/dist/msgpack.min.js
+// @require      https://cdn.jsdelivr.net/npm/int64-buffer/dist/int64-buffer.min.js
 // @require      https://cdn.jsdelivr.net/npm/jsstore/dist/jsstore.min.js
 // @run-at       document-start
 // ==/UserScript==
@@ -1561,18 +1561,7 @@
   let SocketGvG;
   const StaticDatabase = await openDB('Static', 3);
   const RecordDatabase = await openDB('Record', 1);
-  let DataBase = {
-    'Static': {
-      'version': 1,
-      'db': undefined,
-    },
-    'Record': {
-      'version': 3,
-      'db': undefined,
-    },
-  };
   const AppVersion = await getAppVersion();
-  RecordDatabase = await openDB('Record', DataBase.Record.version);
   setStorage('lang', '["en","en","en","en","en","en","en"]');
   //注入翻译
   const functionLanguage = unsafeWindow._m;
@@ -1730,6 +1719,12 @@
   await getSkill();
   //初始化所有页面
   await initPage();
+  setInterval(async() => {
+    let node = getDataUri();
+    if (node.AppAssetVersionInfo.Version!=localStorage.getItem("versionCharacter")){
+      alert(node.AppAssetVersionInfo.Version)}
+      console.log(node.AppAssetVersionInfo.Version)
+  }, 500);
   console.log('载入完成');
   /*常量函数*/
   //分解URL
